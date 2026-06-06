@@ -1,0 +1,14 @@
+{
+  "$schema": "https://staticui.dev/schema.json",
+  "style": "default",
+  "tailwind": {
+    "config": "tailwind.config.js",
+    "css": "src/app/globals.css",
+    "baseColor": "neutral"
+  },
+  "aliases": {
+    "components": "@/components",
+    "ui": "@/components/static-ui",
+    "utils": "@/lib/utils"
+  }
+}

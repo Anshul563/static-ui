@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.13 0.028 261.69);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.13 0.028 261.69);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.13 0.028 261.69);
+  --primary: oklch(0.527 0.154 150.07);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.966 0.022 144.65);
+  --secondary-foreground: oklch(0.304 0.062 152.85);
+  --muted: oklch(0.966 0.022 144.65);
+  --muted-foreground: oklch(0.556 0.034 152.85);
+  --accent: oklch(0.966 0.022 144.65);
+  --accent-foreground: oklch(0.304 0.062 152.85);
+  --destructive: oklch(0.577 0.245 27.33);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.922 0.018 144.65);
+  --input: oklch(0.922 0.018 144.65);
+  --ring: oklch(0.527 0.154 150.07);
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: oklch(0.13 0.028 261.69);
+  --foreground: oklch(0.985 0.002 247.86);
+  --card: oklch(0.13 0.028 261.69);
+  --card-foreground: oklch(0.985 0.002 247.86);
+  --popover: oklch(0.13 0.028 261.69);
+  --popover-foreground: oklch(0.985 0.002 247.86);
+  --primary: oklch(0.527 0.154 150.07);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.268 0.054 152.85);
+  --secondary-foreground: oklch(0.985 0.002 247.86);
+  --muted: oklch(0.268 0.054 152.85);
+  --muted-foreground: oklch(0.708 0.034 152.85);
+  --accent: oklch(0.268 0.054 152.85);
+  --accent-foreground: oklch(0.985 0.002 247.86);
+  --destructive: oklch(0.577 0.245 27.33);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.268 0.054 152.85);
+  --input: oklch(0.268 0.054 152.85);
+  --ring: oklch(0.527 0.154 150.07);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: system-ui, sans-serif;
+}

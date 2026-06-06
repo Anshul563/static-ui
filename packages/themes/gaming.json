@@ -1,0 +1,50 @@
+{
+  "name": "gaming",
+  "label": "Gaming",
+  "active": false,
+  "css": {
+    ":root": {
+      "--background": "oklch(1 0 0)",
+      "--foreground": "oklch(0.09 0.02 300)",
+      "--card": "oklch(1 0 0)",
+      "--card-foreground": "oklch(0.09 0.02 300)",
+      "--popover": "oklch(1 0 0)",
+      "--popover-foreground": "oklch(0.09 0.02 300)",
+      "--primary": "oklch(0.623 0.265 340.32)",
+      "--primary-foreground": "oklch(1 0 0)",
+      "--secondary": "oklch(0.685 0.235 215.78)",
+      "--secondary-foreground": "oklch(1 0 0)",
+      "--muted": "oklch(0.92 0.02 300)",
+      "--muted-foreground": "oklch(0.5 0.05 300)",
+      "--accent": "oklch(0.685 0.235 215.78)",
+      "--accent-foreground": "oklch(1 0 0)",
+      "--destructive": "oklch(0.637 0.237 25.33)",
+      "--destructive-foreground": "oklch(1 0 0)",
+      "--border": "oklch(0.85 0.03 300)",
+      "--input": "oklch(0.85 0.03 300)",
+      "--ring": "oklch(0.623 0.265 340.32)",
+      "--radius": "0.5rem"
+    },
+    "dark": {
+      "--background": "oklch(0.09 0.02 300)",
+      "--foreground": "oklch(0.985 0.002 247.86)",
+      "--card": "oklch(0.09 0.02 300)",
+      "--card-foreground": "oklch(0.985 0.002 247.86)",
+      "--popover": "oklch(0.09 0.02 300)",
+      "--popover-foreground": "oklch(0.985 0.002 247.86)",
+      "--primary": "oklch(0.623 0.265 340.32)",
+      "--primary-foreground": "oklch(1 0 0)",
+      "--secondary": "oklch(0.685 0.235 215.78)",
+      "--secondary-foreground": "oklch(1 0 0)",
+      "--muted": "oklch(0.2 0.04 300)",
+      "--muted-foreground": "oklch(0.6 0.06 300)",
+      "--accent": "oklch(0.685 0.235 215.78)",
+      "--accent-foreground": "oklch(1 0 0)",
+      "--destructive": "oklch(0.637 0.237 25.33)",
+      "--destructive-foreground": "oklch(1 0 0)",
+      "--border": "oklch(0.25 0.04 300)",
+      "--input": "oklch(0.25 0.04 300)",
+      "--ring": "oklch(0.685 0.235 215.78)"
+    }
+  }
+}

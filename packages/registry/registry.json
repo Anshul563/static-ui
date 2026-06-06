@@ -1,0 +1,610 @@
+{
+  "name": "@static-ui/registry",
+  "version": "0.1.0",
+  "description": "Static UI component registry",
+  "categories": {
+    "ui": {
+      "label": "Components",
+      "description": "Individual UI components"
+    },
+    "blocks": {
+      "label": "Blocks",
+      "description": "Pre-built sections and patterns"
+    },
+    "templates": {
+      "label": "Templates",
+      "description": "Full page templates"
+    },
+    "ai": {
+      "label": "AI Components",
+      "description": "AI chat and prompt components"
+    }
+  },
+  "components": [
+    {
+      "name": "accordion",
+      "type": "components:ui",
+      "description": "A vertically stacked set of interactive headings that reveal content",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": ["accordion.tsx"],
+      "categories": ["layout"]
+    },
+    {
+      "name": "alert",
+      "type": "components:ui",
+      "description": "A notification message that communicates information to the user",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["alert.tsx"],
+      "categories": ["feedback"]
+    },
+    {
+      "name": "alert-dialog",
+      "type": "components:ui",
+      "description": "A modal dialog that interrupts the user with urgent information",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": ["alert-dialog.tsx"],
+      "categories": ["overlay"]
+    },
+    {
+      "name": "aspect-ratio",
+      "type": "components:ui",
+      "description": "A container that maintains a consistent aspect ratio",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["aspect-ratio.tsx"],
+      "categories": ["layout"]
+    },
+    {
+      "name": "avatar",
+      "type": "components:ui",
+      "description": "A visual representation of a user or entity",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": ["avatar.tsx"],
+      "categories": ["data-display"]
+    },
+    {
+      "name": "badge",
+      "type": "components:ui",
+      "description": "A small status descriptor for UI elements",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": [],
+      "files": ["badge.tsx"],
+      "categories": ["data-display"]
+    },
+    {
+      "name": "breadcrumb",
+      "type": "components:ui",
+      "description": "A navigation helper that shows the user's location in a hierarchy",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["breadcrumb.tsx"],
+      "categories": ["navigation"]
+    },
+    {
+      "name": "button",
+      "type": "components:ui",
+      "description": "A clickable element that triggers an action",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": [],
+      "files": ["button.tsx"],
+      "categories": ["actions"]
+    },
+    {
+      "name": "calendar",
+      "type": "components:ui",
+      "description": "A date picker calendar component",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["calendar.tsx"],
+      "categories": ["forms"]
+    },
+    {
+      "name": "card",
+      "type": "components:ui",
+      "description": "A flexible content container with optional header, footer, and sections",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["card.tsx"],
+      "categories": ["layout"]
+    },
+    {
+      "name": "carousel",
+      "type": "components:ui",
+      "description": "A horizontally scrollable container for cycling through items",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["carousel.tsx"],
+      "categories": ["layout"]
+    },
+    {
+      "name": "checkbox",
+      "type": "components:ui",
+      "description": "A control that allows the user to toggle between checked and unchecked",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": ["checkbox.tsx"],
+      "categories": ["forms"]
+    },
+    {
+      "name": "collapsible",
+      "type": "components:ui",
+      "description": "An expandable content panel",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": ["collapsible.tsx"],
+      "categories": ["layout"]
+    },
+    {
+      "name": "context-menu",
+      "type": "components:ui",
+      "description": "A menu that appears on right-click, providing contextual actions",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": ["context-menu.tsx"],
+      "categories": ["overlay"]
+    },
+    {
+      "name": "dialog",
+      "type": "components:ui",
+      "description": "A modal overlay that requires user interaction",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": ["dialog.tsx"],
+      "categories": ["overlay"]
+    },
+    {
+      "name": "drawer",
+      "type": "components:ui",
+      "description": "A slide-out panel for navigation or content",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": ["drawer.tsx"],
+      "categories": ["overlay"]
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "components:ui",
+      "description": "A menu of options anchored to a trigger element",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": ["dropdown-menu.tsx"],
+      "categories": ["overlay"]
+    },
+    {
+      "name": "hover-card",
+      "type": "components:ui",
+      "description": "A card that appears on hover with additional information",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": ["hover-card.tsx"],
+      "categories": ["overlay"]
+    },
+    {
+      "name": "input",
+      "type": "components:ui",
+      "description": "A text input field for user data entry",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["input.tsx"],
+      "categories": ["forms"]
+    },
+    {
+      "name": "input-group",
+      "type": "components:ui",
+      "description": "A grouped input with prepended or appended elements",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["input-group.tsx"],
+      "categories": ["forms"]
+    },
+    {
+      "name": "input-otp",
+      "type": "components:ui",
+      "description": "A one-time password input with individual digit fields",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["input-otp.tsx"],
+      "categories": ["forms"]
+    },
+    {
+      "name": "kbd",
+      "type": "components:ui",
+      "description": "A keyboard key indicator",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["kbd.tsx"],
+      "categories": ["data-display"]
+    },
+    {
+      "name": "label",
+      "type": "components:ui",
+      "description": "A text label for form elements",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["label.tsx"],
+      "categories": ["forms"]
+    },
+    {
+      "name": "number-field",
+      "type": "components:ui",
+      "description": "A numeric input with increment and decrement controls",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": ["number-field.tsx"],
+      "categories": ["forms"]
+    },
+    {
+      "name": "pagination",
+      "type": "components:ui",
+      "description": "A pagination navigation component for paged content",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["pagination.tsx"],
+      "categories": ["navigation"]
+    },
+    {
+      "name": "popover",
+      "type": "components:ui",
+      "description": "A floating card that appears on click with additional content",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": ["popover.tsx"],
+      "categories": ["overlay"]
+    },
+    {
+      "name": "progress",
+      "type": "components:ui",
+      "description": "A visual indicator of task completion progress",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": ["progress.tsx"],
+      "categories": ["feedback"]
+    },
+    {
+      "name": "radio-group",
+      "type": "components:ui",
+      "description": "A set of radio buttons for single-selection from options",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": ["radio-group.tsx"],
+      "categories": ["forms"]
+    },
+    {
+      "name": "scroll-area",
+      "type": "components:ui",
+      "description": "A custom scrollable container with styled scrollbars",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": ["scroll-area.tsx"],
+      "categories": ["layout"]
+    },
+    {
+      "name": "select",
+      "type": "components:ui",
+      "description": "A dropdown select menu for choosing from options",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": ["select.tsx"],
+      "categories": ["forms"]
+    },
+    {
+      "name": "separator",
+      "type": "components:ui",
+      "description": "A visual divider between sections",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["separator.tsx"],
+      "categories": ["layout"]
+    },
+    {
+      "name": "sidebar",
+      "type": "components:ui",
+      "description": "A collapsible sidebar navigation panel",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["sidebar.tsx"],
+      "categories": ["navigation"]
+    },
+    {
+      "name": "skeleton",
+      "type": "components:ui",
+      "description": "A placeholder loading skeleton for content",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["skeleton.tsx"],
+      "categories": ["feedback"]
+    },
+    {
+      "name": "slider",
+      "type": "components:ui",
+      "description": "A range slider for selecting a value from a range",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": ["slider.tsx"],
+      "categories": ["forms"]
+    },
+    {
+      "name": "sonner",
+      "type": "components:ui",
+      "description": "A toast notification system using sonner",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["sonner.tsx"],
+      "categories": ["feedback"]
+    },
+    {
+      "name": "spinner",
+      "type": "components:ui",
+      "description": "A loading spinner indicator",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["spinner.tsx"],
+      "categories": ["feedback"]
+    },
+    {
+      "name": "switch",
+      "type": "components:ui",
+      "description": "A toggle switch for binary settings",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": ["switch.tsx"],
+      "categories": ["forms"]
+    },
+    {
+      "name": "table",
+      "type": "components:ui",
+      "description": "A data table for displaying tabular information",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["table.tsx"],
+      "categories": ["data-display"]
+    },
+    {
+      "name": "tabs",
+      "type": "components:ui",
+      "description": "A tabbed navigation for switching between views",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": ["tabs.tsx"],
+      "categories": ["layout"]
+    },
+    {
+      "name": "textarea",
+      "type": "components:ui",
+      "description": "A multi-line text input field",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["textarea.tsx"],
+      "categories": ["forms"]
+    },
+    {
+      "name": "toast",
+      "type": "components:ui",
+      "description": "A toast notification component for brief messages",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["toast.tsx"],
+      "categories": ["feedback"]
+    },
+    {
+      "name": "toggle",
+      "type": "components:ui",
+      "description": "A button that toggles between on and off states",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": [],
+      "files": ["toggle.tsx"],
+      "categories": ["actions"]
+    },
+    {
+      "name": "toggle-group",
+      "type": "components:ui",
+      "description": "A group of toggle buttons for multi-selection",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": ["toggle-group.tsx"],
+      "categories": ["actions"]
+    },
+    {
+      "name": "tooltip",
+      "type": "components:ui",
+      "description": "A floating label that provides additional context on hover",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": ["tooltip.tsx"],
+      "categories": ["overlay"]
+    },
+    {
+      "name": "typography",
+      "type": "components:ui",
+      "description": "A set of typography components for consistent text styling",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["typography.tsx"],
+      "categories": ["typography"]
+    },
+    {
+      "name": "ai-chat",
+      "type": "components:ui",
+      "description": "A full chat UI with message list, input area, and loading states",
+      "dependencies": [],
+      "registryDependencies": ["ai-message", "ai-prompt"],
+      "files": ["ai-chat.tsx"],
+      "categories": ["ai"]
+    },
+    {
+      "name": "ai-message",
+      "type": "components:ui",
+      "description": "A message bubble with role-based styling and timestamp support",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["ai-message.tsx"],
+      "categories": ["ai"]
+    },
+    {
+      "name": "ai-prompt",
+      "type": "components:ui",
+      "description": "A multi-line prompt input with send button and keyboard submit",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["ai-prompt.tsx"],
+      "categories": ["ai"]
+    },
+    {
+      "name": "ai-code-block",
+      "type": "components:ui",
+      "description": "A code display block with language label, copy button, and line numbers",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["ai-code-block.tsx"],
+      "categories": ["ai"]
+    },
+    {
+      "name": "ai-file-upload",
+      "type": "components:ui",
+      "description": "A drag-and-drop file upload zone with progress and file restrictions",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["ai-file-upload.tsx"],
+      "categories": ["ai"]
+    },
+    {
+      "name": "ai-chat-layout",
+      "type": "components:ui",
+      "description": "A responsive chat page layout with sidebar, header, and main area",
+      "dependencies": [],
+      "registryDependencies": ["ai-sidebar"],
+      "files": ["ai-chat-layout.tsx"],
+      "categories": ["ai"]
+    },
+    {
+      "name": "ai-sidebar",
+      "type": "components:ui",
+      "description": "A conversation sidebar with search, new chat button, and scrollable list",
+      "dependencies": [],
+      "registryDependencies": ["ai-conversation"],
+      "files": ["ai-sidebar.tsx"],
+      "categories": ["ai"]
+    },
+    {
+      "name": "ai-conversation",
+      "type": "components:ui",
+      "description": "A conversation item with title, preview, timestamp, active state, and delete",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["ai-conversation.tsx"],
+      "categories": ["ai"]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "dashboard-01",
+      "type": "components:block",
+      "description": "A full dashboard layout with sidebar, header, and stats",
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["sidebar", "card", "button", "avatar"],
+      "files": ["blocks/dashboard-01.tsx"]
+    },
+    {
+      "name": "dashboard-02",
+      "type": "components:block",
+      "description": "An analytics dashboard variant with charts",
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["sidebar", "card", "tabs", "select", "button"],
+      "files": ["blocks/dashboard-02.tsx"]
+    },
+    {
+      "name": "login-01",
+      "type": "components:block",
+      "description": "A clean login form with email and password",
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["button", "input", "label", "card"],
+      "files": ["blocks/login-01.tsx"]
+    },
+    {
+      "name": "login-02",
+      "type": "components:block",
+      "description": "A login form with social auth providers",
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["button", "input", "label", "card", "separator"],
+      "files": ["blocks/login-02.tsx"]
+    },
+    {
+      "name": "pricing-01",
+      "type": "components:block",
+      "description": "A three-tier pricing card layout",
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["card", "button", "badge"],
+      "files": ["blocks/pricing-01.tsx"]
+    },
+    {
+      "name": "pricing-02",
+      "type": "components:block",
+      "description": "A pricing table with feature comparison",
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["card", "button", "badge", "table"],
+      "files": ["blocks/pricing-02.tsx"]
+    },
+    {
+      "name": "hero-01",
+      "type": "components:block",
+      "description": "A centered hero section with CTA buttons",
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["button", "badge"],
+      "files": ["blocks/hero-01.tsx"]
+    },
+    {
+      "name": "hero-02",
+      "type": "components:block",
+      "description": "A split hero section with image and text",
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["button", "badge"],
+      "files": ["blocks/hero-02.tsx"]
+    },
+    {
+      "name": "feature-01",
+      "type": "components:block",
+      "description": "A three-column feature grid",
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["card"],
+      "files": ["blocks/feature-01.tsx"]
+    },
+    {
+      "name": "feature-02",
+      "type": "components:block",
+      "description": "An alternating feature section with icons",
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["card"],
+      "files": ["blocks/feature-02.tsx"]
+    }
+  ],
+  "templates": [
+    {
+      "name": "marketing",
+      "type": "components:template",
+      "description": "A full marketing landing page template",
+      "dependencies": ["@base-ui/react", "lucide-react", "next"],
+      "registryDependencies": ["hero-01", "feature-01", "pricing-01", "button"],
+      "files": ["templates/marketing.tsx"]
+    },
+    {
+      "name": "dashboard",
+      "type": "components:template",
+      "description": "A full dashboard template",
+      "dependencies": ["@base-ui/react", "lucide-react", "next"],
+      "registryDependencies": ["dashboard-01", "sidebar", "button", "card"],
+      "files": ["templates/dashboard.tsx"]
+    },
+    {
+      "name": "auth",
+      "type": "components:template",
+      "description": "An authentication pages template",
+      "dependencies": ["@base-ui/react", "lucide-react", "next"],
+      "registryDependencies": ["login-01", "login-02"],
+      "files": ["templates/auth.tsx"]
+    }
+  ]
+}

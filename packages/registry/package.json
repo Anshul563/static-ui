@@ -1,0 +1,33 @@
+{
+  "name": "@static-ui/registry",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "description": "Static UI component registry — UI components, blocks, and templates",
+  "main": "./dist/index.json",
+  "exports": {
+    ".": "./dist/index.json",
+    "./registry.json": "./registry.json"
+  },
+  "files": [
+    "dist",
+    "registry.json"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsx scripts/build-registry.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["static-ui", "components", "registry", "blocks", "templates", "base-ui"],
+  "author": "Anshul Shakya",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^20.19.41",
+    "fs-extra": "^11.3.5",
+    "tsx": "^4.22.4",
+    "typescript": "^5.9.3"
+  }
+}

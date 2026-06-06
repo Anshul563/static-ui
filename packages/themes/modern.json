@@ -1,0 +1,50 @@
+{
+  "name": "modern",
+  "label": "Modern",
+  "active": false,
+  "css": {
+    ":root": {
+      "--background": "oklch(1 0 0)",
+      "--foreground": "oklch(0.13 0.02 240)",
+      "--card": "oklch(1 0 0)",
+      "--card-foreground": "oklch(0.13 0.02 240)",
+      "--popover": "oklch(1 0 0)",
+      "--popover-foreground": "oklch(0.13 0.02 240)",
+      "--primary": "oklch(0.6 0.18 195)",
+      "--primary-foreground": "oklch(1 0 0)",
+      "--secondary": "oklch(0.96 0.02 195)",
+      "--secondary-foreground": "oklch(0.25 0.04 195)",
+      "--muted": "oklch(0.96 0.02 195)",
+      "--muted-foreground": "oklch(0.55 0.03 195)",
+      "--accent": "oklch(0.96 0.02 195)",
+      "--accent-foreground": "oklch(0.25 0.04 195)",
+      "--destructive": "oklch(0.577 0.245 27.33)",
+      "--destructive-foreground": "oklch(1 0 0)",
+      "--border": "oklch(0.92 0.02 195)",
+      "--input": "oklch(0.92 0.02 195)",
+      "--ring": "oklch(0.6 0.18 195)",
+      "--radius": "0.5rem"
+    },
+    "dark": {
+      "--background": "oklch(0.13 0.02 240)",
+      "--foreground": "oklch(0.985 0.002 247.86)",
+      "--card": "oklch(0.13 0.02 240)",
+      "--card-foreground": "oklch(0.985 0.002 247.86)",
+      "--popover": "oklch(0.13 0.02 240)",
+      "--popover-foreground": "oklch(0.985 0.002 247.86)",
+      "--primary": "oklch(0.6 0.18 195)",
+      "--primary-foreground": "oklch(1 0 0)",
+      "--secondary": "oklch(0.22 0.04 195)",
+      "--secondary-foreground": "oklch(0.985 0.002 247.86)",
+      "--muted": "oklch(0.22 0.04 195)",
+      "--muted-foreground": "oklch(0.65 0.04 195)",
+      "--accent": "oklch(0.22 0.04 195)",
+      "--accent-foreground": "oklch(0.985 0.002 247.86)",
+      "--destructive": "oklch(0.577 0.245 27.33)",
+      "--destructive-foreground": "oklch(1 0 0)",
+      "--border": "oklch(0.22 0.04 195)",
+      "--input": "oklch(0.22 0.04 195)",
+      "--ring": "oklch(0.6 0.18 195)"
+    }
+  }
+}

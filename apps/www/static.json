@@ -1,0 +1,12 @@
+{
+  "$schema": "https://staticui.dev/schema.json",
+  "framework": "Next.js",
+  "routerType": "App Router",
+  "language": "typescript",
+  "theme": "nova",
+  "aliases": {
+    "components": "@/components",
+    "ui": "@/components/static-ui",
+    "utils": "@/lib/utils"
+  }
+}

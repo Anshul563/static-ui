@@ -1,0 +1,50 @@
+{
+  "name": "blue",
+  "label": "Blue",
+  "active": false,
+  "css": {
+    ":root": {
+      "--background": "oklch(1 0 0)",
+      "--foreground": "oklch(0.13 0.028 261.69)",
+      "--card": "oklch(1 0 0)",
+      "--card-foreground": "oklch(0.13 0.028 261.69)",
+      "--popover": "oklch(1 0 0)",
+      "--popover-foreground": "oklch(0.13 0.028 261.69)",
+      "--primary": "oklch(0.546 0.245 262.88)",
+      "--primary-foreground": "oklch(1 0 0)",
+      "--secondary": "oklch(0.946 0.054 262.88)",
+      "--secondary-foreground": "oklch(0.278 0.069 262.88)",
+      "--muted": "oklch(0.946 0.054 262.88)",
+      "--muted-foreground": "oklch(0.556 0.04 262.88)",
+      "--accent": "oklch(0.946 0.054 262.88)",
+      "--accent-foreground": "oklch(0.278 0.069 262.88)",
+      "--destructive": "oklch(0.577 0.245 27.33)",
+      "--destructive-foreground": "oklch(1 0 0)",
+      "--border": "oklch(0.922 0.022 262.88)",
+      "--input": "oklch(0.922 0.022 262.88)",
+      "--ring": "oklch(0.546 0.245 262.88)",
+      "--radius": "0.5rem"
+    },
+    "dark": {
+      "--background": "oklch(0.13 0.028 261.69)",
+      "--foreground": "oklch(0.985 0.002 247.86)",
+      "--card": "oklch(0.13 0.028 261.69)",
+      "--card-foreground": "oklch(0.985 0.002 247.86)",
+      "--popover": "oklch(0.13 0.028 261.69)",
+      "--popover-foreground": "oklch(0.985 0.002 247.86)",
+      "--primary": "oklch(0.546 0.245 262.88)",
+      "--primary-foreground": "oklch(1 0 0)",
+      "--secondary": "oklch(0.278 0.069 262.88)",
+      "--secondary-foreground": "oklch(0.985 0.002 247.86)",
+      "--muted": "oklch(0.278 0.069 262.88)",
+      "--muted-foreground": "oklch(0.708 0.04 262.88)",
+      "--accent": "oklch(0.278 0.069 262.88)",
+      "--accent-foreground": "oklch(0.985 0.002 247.86)",
+      "--destructive": "oklch(0.577 0.245 27.33)",
+      "--destructive-foreground": "oklch(1 0 0)",
+      "--border": "oklch(0.278 0.069 262.88)",
+      "--input": "oklch(0.278 0.069 262.88)",
+      "--ring": "oklch(0.546 0.245 262.88)"
+    }
+  }
+}
