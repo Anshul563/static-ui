@@ -1,6 +1,6 @@
 {
   "name": "@static-ui/cli",
-  "version": "0.0.9",
+  "version": "1.0.0",
   "description": "The command-line interface for Static UI",
   "type": "module",
   "main": "./dist/index.js",
