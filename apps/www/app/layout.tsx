@@ -1,6 +1,6 @@
-import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
+import { createMetadata } from "@/lib/seo"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,26 +12,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 })
 
-export const metadata: Metadata = {
-  title: {
-    default: "Static UI - Unstyled Component Primitives",
-    template: "%s - Static UI",
-  },
-  description: "Copy, paste, and fully own every line of code. An atomic unstyled component engine for Next.js and Tailwind CSS v4.",
-  openGraph: {
-    title: "Static UI - Unstyled Component Primitives",
-    description: "Copy, paste, and fully own every line of code. An atomic unstyled component engine for Next.js and Tailwind CSS v4.",
-    url: "https://static-ui.dev",
-    siteName: "Static UI",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Static UI - Unstyled Component Primitives",
-    description: "Copy, paste, and fully own every line of code.",
-  },
-  robots: { index: true, follow: true },
-}
+export const metadata = createMetadata()
 
 export default function RootLayout({
   children,

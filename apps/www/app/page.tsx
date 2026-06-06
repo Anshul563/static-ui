@@ -30,9 +30,13 @@ export default function LandingPage() {
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-400">
-            <Link href="/docs" className="transition-colors hover:text-white">Documentation</Link>
+            <Link href="/docs" className="transition-colors hover:text-white">Docs</Link>
             <Link href="/docs/components" className="transition-colors hover:text-white">Components</Link>
-            <a href="https://github.com" target="_blank" rel="noreferrer" className="transition-colors hover:text-white">GitHub</a>
+            <Link href="/docs/blocks" className="transition-colors hover:text-white">Blocks</Link>
+            <Link href="/docs/templates" className="transition-colors hover:text-white">Templates</Link>
+            <Link href="/docs/themes" className="transition-colors hover:text-white">Themes</Link>
+            <a href={process.env.NEXT_PUBLIC_STORYBOOK_URL || "https://registry-staticui.vercel.app"} target="_blank" rel="noreferrer" className="transition-colors hover:text-white">Storybook</a>
+            <a href={process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/Anshul563/static-ui"} target="_blank" rel="noreferrer" className="transition-colors hover:text-white">GitHub</a>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -47,9 +51,13 @@ export default function LandingPage() {
         {/* Mobile Navigation Dropdown */}
         {mobileMenuOpen && (
           <div className="md:hidden border-b border-neutral-900 bg-[#030303] px-6 py-4 space-y-3 flex flex-col text-sm font-medium">
-            <Link href="/docs" onClick={() => setMobileMenuOpen(false)} className="text-neutral-400 hover:text-white py-1">Documentation</Link>
+            <Link href="/docs" onClick={() => setMobileMenuOpen(false)} className="text-neutral-400 hover:text-white py-1">Docs</Link>
             <Link href="/docs/components" onClick={() => setMobileMenuOpen(false)} className="text-neutral-400 hover:text-white py-1">Components</Link>
-            <a href="https://github.com" target="_blank" rel="noreferrer" className="text-neutral-400 hover:text-white py-1">GitHub</a>
+            <Link href="/docs/blocks" onClick={() => setMobileMenuOpen(false)} className="text-neutral-400 hover:text-white py-1">Blocks</Link>
+            <Link href="/docs/templates" onClick={() => setMobileMenuOpen(false)} className="text-neutral-400 hover:text-white py-1">Templates</Link>
+            <Link href="/docs/themes" onClick={() => setMobileMenuOpen(false)} className="text-neutral-400 hover:text-white py-1">Themes</Link>
+            <a href={process.env.NEXT_PUBLIC_STORYBOOK_URL || "https://registry-staticui.vercel.app"} target="_blank" rel="noreferrer" className="text-neutral-400 hover:text-white py-1">Storybook</a>
+            <a href={process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/Anshul563/static-ui"} target="_blank" rel="noreferrer" className="text-neutral-400 hover:text-white py-1">GitHub</a>
           </div>
         )}
       </header>
@@ -143,13 +151,46 @@ export default function LandingPage() {
         </section>
       </main>
 
-      {/* Subtle Footer */}
-      <footer className="border-t border-neutral-900 bg-[#030303] py-6 text-center text-xs text-neutral-600">
-        <div className="mx-auto max-w-7xl px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© 2026 Static UI. Built open-source for modern developers.</p>
-          <div className="flex gap-4">
-            <a href="#" className="hover:text-neutral-400 transition-colors">Privacy</a>
-            <a href="#" className="hover:text-neutral-400 transition-colors">Terms</a>
+      {/* Footer */}
+      <footer className="border-t border-neutral-900 bg-[#030303] py-12 text-xs text-neutral-500">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div>
+              <h4 className="font-semibold text-neutral-300 mb-3">Product</h4>
+              <ul className="space-y-2">
+                <li><Link href="/docs/components" className="hover:text-neutral-300 transition-colors">Components</Link></li>
+                <li><Link href="/docs/blocks" className="hover:text-neutral-300 transition-colors">Blocks</Link></li>
+                <li><Link href="/docs/templates" className="hover:text-neutral-300 transition-colors">Templates</Link></li>
+                <li><Link href="/docs/themes" className="hover:text-neutral-300 transition-colors">Themes</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold text-neutral-300 mb-3">Resources</h4>
+              <ul className="space-y-2">
+                <li><Link href="/docs" className="hover:text-neutral-300 transition-colors">Docs</Link></li>
+                <li><a href={process.env.NEXT_PUBLIC_STORYBOOK_URL || "https://registry-staticui.vercel.app"} target="_blank" rel="noreferrer" className="hover:text-neutral-300 transition-colors">Storybook</a></li>
+                <li><a href={process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/Anshul563/static-ui"} target="_blank" rel="noreferrer" className="hover:text-neutral-300 transition-colors">GitHub</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold text-neutral-300 mb-3">Community</h4>
+              <ul className="space-y-2">
+                <li><a href={`${process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/Anshul563/static-ui"}/issues`} target="_blank" rel="noreferrer" className="hover:text-neutral-300 transition-colors">Issues</a></li>
+                <li><a href={`${process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/Anshul563/static-ui"}/discussions`} target="_blank" rel="noreferrer" className="hover:text-neutral-300 transition-colors">Discussions</a></li>
+                <li><a href={`${process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/Anshul563/static-ui"}/blob/master/CONTRIBUTING.md`} target="_blank" rel="noreferrer" className="hover:text-neutral-300 transition-colors">Contributing</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold text-neutral-300 mb-3">Legal</h4>
+              <ul className="space-y-2">
+                <li><a href="#" className="hover:text-neutral-300 transition-colors">Privacy</a></li>
+                <li><a href="#" className="hover:text-neutral-300 transition-colors">Terms</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="mt-10 pt-6 border-t border-neutral-900 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>© 2026 Static UI. Built open-source for modern developers.</p>
+            <p className="text-neutral-600">Beautiful React Components powered by Base UI.</p>
           </div>
         </div>
       </footer>

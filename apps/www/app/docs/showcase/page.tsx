@@ -1,16 +1,13 @@
 import React from "react"
-import type { Metadata } from "next"
 import { ArrowUpRight } from "lucide-react"
 import Link from "next/link"
+import { createMetadata } from "@/lib/seo"
 
-export const metadata: Metadata = {
-  title: "Showcase - Static UI",
+export const metadata = createMetadata({
+  title: "Showcase",
   description: "Projects and applications built with Static UI. Get inspired and share your own.",
-  openGraph: {
-    title: "Showcase - Static UI",
-    description: "Projects and applications built with Static UI.",
-  },
-}
+  path: "/docs/showcase",
+})
 import { ProjectCard, type ProjectData } from "@/components/ProjectCard"
 
 const projects: ProjectData[] = [

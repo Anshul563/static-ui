@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation"
 import { registryBySlug } from "@/lib/registry"
+import { createMetadata } from "@/lib/seo"
 import ComponentDetailClient from "./client"
 
 export function generateStaticParams() {
@@ -14,10 +15,11 @@ export async function generateMetadata({
   const { slug } = await params
   const meta = registryBySlug[slug]
   if (!meta) return {}
-  return {
-    title: `${meta.name} - Static UI`,
+  return createMetadata({
+    title: meta.name,
     description: meta.description,
-  }
+    path: `/docs/components/${slug}`,
+  })
 }
 
 export default async function ComponentDetailPage({

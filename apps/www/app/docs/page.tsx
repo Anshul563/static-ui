@@ -1,21 +1,17 @@
 import React from "react"
-import type { Metadata } from "next"
 import { Terminal, ArrowRight } from "lucide-react"
 import Link from "next/link"
+import { createMetadata } from "@/lib/seo"
 
-export const metadata: Metadata = {
-  title: "Introduction - Static UI Docs",
+export const metadata = createMetadata({
+  title: "Introduction",
   description: "Beautifully designed component primitives that you can copy, paste, and completely control inside your applications.",
-  openGraph: {
-    title: "Introduction - Static UI Docs",
-    description: "Copy, paste, and fully own every line of code.",
-  },
-}
+  path: "/docs",
+})
 
 export default function DocsIntroductionPage() {
   return (
     <div className="flex flex-col gap-6 py-6">
-      {/* Breadcrumb Header */}
       <div className="flex flex-col gap-2">
         <p className="text-xs font-medium text-neutral-500">Getting Started</p>
         <h1 className="text-4xl font-bold tracking-tight text-white">Introduction</h1>
@@ -26,31 +22,59 @@ export default function DocsIntroductionPage() {
 
       <hr className="border-neutral-900 my-2" />
 
-      {/* Philosophy */}
       <div className="space-y-4 text-sm leading-relaxed text-neutral-400">
         <p>
-          Static UI is <strong className="text-white font-medium">not a component library</strong> in the traditional sense. It is not an npm package that you download as an unchangeable dependency block. Instead, it is a suite of carefully engineered open-source code templates powered by unstyled Base UI controllers and styled with Tailwind CSS v4.
+          Static UI is a modern, unstyled component library built on top of <strong className="text-white">Base UI</strong> and styled with <strong className="text-white">Tailwind CSS v4</strong>.
+          Every component is designed to be copied, pasted, and fully customized — giving you complete control over your codebase.
         </p>
+
         <p>
-          You use our custom command-line interface engine to generate these primitives directly into your local workspaces, allowing you total execution ownership over structure, themes, and logic variants.
+          Unlike traditional component libraries that ship as npm dependencies with locked-in styles,
+          Static UI gives you the source code directly. You own every line, can modify every style,
+          and never worry about breaking changes from upstream updates.
         </p>
+
+        <div className="rounded-xl border border-neutral-900 bg-[#0a0a0a]/40 p-6 backdrop-blur-md mt-6">
+          <div className="flex items-start gap-4">
+            <Terminal className="h-5 w-5 text-[#22c55e] mt-0.5 shrink-0" />
+            <div className="space-y-2">
+              <h3 className="text-sm font-medium text-white">Quick Start</h3>
+              <p className="text-xs text-neutral-500">
+                Initialize Static UI in your project with a single command:
+              </p>
+              <div className="flex items-center gap-2 rounded-lg border border-neutral-800 bg-[#030303] px-4 py-2.5 font-mono text-sm text-neutral-300">
+                npx @static-ui/cli init
+              </div>
+              <p className="text-xs text-neutral-500">
+                Then add any component: <code className="text-[#22c55e]">npx @static-ui/cli add button</code>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Why track */}
-      <div className="space-y-3 mt-4">
-        <h2 className="text-xl font-semibold tracking-tight text-white">Why Static UI?</h2>
-        <p className="text-sm leading-relaxed text-neutral-400">
-          Traditional component packages create an extraction layer away from your design system tokens. When you need to override a specific behavior or tweak a microscopic animation frame, you are forced to fight style scope leaks or library wrappers. Static UI places the source code directly under your cursor.
-        </p>
-      </div>
+      <hr className="border-neutral-900 my-2" />
 
-      {/* Immediate Action Area */}
-      <div className="flex items-center gap-4 mt-6">
-        <Link 
-          href="/docs/installation" 
-          className="inline-flex h-9 items-center justify-center gap-2 rounded-md bg-white px-4 text-xs font-medium text-black hover:bg-neutral-200 transition-colors"
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Link
+          href="/docs/installation"
+          className="group flex items-center justify-between rounded-xl border border-neutral-900 bg-[#0a0a0a]/40 p-5 hover:border-neutral-800 transition-all"
         >
-          Proceed to Installation <ArrowRight className="h-3.5 w-3.5" />
+          <div>
+            <h3 className="text-sm font-medium text-white">Installation</h3>
+            <p className="mt-1 text-xs text-neutral-500">Set up Static UI in your project</p>
+          </div>
+          <ArrowRight className="h-4 w-4 text-neutral-600 group-hover:text-[#22c55e] transition-colors" />
+        </Link>
+        <Link
+          href="/docs/components"
+          className="group flex items-center justify-between rounded-xl border border-neutral-900 bg-[#0a0a0a]/40 p-5 hover:border-neutral-800 transition-all"
+        >
+          <div>
+            <h3 className="text-sm font-medium text-white">Components</h3>
+            <p className="mt-1 text-xs text-neutral-500">Browse the component library</p>
+          </div>
+          <ArrowRight className="h-4 w-4 text-neutral-600 group-hover:text-[#22c55e] transition-colors" />
         </Link>
       </div>
     </div>

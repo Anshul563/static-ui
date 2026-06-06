@@ -1,16 +1,13 @@
 import React from "react"
-import type { Metadata } from "next"
 import Link from "next/link"
 import { Terminal, Check } from "lucide-react"
+import { createMetadata } from "@/lib/seo"
 
-export const metadata: Metadata = {
-  title: "Themes - Static UI",
+export const metadata = createMetadata({
+  title: "Themes",
   description: "Pre-built color themes for Static UI. Each theme provides a complete set of CSS variables for both light and dark mode.",
-  openGraph: {
-    title: "Themes - Static UI",
-    description: "Pre-built color themes for Static UI.",
-  },
-}
+  path: "/docs/themes",
+})
 
 const themes = [
   { name: "Green", slug: "green", description: "Fresh and clean green accent theme", color: "#22c55e", isDefault: true },

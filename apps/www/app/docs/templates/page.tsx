@@ -1,16 +1,13 @@
 import React from "react"
-import type { Metadata } from "next"
 import Link from "next/link"
 import { Terminal } from "lucide-react"
+import { createMetadata } from "@/lib/seo"
 
-export const metadata: Metadata = {
-  title: "Templates - Static UI",
-  description: "Full-page templates composed of multiple blocks and components. Ready to use as starting points for your pages.",
-  openGraph: {
-    title: "Templates - Static UI",
-    description: "Full-page templates composed of multiple blocks and components.",
-  },
-}
+export const metadata = createMetadata({
+  title: "Templates",
+  description: "Full-page templates composed of multiple blocks and components. Copy and paste entire page layouts.",
+  path: "/docs/templates",
+})
 
 const templates = [
   { name: "Marketing", slug: "marketing", description: "Full marketing landing page with hero, features, and pricing sections", components: 4 },

@@ -193,8 +193,14 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
             <Link href="/" className="transition-colors hover:text-white">Home</Link>
             <Link href="/docs/components" className="transition-colors hover:text-white">Components</Link>
             <Link href="/docs/blocks" className="transition-colors hover:text-white">Blocks</Link>
+            <Link href="/docs/templates" className="transition-colors hover:text-white">Templates</Link>
             <Link href="/docs/themes" className="transition-colors hover:text-white">Themes</Link>
-            <a href="https://github.com/Anshul563/static-ui" target="_blank" rel="noreferrer" className="transition-colors hover:text-white flex items-center gap-1">
+            <Link href="/docs/showcase" className="transition-colors hover:text-white">Showcase</Link>
+            <a href={process.env.NEXT_PUBLIC_STORYBOOK_URL || "https://registry-staticui.vercel.app"} target="_blank" rel="noreferrer" className="transition-colors hover:text-white flex items-center gap-1">
+              <ExternalLink className="h-3.5 w-3.5" />
+              Storybook
+            </a>
+            <a href={process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/Anshul563/static-ui"} target="_blank" rel="noreferrer" className="transition-colors hover:text-white flex items-center gap-1">
               <ExternalLink className="h-3.5 w-3.5" />
               GitHub
             </a>
@@ -236,6 +242,20 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
       </div>
+
+      {/* Footer */}
+      <footer className="border-t border-neutral-900 bg-[#030303] py-8 text-xs text-neutral-500">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>© 2026 Static UI. Built open-source for modern developers.</p>
+            <div className="flex gap-4">
+              <Link href="/docs" className="hover:text-neutral-300 transition-colors">Docs</Link>
+              <a href={process.env.NEXT_PUBLIC_STORYBOOK_URL || "https://registry-staticui.vercel.app"} target="_blank" rel="noreferrer" className="hover:text-neutral-300 transition-colors">Storybook</a>
+              <a href={process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/Anshul563/static-ui"} target="_blank" rel="noreferrer" className="hover:text-neutral-300 transition-colors">GitHub</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }

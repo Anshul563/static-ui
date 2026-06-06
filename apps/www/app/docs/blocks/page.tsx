@@ -1,16 +1,13 @@
 import React from "react"
-import type { Metadata } from "next"
 import Link from "next/link"
 import { Terminal } from "lucide-react"
+import { createMetadata } from "@/lib/seo"
 
-export const metadata: Metadata = {
-  title: "Blocks - Static UI",
+export const metadata = createMetadata({
+  title: "Blocks",
   description: "Pre-built layout sections and page patterns. Copy and paste entire blocks into your project.",
-  openGraph: {
-    title: "Blocks - Static UI",
-    description: "Pre-built layout sections and page patterns.",
-  },
-}
+  path: "/docs/blocks",
+})
 
 const blocks = [
   { name: "Dashboard 01", slug: "dashboard-01", description: "Full dashboard layout with sidebar, header, and stats", deps: 2 },

@@ -12,6 +12,11 @@ const preview: Preview = {
       },
     },
     backgrounds: { disable: true },
+    options: {
+      storySort: {
+        order: ["Introduction", "Components", "Blocks"],
+      },
+    },
   },
   decorators: [
     withThemeByClassName({
