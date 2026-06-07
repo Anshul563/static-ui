@@ -3,6 +3,7 @@
 import React, { useState } from "react"
 import Link from "next/link"
 import { Terminal, ArrowRight, Layers, Cpu, ShieldCheck, Check, Copy, Menu, X } from "lucide-react"
+import { FrameworkSection } from "@/components/FrameworkSection"
 
 export default function LandingPage() {
   const [copied, setCopied] = useState(false)
@@ -150,6 +151,8 @@ export default function LandingPage() {
 
         </section>
       </main>
+
+      <FrameworkSection />
 
       {/* Footer */}
       <footer className="border-t border-neutral-900 bg-[#030303] py-12 text-xs text-neutral-500">

@@ -10,7 +10,10 @@ export interface RegistryFile {
 
 export interface RegistryItem {
   name: string;
+  type: string;
+  frameworks: string[];
   dependencies: string[];
+  registryDependencies: string[];
   files: RegistryFile[];
 }
 
@@ -31,4 +34,33 @@ export async function fetchRegistry(url?: string): Promise<RegistryItem[]> {
 
 export function getComponent(name: string, registry: RegistryItem[]): RegistryItem | undefined {
   return registry.find((item) => item.name.toLowerCase() === name.toLowerCase());
+}
+
+export function getComponentForFramework(
+  name: string,
+  registry: RegistryItem[],
+  framework: string,
+): RegistryItem | undefined {
+  const component = getComponent(name, registry);
+  if (!component) return undefined;
+  if (component.frameworks && !component.frameworks.includes(framework)) return undefined;
+  return component;
+}
+
+export function filterRegistryByFramework(
+  registry: RegistryItem[],
+  framework: string,
+): RegistryItem[] {
+  return registry.filter((item) => {
+    if (!item.frameworks || item.frameworks.length === 0) return true;
+    return item.frameworks.includes(framework);
+  });
+}
+
+export function getFrameworksForComponent(
+  name: string,
+  registry: RegistryItem[],
+): string[] {
+  const component = getComponent(name, registry);
+  return component?.frameworks ?? [];
 }

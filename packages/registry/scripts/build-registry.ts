@@ -58,6 +58,7 @@ interface RegistryMetadata {
   name: string;
   version: string;
   description: string;
+  supportedFrameworks?: string[];
   categories: Record<string, { label: string; description: string }>;
   components: RegistryEntry[];
   blocks: RegistryEntry[];
@@ -68,6 +69,7 @@ interface RegistryEntry {
   name: string;
   type: string;
   description: string;
+  frameworks?: string[];
   dependencies: string[];
   registryDependencies: string[];
   files: string[];
@@ -77,10 +79,13 @@ interface RegistryEntry {
 interface BuildItem {
   name: string;
   type: string;
+  frameworks: string[];
   dependencies: string[];
   registryDependencies: string[];
   files: { name: string; content: string }[];
 }
+
+const DEFAULT_FRAMEWORKS = ["react", "nextjs", "vue", "nuxt", "solid", "svelte", "astro", "remix"];
 
 async function buildRegistry() {
   try {
@@ -110,6 +115,7 @@ async function buildRegistry() {
       buildItems.push({
         name: normalizedName,
         type: "components:ui",
+        frameworks: metaEntry?.frameworks ?? DEFAULT_FRAMEWORKS,
         dependencies,
         registryDependencies: metaEntry?.registryDependencies ?? [],
         files: [{ name: file, content }],
@@ -130,6 +136,7 @@ async function buildRegistry() {
         buildItems.push({
           name: rawName,
           type: "components:block",
+          frameworks: metaEntry?.frameworks ?? DEFAULT_FRAMEWORKS,
           dependencies: metaEntry?.dependencies ?? [],
           registryDependencies: metaEntry?.registryDependencies ?? [],
           files: [{ name: `blocks/${file}`, content }],
@@ -151,6 +158,7 @@ async function buildRegistry() {
         buildItems.push({
           name: rawName,
           type: "components:template",
+          frameworks: metaEntry?.frameworks ?? DEFAULT_FRAMEWORKS,
           dependencies: metaEntry?.dependencies ?? [],
           registryDependencies: metaEntry?.registryDependencies ?? [],
           files: [{ name: `templates/${file}`, content }],
@@ -163,6 +171,7 @@ async function buildRegistry() {
     console.log(
       `\u2705 Registry generated from @static-ui/ui! (${buildItems.length} items: UI components + blocks + templates)`,
     );
+    console.log(`   Supported frameworks: ${meta.supportedFrameworks?.join(", ") || DEFAULT_FRAMEWORKS.join(", ")}`);
   } catch (error) {
     console.error("\u274c Failed to build registry:", error);
     process.exit(1);

@@ -9,6 +9,7 @@ import { listAction } from "./commands/list.js";
 import { updateAction } from "./commands/update.js";
 import { searchAction } from "./commands/search.js";
 import { diffAction } from "./commands/diff.js";
+import { frameworkAction } from "./commands/framework.js";
 
 const program = new Command();
 
@@ -40,6 +41,11 @@ program
   .description("Apply a theme to your project")
   .argument("[theme]", "Theme name (green, blue, zinc, slate, gaming, cyberpunk, modern)")
   .action(themeAction);
+
+program
+  .command("framework")
+  .description("Display current framework information")
+  .action(frameworkAction);
 
 program
   .command("list")

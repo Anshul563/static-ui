@@ -4,6 +4,7 @@ import fs from "fs-extra";
 import path from "path";
 import { readStaticConfig } from "../utils/index.js";
 import { fetchRegistry } from "../registry/index.js";
+import { detectFramework, getAdapterById, getAllAdapters } from "../adapters/index.js";
 
 interface CheckResult {
   name: string;
@@ -26,16 +27,38 @@ export async function doctorAction() {
     pkg = await fs.readJson(pkgPath);
   }
 
-  const deps = { ...(pkg as Record<string, unknown>)["dependencies"] as Record<string, string> || {}, ...(pkg as Record<string, unknown>)["devDependencies"] as Record<string, string> || {} };
+  const deps = {
+    ...(pkg as Record<string, unknown>)["dependencies"] as Record<string, string> || {},
+    ...(pkg as Record<string, unknown>)["devDependencies"] as Record<string, string> || {},
+  };
 
-  if (deps["react"]) {
-    results.push({ name: "React", status: "pass", message: `React ${deps["react"]}` });
+  const detection = detectFramework(projectRoot);
+
+  if (detection) {
+    results.push({
+      name: "Framework",
+      status: "pass",
+      message: `${detection.framework.label} ${detection.version ? `v${detection.version}` : ""}`,
+    });
   } else {
-    results.push({ name: "React", status: "fail", message: "React not found in dependencies" });
+    results.push({ name: "Framework", status: "fail", message: "Could not detect framework" });
+  }
+
+  const pkgManager = deps["pnpm"] ? "pnpm" : deps["yarn"] ? "yarn" : deps["bun"] ? "bun" : "npm";
+  results.push({ name: "Package Manager", status: "pass", message: pkgManager });
+
+  if (detection?.isTypeScript || deps["typescript"]) {
+    results.push({
+      name: "TypeScript",
+      status: "pass",
+      message: deps["typescript"] ? `v${deps["typescript"]}` : "Detected",
+    });
+  } else {
+    results.push({ name: "TypeScript", status: "warn", message: "Not detected" });
   }
 
   if (deps["tailwindcss"]) {
-    results.push({ name: "Tailwind CSS", status: "pass", message: `Tailwind ${deps["tailwindcss"]}` });
+    results.push({ name: "Tailwind CSS", status: "pass", message: `v${deps["tailwindcss"]}` });
   } else {
     results.push({ name: "Tailwind CSS", status: "fail", message: "tailwindcss not installed" });
   }
@@ -45,21 +68,26 @@ export async function doctorAction() {
     config = readStaticConfig(projectRoot);
     results.push({ name: "static.json", status: "pass", message: "Configuration found" });
 
-    const cssPath = path.join(projectRoot, config.aliases.ui.replace(/^@\//, "").replace(/\/static-ui$/, ""), "..", "..");
-    const possibleCssFiles = ["src/app/globals.css", "src/styles/globals.css", "app/globals.css", "src/index.css"];
-    let foundCss = false;
-    for (const f of possibleCssFiles) {
-      if (await fs.pathExists(path.join(projectRoot, f))) {
-        const content = await fs.readFile(path.join(projectRoot, f), "utf8");
-        if (content.includes("@theme inline") || content.includes("--color-background")) {
-          foundCss = true;
-          results.push({ name: "globals.css", status: "pass", message: `Found at ${f}` });
-          break;
+    const adapter = getAdapterById(config.framework);
+    if (adapter) {
+      const possibleCssFiles = adapter.getCssPath(projectRoot).map((c: string) => c);
+      let foundCss = false;
+      for (const f of possibleCssFiles) {
+        const fullPath = path.isAbsolute(f) ? f : path.join(projectRoot, f);
+        if (await fs.pathExists(fullPath)) {
+          try {
+            const content = await fs.readFile(fullPath, "utf8");
+            if (content.includes("@theme inline") || content.includes("--color-background")) {
+              foundCss = true;
+              results.push({ name: "Theme CSS", status: "pass", message: `Found at ${f}` });
+              break;
+            }
+          } catch { }
         }
       }
-    }
-    if (!foundCss) {
-      results.push({ name: "globals.css", status: "warn", message: "Could not verify Tailwind theme variables in CSS" });
+      if (!foundCss) {
+        results.push({ name: "Theme CSS", status: "warn", message: "Could not verify theme variables in CSS" });
+      }
     }
   } catch {
     results.push({ name: "static.json", status: "fail", message: "Not found. Run init first." });
@@ -70,21 +98,33 @@ export async function doctorAction() {
     try {
       const tsconfig = await fs.readJson(tsconfigPath);
       const paths_ = (tsconfig.compilerOptions?.paths as Record<string, string[]>) || {};
-      const hasAlias = Object.keys(paths_).some((k) => k.startsWith("@"));
+      const hasAlias = Object.keys(paths_).some((k) => k.startsWith("@") || k.startsWith("~"));
       if (hasAlias) {
-        results.push({ name: "tsconfig paths", status: "pass", message: "Path aliases configured" });
+        results.push({ name: "Path aliases", status: "pass", message: "Configured in tsconfig" });
       } else {
-        results.push({ name: "tsconfig paths", status: "warn", message: "No @/ path aliases found" });
+        results.push({ name: "Path aliases", status: "warn", message: "No @/~ path aliases found" });
       }
     } catch {
-      results.push({ name: "tsconfig paths", status: "warn", message: "Could not parse tsconfig.json" });
+      results.push({ name: "Path aliases", status: "warn", message: "Could not parse tsconfig.json" });
     }
   } else {
-    results.push({ name: "tsconfig paths", status: "warn", message: "No tsconfig.json (JavaScript project)" });
+    results.push({ name: "Path aliases", status: "warn", message: "No tsconfig.json (JS project)" });
+  }
+
+  if (config?.theme) {
+    const themePath = path.join(projectRoot, "..", "packages", "themes", `${config.theme}.json`);
+    const wwwThemePath = path.join(projectRoot, "..", "..", "packages", "themes", `${config.theme}.json`);
+    if (await fs.pathExists(themePath) || await fs.pathExists(wwwThemePath)) {
+      results.push({ name: "Theme", status: "pass", message: `"${config.theme}" found` });
+    } else {
+      results.push({ name: "Theme", status: "warn", message: `"${config.theme}" theme (remote ok)` });
+    }
   }
 
   if (deps["@base-ui/react"]) {
     results.push({ name: "@base-ui/react", status: "pass", message: `v${deps["@base-ui/react"]}` });
+  } else if (["vue", "nuxt", "solid", "svelte"].includes(config?.framework || "")) {
+    results.push({ name: "@base-ui/react", status: "pass", message: "Not required for framework" });
   } else {
     results.push({ name: "@base-ui/react", status: "warn", message: "Not installed (optional)" });
   }
@@ -109,5 +149,11 @@ export async function doctorAction() {
   const pass = results.filter((r) => r.status === "pass").length;
   const warn = results.filter((r) => r.status === "warn").length;
   const fail = results.filter((r) => r.status === "fail").length;
-  p.outro(`${color.green(`${pass} passed`)}${warn > 0 ? `, ${color.yellow(`${warn} warnings`)}` : ""}${fail > 0 ? `, ${color.red(`${fail} failed`)}` : ""}`);
+  const total = results.length;
+  const score = Math.round((pass / total) * 100);
+
+  p.outro(
+    `${color.bold(`Project Health Score: ${score}/100`)}\n` +
+    `${color.green(`${pass} passed`)}${warn > 0 ? `, ${color.yellow(`${warn} warnings`)}` : ""}${fail > 0 ? `, ${color.red(`${fail} failed`)}` : ""}`
+  );
 }

@@ -3,6 +3,7 @@ import color from "picocolors";
 import fs from "fs-extra";
 import path from "path";
 import { readStaticConfig } from "../utils/index.js";
+import { getAdapterById } from "../adapters/index.js";
 
 const THEME_CSS_VARS: Record<string, { label: string; sans: string; mono: string; light: Record<string, string>; dark: Record<string, string> }> = {
   green: {
@@ -267,6 +268,17 @@ ${cssVarsToString(t.dark)}
 }`;
 }
 
+const FRAMEWORK_CSS_PATHS: Record<string, string[]> = {
+  react: ["src/index.css", "src/App.css", "src/styles/globals.css"],
+  nextjs: ["app/globals.css", "src/app/globals.css", "styles/globals.css", "src/styles/globals.css"],
+  vue: ["src/assets/main.css", "src/assets/css/main.css", "src/styles/globals.css"],
+  nuxt: ["assets/css/main.css", "src/assets/css/main.css"],
+  solid: ["src/index.css", "src/App.css", "app.css"],
+  svelte: ["src/app.css", "app.css", "src/global.css"],
+  astro: ["src/styles/globals.css", "src/globals.css"],
+  remix: ["app/globals.css", "app/styles/globals.css", "src/globals.css"],
+};
+
 export async function themeAction(themeName?: string) {
   if (!themeName) {
     p.cancel("Please specify a theme name: green, blue, zinc, slate, gaming, cyberpunk, modern");
@@ -289,9 +301,13 @@ export async function themeAction(themeName?: string) {
     process.exit(1);
   }
 
-  const cssPaths = ["src/app/globals.css", "src/styles/globals.css", "app/globals.css", "src/index.css"];
+  const fallbackPaths = FRAMEWORK_CSS_PATHS[config.framework] || FRAMEWORK_CSS_PATHS.nextjs;
+
+  const cssPaths = [...fallbackPaths, "src/app/globals.css", "src/styles/globals.css", "app/globals.css", "src/index.css"];
+  const uniquePaths = [...new Set(cssPaths)];
+
   let cssPath = "";
-  for (const cp of cssPaths) {
+  for (const cp of uniquePaths) {
     const full = path.join(projectRoot, cp);
     if (await fs.pathExists(full)) {
       cssPath = full;
@@ -300,12 +316,12 @@ export async function themeAction(themeName?: string) {
   }
 
   if (!cssPath) {
-    p.cancel("Could not find global CSS file.");
+    p.cancel("Could not find global CSS file. Check your framework's CSS path.");
     process.exit(1);
   }
 
   const spin = p.spinner();
-  spin.start(`Applying ${normalized} theme...`);
+  spin.start(`Applying ${normalized} theme for ${config.framework}...`);
 
   const css = generateCss(normalized);
   await fs.writeFile(cssPath, css, "utf8");

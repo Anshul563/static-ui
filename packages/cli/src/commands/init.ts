@@ -2,10 +2,15 @@ import * as p from "@clack/prompts";
 import color from "picocolors";
 import fs from "fs-extra";
 import path from "path";
-import { execSync } from "child_process";
 import { resolveAlias, getPackageManager, installDependencies } from "../utils/index.js";
 import { banner } from "../logger/index.js";
-import { selectFramework, selectLanguage, selectLibrary, selectTheme } from "../prompts/index.js";
+import {
+  selectFramework,
+  selectLanguage,
+  selectLibrary,
+  selectTheme,
+} from "../prompts/index.js";
+import { detectFramework, getAdapterById } from "../adapters/index.js";
 
 interface ThemeManifestEntry {
   label: string;
@@ -419,40 +424,83 @@ export async function initAction() {
   const pkg = await fs.readJson(path.join(projectRoot, "package.json"));
   const deps = { ...pkg.dependencies, ...pkg.devDependencies };
 
-  let detectedFramework = "Unknown";
-  let routerType = "N/A";
-  if (deps["next"]) {
-    detectedFramework = "nextjs";
-    const hasApp = await fs.pathExists(path.join(projectRoot, "src/app")) ||
-                     await fs.pathExists(path.join(projectRoot, "app"));
-    routerType = hasApp ? "App Router" : "Pages Router";
-  } else if (deps["vite"] || deps["@vitejs/plugin-react"]) {
-    detectedFramework = "vite";
-  } else if (deps["react-router"] || deps["@remix-run/router"]) {
-    detectedFramework = "remix";
+  const detection = detectFramework(projectRoot);
+
+  if (detection) {
+    const routerType = detection.framework.id === "nextjs"
+      ? (await fs.pathExists(path.join(projectRoot, "src/app")) ||
+         await fs.pathExists(path.join(projectRoot, "app")))
+        ? "App Router"
+        : "Pages Router"
+      : "N/A";
+
+    p.note(
+      `Detected:\n` +
+      `${color.green("✓")} package.json detected\n` +
+      `${color.green("✓")} Framework detected: ${color.cyan(detection.framework.label)}${detection.version ? ` ${color.dim(detection.version)}` : ""}\n` +
+      `${detection.isTypeScript ? color.green("✓") : color.yellow("!")} ${detection.isTypeScript ? "TypeScript detected" : "JavaScript detected"}\n` +
+      `${detection.hasTailwind ? color.green("✓") : color.yellow("!")} ${detection.hasTailwind ? "Tailwind detected" : "Tailwind not detected"}`,
+      "Project Scan"
+    );
+
+    const proceed = await p.confirm({
+      message: `Continue with ${detection.framework.label}?`,
+    });
+
+    if (p.isCancel(proceed) || !proceed) {
+      const manualFramework = await selectFramework();
+      const adapter = getAdapterById(manualFramework);
+      const language = await selectLanguage();
+      const library = await selectLibrary();
+      const themeName = await selectTheme();
+
+      await runInit(projectRoot, adapter!.id, routerType, language, library, themeName);
+      return;
+    }
+
+    const language = detection.isTypeScript ? "typescript" : "javascript";
+    const library = "static-ui";
+    const themeName = await selectTheme();
+
+    await runInit(projectRoot, detection.framework.id, routerType, language, library, themeName);
+  } else {
+    p.note(
+      `${color.yellow("!")} Could not detect framework.\n` +
+      `Please select manually.`,
+      "Project Scan"
+    );
+
+    const manualFramework = await selectFramework();
+    const adapter = getAdapterById(manualFramework);
+    const language = await selectLanguage();
+    const library = await selectLibrary();
+    const themeName = await selectTheme();
+
+    await runInit(projectRoot, adapter!.id, "N/A", language, library, themeName);
   }
+}
 
-  const isTypeScript = await fs.pathExists(path.join(projectRoot, "tsconfig.json")) || !!deps["typescript"];
-  const hasTailwind = deps["tailwindcss"];
-
-  p.note(
-    `Detected:\n` +
-    `• Framework: ${color.cyan(detectedFramework)} ${routerType !== "N/A" ? color.dim(`(${routerType})`) : ""}\n` +
-    `• Language: ${color.cyan(isTypeScript ? "TypeScript" : "JavaScript")}\n` +
-    `• Tailwind: ${hasTailwind ? color.green("Yes") : color.yellow("Not detected")}`,
-    "Project Scan"
-  );
-
-  const framework = await selectFramework();
-  const language = await selectLanguage();
-  const library = await selectLibrary();
-  const themeName = await selectTheme();
-
+async function runInit(
+  projectRoot: string,
+  framework: string,
+  routerType: string,
+  language: string,
+  library: string,
+  themeName: string,
+) {
   const defaultCssPath = framework === "nextjs" && routerType === "App Router"
     ? "app/globals.css"
-    : framework === "vite"
-      ? "src/index.css"
-      : "src/styles/globals.css";
+    : ["vue", "nuxt"].includes(framework)
+      ? "src/assets/main.css"
+      : framework === "svelte"
+        ? "src/app.css"
+        : framework === "solid" || framework === "react"
+          ? "src/index.css"
+          : framework === "astro"
+            ? "src/styles/globals.css"
+            : framework === "remix"
+              ? "app/globals.css"
+              : "src/styles/globals.css";
 
   const paths = await p.group(
     {
@@ -534,5 +582,5 @@ export function cn(...inputs: ClassValue[]) {
     spin.stop("Dependencies installed!");
   }
 
-  p.outro(`${color.green("Done!")} Static UI initialized with ${color.bold(themeName)} theme.`);
+  p.outro(`${color.green("Done!")} Static UI initialized with ${color.bold(themeName)} theme for ${config.framework}.`);
 }

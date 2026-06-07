@@ -16,8 +16,12 @@ export async function selectFramework(): Promise<string> {
     message: "Which framework are you using?",
     options: [
       { value: "nextjs", label: "Next.js" },
-      { value: "vite", label: "Vite" },
       { value: "react", label: "React" },
+      { value: "vue", label: "Vue" },
+      { value: "nuxt", label: "Nuxt" },
+      { value: "solid", label: "SolidJS" },
+      { value: "svelte", label: "Svelte" },
+      { value: "astro", label: "Astro" },
       { value: "remix", label: "Remix" },
     ],
   });
