@@ -1,28 +1,56 @@
 {
   "name": "@static-ui/registry",
-  "version": "0.1.0",
+  "version": "0.1.0-beta.1",
   "private": false,
   "type": "module",
-  "description": "Static UI component registry — UI components, blocks, and templates",
+  "description": "Static UI component registry — UI components, blocks, and templates for all supported frameworks.",
   "main": "./dist/index.json",
+  "module": "./dist/index.json",
   "exports": {
-    ".": "./dist/index.json",
+    ".": {
+      "import": "./dist/index.json",
+      "default": "./dist/index.json"
+    },
     "./registry.json": "./registry.json"
   },
   "files": [
     "dist",
     "registry.json"
   ],
+  "sideEffects": false,
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
     "build": "tsx scripts/build-registry.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "typecheck": "tsc --noEmit"
   },
-  "keywords": ["static-ui", "components", "registry", "blocks", "templates", "base-ui"],
-  "author": "Anshul Shakya",
-  "license": "ISC",
+  "keywords": [
+    "static-ui",
+    "components",
+    "registry",
+    "blocks",
+    "templates",
+    "base-ui",
+    "react",
+    "vue",
+    "svelte",
+    "solid"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anshul563/static-ui.git",
+    "directory": "packages/registry"
+  },
+  "homepage": "https://get-staticui.vercel.app",
+  "bugs": {
+    "url": "https://github.com/Anshul563/static-ui/issues"
+  },
+  "author": {
+    "name": "Anshul Shakya",
+    "url": "https://github.com/Anshul563"
+  },
+  "license": "MIT",
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^20.19.41",

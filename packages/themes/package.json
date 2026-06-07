@@ -1,14 +1,44 @@
 {
   "name": "@static-ui/themes",
-  "version": "0.1.0",
+  "version": "0.1.0-beta.1",
   "private": false,
   "type": "module",
-  "description": "Theme definitions for Static UI - CSS variable presets for every color scheme.",
+  "description": "Theme definitions for Static UI - CSS variable presets for every color scheme. Includes green, blue, zinc, slate, gaming, cyberpunk, and modern themes.",
   "main": "./green.json",
+  "module": "./green.json",
+  "exports": {
+    "./green.json": "./green.json",
+    "./blue.json": "./blue.json",
+    "./zinc.json": "./zinc.json",
+    "./slate.json": "./slate.json",
+    "./gaming.json": "./gaming.json",
+    "./cyberpunk.json": "./cyberpunk.json",
+    "./modern.json": "./modern.json"
+  },
+  "sideEffects": false,
   "files": ["*.json"],
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["static-ui", "themes", "colors", "css-variables"],
-  "license": "ISC"
+  "keywords": [
+    "static-ui",
+    "themes",
+    "colors",
+    "css-variables",
+    "design-system"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anshul563/static-ui.git",
+    "directory": "packages/themes"
+  },
+  "homepage": "https://get-staticui.vercel.app",
+  "bugs": {
+    "url": "https://github.com/Anshul563/static-ui/issues"
+  },
+  "author": {
+    "name": "Anshul Shakya",
+    "url": "https://github.com/Anshul563"
+  },
+  "license": "MIT"
 }

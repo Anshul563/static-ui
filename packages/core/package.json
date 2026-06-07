@@ -1,25 +1,54 @@
 {
   "name": "@static-ui/core",
-  "version": "0.1.0",
+  "version": "0.1.0-beta.1",
   "private": false,
   "type": "module",
-  "description": "Static UI core - component schemas and multi-framework code generators",
+  "description": "Static UI core - component schemas and multi-framework code generators. Source of truth for component definitions.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "module": "./dist/index.js",
   "exports": {
-    ".": "./dist/index.js",
-    "./schemas/*": "./src/schemas/*.ts",
-    "./generators/*": "./src/generators/*.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
   },
+  "sideEffects": false,
   "files": [
     "dist",
     "src"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsup src/index.ts --format esm --dts",
     "dev": "tsup src/index.ts --format esm --watch",
     "typecheck": "tsc --noEmit"
   },
+  "keywords": [
+    "static-ui",
+    "core",
+    "schemas",
+    "codegen",
+    "components",
+    "multi-framework"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anshul563/static-ui.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://get-staticui.vercel.app",
+  "bugs": {
+    "url": "https://github.com/Anshul563/static-ui/issues"
+  },
+  "author": {
+    "name": "Anshul Shakya",
+    "url": "https://github.com/Anshul563"
+  },
+  "license": "MIT",
   "dependencies": {
     "typescript": "^5.3.3"
   },
