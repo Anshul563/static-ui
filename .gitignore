@@ -4,7 +4,7 @@ node_modules
 dist
 build
 coverage
+storybook-static
+*.tsbuildinfo
 .env
 .env.local
-pnpm-debug.log
-*.tsbuildinfo
