@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { Menu, X } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 import { SearchModal } from "./SearchModal"
 import { ThemeToggleButton } from "./ThemeToggleButton"
@@ -16,7 +17,7 @@ export default function Navbar() {
             href="/"
             className="flex items-center gap-2 font-semibold text-foreground tracking-tight text-lg"
           >
-            <img src="/logo.svg" alt="Static UI" className="h-5 w-auto" />
+            <Image src="/logo.svg" alt="Static UI" width={20} height={20} className="h-5 w-auto" />
             Static UI{" "}
             <Badge variant="outline" className="ml-1">
               v0.1.0
@@ -54,7 +55,13 @@ export default function Navbar() {
                 rel="noreferrer"
                 className="transition-colors hover:text-foreground"
               >
-                <img src="/icons/storybook.svg" alt="Static UI" className="h-5 w-auto" />
+                <Image
+                  src="/icons/storybook.svg"
+                  alt="Static UI"
+                  width={20}
+                  height={20}
+                  className="h-5 w-auto"
+                />
               </a>
               <div className="h-4 w-px rounded-2xl bg-gray-300" />
               <a
@@ -65,7 +72,13 @@ export default function Navbar() {
                 rel="noreferrer"
                 className="transition-colors hover:text-foreground"
               >
-                <img src="/icons/github.svg" alt="Static UI" className="h-5 w-auto" />
+                <Image
+                  src="/icons/github.svg"
+                  alt="Static UI"
+                  width={20}
+                  height={20}
+                  className="h-5 w-auto"
+                />
               </a>
             </div>
           </nav>

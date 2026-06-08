@@ -1,10 +1,10 @@
 "use client"
 
+import { Check } from "lucide-react"
+import Image from "next/image"
+import { Card } from "@/components/ui/card"
 import type { Framework } from "@/lib/frameworks"
 import { FrameworkBadge } from "./FrameworkBadge"
-import { Check } from "lucide-react"
-import { statusConfig } from "@/lib/frameworks"
-import { Card } from "@/components/ui/card"
 
 interface FrameworkCardProps {
   framework: Framework
@@ -12,9 +12,7 @@ interface FrameworkCardProps {
 }
 
 export function FrameworkCard({ framework, index }: FrameworkCardProps) {
-  const Icon = framework.icon
   const isStableOrBeta = framework.status !== "planned"
-  const statusStyle = statusConfig[framework.status]
 
   return (
     <Card
@@ -27,17 +25,25 @@ export function FrameworkCard({ framework, index }: FrameworkCardProps) {
     >
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
-          <div
-            className={`flex h-12 w-12 items-center justify-center bg-secondary rounded-lg`}
-          >
-            <img src={framework.icon} alt={`${framework.name} icon`} className="h-8 w-8 p-1" />
+          <div className={`flex h-12 w-12 items-center justify-center bg-secondary rounded-lg`}>
+            <Image
+              src={framework.icon}
+              alt={`${framework.name} icon`}
+              width={32}
+              height={32}
+              className="h-8 w-8 p-1"
+            />
           </div>
           <div>
-            <h3 className={`text-sm font-semibold ${isStableOrBeta ? "text-foreground" : "text-muted-foreground"}`}>
+            <h3
+              className={`text-sm font-semibold ${isStableOrBeta ? "text-foreground" : "text-muted-foreground"}`}
+            >
               {framework.name}
             </h3>
             <p className="text-[11px] text-muted-foreground leading-tight mt-0.5">
-              {framework.description.length > 40 ? `${framework.description.slice(0, 40)}...` : framework.description}
+              {framework.description.length > 40
+                ? `${framework.description.slice(0, 40)}...`
+                : framework.description}
             </p>
           </div>
         </div>

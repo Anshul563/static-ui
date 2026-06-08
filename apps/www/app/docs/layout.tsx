@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react"
 import { ExternalLink, Menu, X } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { SearchModal } from "@/components/SearchModal"
@@ -196,7 +197,13 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
               {mobileSidebarOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
             <Link href="/" className="flex items-center gap-1 font-semibold text-foreground">
-              <img src="/logo.svg" alt="Static UI" className="h-5 w-auto" />
+              <Image
+                src="/logo.svg"
+                alt="Static UI"
+                width={20}
+                height={20}
+                className="h-5 w-auto"
+              />
               Static UI{" "}
               <Badge variant="outline" className="">
                 Docs

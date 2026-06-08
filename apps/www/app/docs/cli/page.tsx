@@ -1,6 +1,7 @@
 "use client"
 
 import { ChevronRight } from "lucide-react"
+import Image from "next/image"
 import { CommandBlock, DynamicCommand } from "@/components/docs/CommandBlock"
 import { Card } from "@/components/ui/card"
 
@@ -209,11 +210,28 @@ export default function DocsCliPage() {
             <Card
               key={pm.name}
               size="sm"
-              className="flex-row items-center gap-2 px-3 py-2 bg-card/50"
+              className="flex-row items-center gap-2.5 rounded-full border border-border/40 bg-secondary/30 pl-2.5 pr-3.5 py-1"
             >
-              <img src={`/icons/${pm.name}.svg`} alt={pm.name} className="h-4 w-4" />
-              <span className="text-xs font-medium text-foreground">{pm.name}</span>
-              <span className="text-[10px] font-mono text-muted-foreground">{pm.lock}</span>
+              {/* Icon wrapper to ensure perfect geometry */}
+              <div className="flex h-5 w-5 items-center justify-center shrink-0">
+                <Image
+                  src={`/icons/${pm.name}.svg`}
+                  alt={pm.name}
+                  width={16}
+                  height={16}
+                  className="h-4 w-4"
+                />
+              </div>
+
+              {/* Package Manager Name */}
+              <span className="text-xs font-semibold tracking-wide text-foreground">
+                {pm.name === "Npm" ? "npm" : pm.name}
+              </span>
+
+              {/* Lockfile Name - given its own subtle container for separation */}
+              <span className="rounded bg-background/50 px-1.5 py-0.5 font-mono text-[10px] font-medium text-muted-foreground border border-border/20">
+                {pm.lock}
+              </span>
             </Card>
           ))}
         </div>
