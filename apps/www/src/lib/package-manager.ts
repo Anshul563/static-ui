@@ -31,10 +31,10 @@ export function getCommand(type: CommandType, pm: PackageManager, slug?: string)
   const prefix = getPrefix(pm)
   switch (type) {
     case "init":
-      return `${prefix} @static-ui/cli init`
+      return `${prefix} static-ui init`
     case "add":
-      return `${prefix} @static-ui/cli add ${slug || ""}`.trim()
+      return `${prefix} static-ui add ${slug || ""}`.trim()
     case "theme":
-      return `${prefix} @static-ui/cli theme ${slug || ""}`.trim()
+      return `${prefix} static-ui theme ${slug || ""}`.trim()
   }
 }

@@ -11,7 +11,7 @@ interface Line {
 }
 
 const lines: Line[] = [
-  { text: "npx @static-ui/cli init", type: "command", delay: 0 },
+  { text: "pnpm dlx static-ui init", type: "command", delay: 0 },
   { text: "✓ package.json detected", type: "success", delay: 600 },
   { text: "✓ Framework detected: Next.js", type: "success", delay: 1200 },
   { text: "✓ TypeScript detected", type: "success", delay: 1800 },

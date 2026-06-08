@@ -182,7 +182,7 @@ export default function DocsCliPage() {
         <p>
           The Static UI CLI (
           <code className="text-foreground text-xs font-mono bg-muted px-1 py-0.5 rounded-sm">
-            @static-ui/cli
+            static-ui
           </code>
           ) is the primary gateway for generating components, managing themes, and maintaining your
           workspace configuration. All commands follow the{" "}
