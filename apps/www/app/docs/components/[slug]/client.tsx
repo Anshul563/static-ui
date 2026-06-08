@@ -26,6 +26,51 @@ import {
 import { Card } from "@/components/ui/card"
 import { categoryLabels, getRelatedComponents, registryBySlug } from "@/lib/registry"
 
+const slugToExport: Record<string, string> = {
+  accordion: "Accordion",
+  alert: "Alert",
+  "alert-dialog": "AlertDialog",
+  "aspect-ratio": "AspectRatio",
+  avatar: "Avatar",
+  badge: "Badge",
+  breadcrumb: "Breadcrumb",
+  button: "Button",
+  calendar: "Calendar",
+  card: "Card",
+  carousel: "Carousel",
+  checkbox: "Checkbox",
+  collapsible: "Collapsible",
+  "context-menu": "ContextMenu",
+  dialog: "Dialog",
+  drawer: "Drawer",
+  "dropdown-menu": "DropdownMenu",
+  "hover-card": "HoverCard",
+  input: "Input",
+  "input-group": "InputGroup",
+  "input-otp": "InputOTP",
+  kbd: "Kbd",
+  label: "Label",
+  "number-field": "NumberField",
+  pagination: "Pagination",
+  popover: "Popover",
+  progress: "Progress",
+  "radio-group": "RadioGroup",
+  "scroll-area": "ScrollArea",
+  select: "Select",
+  separator: "Separator",
+  sidebar: "Sidebar",
+  skeleton: "Skeleton",
+  slider: "Slider",
+  spinner: "Spinner",
+  switch: "Switch",
+  table: "Table",
+  tabs: "Tabs",
+  textarea: "Textarea",
+  toggle: "Toggle",
+  "toggle-group": "ToggleGroup",
+  tooltip: "Tooltip",
+}
+
 const INSTALLED_SLUGS = new Set([
   "accordion",
   "alert",
@@ -299,25 +344,37 @@ const previewOverrides: Record<string, PreviewFactory> = {
       </HoverCard>
     )
   },
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  sonner: (mod: Record<string, any>) => {
-    const SonnerProvider = mod.SonnerProvider
+  sonner: () => {
     const SonnerTrigger = () => {
-      const { toast } = mod.useSonner()
+      const [show, setShow] = React.useState(false)
       return (
-        <button
-          onClick={() => toast("Event created!", "Your changes have been saved.")}
-          className="inline-flex items-center justify-center rounded-md bg-muted px-4 py-2 text-sm font-medium text-foreground cursor-pointer hover:bg-accent transition-colors"
-        >
-          Show Toast
-        </button>
+        <>
+          <button
+            onClick={() => setShow(true)}
+            className="inline-flex items-center justify-center rounded-md bg-muted px-4 py-2 text-sm font-medium text-foreground cursor-pointer hover:bg-accent transition-colors"
+          >
+            Show Toast
+          </button>
+          {show && (
+            <div className="fixed bottom-4 right-4 rounded-lg border border-border bg-card px-4 py-3 shadow-lg text-sm text-foreground z-50">
+              Event created! Your changes have been saved.
+              <button
+                onClick={() => setShow(false)}
+                className="ml-3 text-muted-foreground hover:text-foreground cursor-pointer"
+              >
+                ×
+              </button>
+            </div>
+          )}
+        </>
       )
     }
     SonnerTrigger.displayName = "SonnerTrigger"
     return (
-      <SonnerProvider>
+      <div className="flex flex-col items-center gap-4">
         <SonnerTrigger />
-      </SonnerProvider>
+        <div className="text-[10px] text-muted-foreground">Toaster component renders in corner</div>
+      </div>
     )
   },
   switch: (mod) => {
@@ -447,6 +504,29 @@ const previewOverrides: Record<string, PreviewFactory> = {
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
+    )
+  },
+  typography: () => {
+    return (
+      <div className="space-y-4 max-w-lg">
+        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight text-balance text-foreground">
+          Taxing Laughter: The Joke Tax Chronicles
+        </h1>
+        <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0 text-foreground">
+          The People of the Kingdom
+        </h2>
+        <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight text-foreground">
+          The Joke Tax
+        </h3>
+        <p className="leading-7 text-muted-foreground">
+          The king, seeing how much happier his subjects were, realized the error of his ways and
+          repealed the joke tax.
+        </p>
+        <p className="text-xl text-muted-foreground">
+          A modal dialog that interrupts the user with important content.
+        </p>
+        <p className="text-sm text-muted-foreground">Enter your email address.</p>
+      </div>
     )
   },
 }
@@ -848,21 +928,31 @@ export default function ComponentDetailClient({ slug: propSlug }: { slug: string
     if (!meta || !regEntry || !isInstalled) return null
 
     const override = previewOverrides[slug]
+    const exportName = slugToExport[slug]
 
     return dynamic(
       () =>
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         import("@static-ui/ui").then((mod: Record<string, any>) => {
-          const normalized = meta.name.replace(/\s+/g, "")
-          const Component = mod.default || mod[normalized] || mod[Object.keys(mod)[0]]
-
           if (override) {
             const Preview: React.FC = () => <>{override(mod)}</>
             Preview.displayName = `Preview_${slug}`
             return Preview
           }
 
-          return Component
+          const Component = exportName ? mod[exportName] : null
+          if (Component) return Component
+
+          return {
+            default: () => (
+              <div className="flex flex-col items-center gap-2 text-muted-foreground py-8">
+                <p className="text-xs font-medium text-muted-foreground">Preview not available</p>
+                <p className="text-[10px] text-muted-foreground">
+                  Use the CLI command below to add this component to your project
+                </p>
+              </div>
+            ),
+          }
         }),
       { loading: () => <LoadingIndicator />, ssr: false }
     )
