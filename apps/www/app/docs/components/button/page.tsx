@@ -4,7 +4,7 @@ import React, { useState } from "react"
 // 1. Importing your TRUE production component from your local code workspace folder
 import { Button } from "@static-ui/ui"
 import { CodeBlock } from "@/components/CodeBlock"
-import { CommandBlock } from "@/components/CommandBlock"
+import { CommandBlock } from "@/components/docs/CommandBlock"
 import {
   Breadcrumb,
   BreadcrumbItem,

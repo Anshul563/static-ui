@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react"
 import { ExternalLink, Menu, X } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { PackageManagerSwitcher } from "@/components/PackageManagerSwitcher"
 import { SearchModal } from "@/components/SearchModal"
 import { ThemeSwitcher } from "@/components/ThemeSwitcher"
 import { ThemeToggleButton } from "@/components/ThemeToggleButton"
@@ -243,9 +242,6 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
             </a>
           </nav>
           <div className="flex items-center gap-2">
-            <div className="hidden md:flex">
-              <PackageManagerSwitcher />
-            </div>
             <SearchModal />
             <ThemeSwitcher />
             <ThemeToggleButton />

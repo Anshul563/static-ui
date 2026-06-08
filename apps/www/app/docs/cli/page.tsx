@@ -2,7 +2,7 @@
 
 import { ChevronRight } from "lucide-react"
 import { CodeBlock } from "@/components/CodeBlock"
-import { DynamicCommand } from "@/components/DynamicCommand"
+import { DynamicCommand } from "@/components/docs/CommandBlock"
 import { Card } from "@/components/ui/card"
 import { getCommand } from "@/lib/package-manager"
 import { usePackageManager } from "@/lib/package-manager-context"

@@ -1,7 +1,6 @@
 "use client"
 
-import { CommandBlock } from "@/components/CommandBlock"
-import { PackageManagerSwitcher } from "@/components/PackageManagerSwitcher"
+import { CommandBlock } from "@/components/docs/CommandBlock"
 
 export default function DocsInstallationPage() {
   return (
@@ -16,11 +15,6 @@ export default function DocsInstallationPage() {
       </div>
 
       <hr className="border-border my-2" />
-
-      <div className="flex items-center justify-between">
-        <p className="text-xs text-muted-foreground">Choose your package manager:</p>
-        <PackageManagerSwitcher />
-      </div>
 
       {/* Step 1 */}
       <div className="space-y-3">

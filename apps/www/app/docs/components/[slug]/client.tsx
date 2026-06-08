@@ -13,7 +13,7 @@ import {
 import dynamic from "next/dynamic"
 import { notFound } from "next/navigation"
 import { CodeBlock } from "@/components/CodeBlock"
-import { CommandBlock } from "@/components/CommandBlock"
+import { CommandBlock } from "@/components/docs/CommandBlock"
 import { Badge } from "@/components/ui/badge"
 import {
   Breadcrumb,

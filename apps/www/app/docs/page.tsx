@@ -3,8 +3,7 @@
 import React from "react"
 import { ArrowRight, Terminal } from "lucide-react"
 import Link from "next/link"
-import { CommandBlock } from "@/components/CommandBlock"
-import { DynamicCommand } from "@/components/DynamicCommand"
+import { CommandBlock, DynamicCommand } from "@/components/docs/CommandBlock"
 import { Card } from "@/components/ui/card"
 
 export default function DocsIntroductionPage() {

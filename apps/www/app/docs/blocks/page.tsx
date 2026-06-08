@@ -1,7 +1,7 @@
 import React from "react"
 import { Terminal } from "lucide-react"
 import Link from "next/link"
-import { DynamicCommand } from "@/components/DynamicCommand"
+import { DynamicCommand } from "@/components/docs/CommandBlock"
 import { createMetadata } from "@/lib/seo"
 
 export const metadata = createMetadata({

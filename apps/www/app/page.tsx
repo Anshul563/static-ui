@@ -24,11 +24,9 @@ import {
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { AnimatedCounter } from "@/components/AnimatedCounter"
-import { CommandBlock } from "@/components/CommandBlock"
-import { DynamicCommand } from "@/components/DynamicCommand"
+import { CommandBlock, DynamicCommand } from "@/components/docs/CommandBlock"
 import { FrameworkSection } from "@/components/FrameworkSection"
 import Navbar from "@/components/Navbar"
-import { PackageManagerSwitcher } from "@/components/PackageManagerSwitcher"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -217,11 +215,7 @@ export default function LandingPage() {
             for modern developers.
           </p>
 
-          <div className="flex justify-center mt-6">
-            <PackageManagerSwitcher />
-          </div>
-
-          <div className="mx-auto mt-4 max-w-sm">
+          <div className="mx-auto mt-8 max-w-sm">
             <CommandBlock type="init" />
           </div>
 
