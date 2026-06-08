@@ -3,9 +3,20 @@
 import React, { useState, Component, type ReactNode } from "react";
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
-import Link from "next/link";
-import { ChevronRight, Terminal, Check, Copy, Loader2, Package, Wrench, Accessibility, Layers } from "lucide-react";
+
+import { ChevronRight, Terminal, Loader2, Package, Wrench, Accessibility, Layers } from "lucide-react";
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { registryBySlug, getRelatedComponents, categoryLabels, type RegistryComponent } from "@/lib/registry";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { CodeBlock } from "@/components/CodeBlock";
 
 const INSTALLED_SLUGS = new Set([
   "accordion", "alert", "alert-dialog", "aspect-ratio", "avatar", "badge",
@@ -106,10 +117,10 @@ const previewOverrides: Record<string, PreviewFactory> = {
           <CardDescription>You have 3 unread messages.</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-neutral-500">Your team has been assigned a new project.</p>
+          <p className="text-sm text-muted-foreground">Your team has been assigned a new project.</p>
         </CardContent>
         <CardFooter>
-          <span className="inline-flex items-center justify-center rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-neutral-50 cursor-default">View All</span>
+          <span className="inline-flex items-center justify-center rounded-md bg-muted px-4 py-2 text-sm font-medium text-foreground cursor-default">View All</span>
         </CardFooter>
       </Card>
     );
@@ -132,7 +143,7 @@ const previewOverrides: Record<string, PreviewFactory> = {
         <CarouselContent>
           {slides.map((slide, i) => (
             <CarouselItem key={i}>
-              <div className={`flex items-center justify-center h-40 rounded-md border border-neutral-700 ${slide.bg} text-neutral-300 text-sm font-medium`}>{slide.label}</div>
+              <div className={`flex items-center justify-center h-40 rounded-md border border-border ${slide.bg} text-foreground text-sm font-medium`}>{slide.label}</div>
             </CarouselItem>
           ))}
         </CarouselContent>
@@ -154,7 +165,7 @@ const previewOverrides: Record<string, PreviewFactory> = {
     const DialogClose = mod.DialogClose;
     return (
       <Dialog>
-        <DialogTrigger className="inline-flex items-center justify-center rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-neutral-50 cursor-pointer hover:bg-neutral-800 transition-colors">Open Dialog</DialogTrigger>
+<DialogTrigger className="inline-flex items-center justify-center rounded-md bg-muted px-4 py-2 text-sm font-medium text-foreground cursor-pointer hover:bg-accent transition-colors">Open Dialog</DialogTrigger>
         <DialogPortal>
           <DialogBackdrop />
           <DialogPopup>
@@ -164,17 +175,17 @@ const previewOverrides: Record<string, PreviewFactory> = {
             </DialogHeader>
             <div className="flex flex-col gap-3 py-2">
               <div className="flex flex-col gap-1">
-                <label className="text-sm font-medium text-neutral-700">Name</label>
-                <input className="flex h-9 w-full rounded-md border border-neutral-300 bg-white px-3 py-1 text-sm shadow-xs transition-colors focus-visible:outline-none focus-visible:border-neutral-900" placeholder="Enter your name" />
+                <label className="text-sm font-medium text-foreground">Name</label>
+                <input className="flex h-9 w-full rounded-md border border-border bg-background px-3 py-1 text-sm shadow-xs transition-colors focus-visible:outline-none focus-visible:border-foreground" placeholder="Enter your name" />
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-sm font-medium text-neutral-700">Email</label>
-                <input className="flex h-9 w-full rounded-md border border-neutral-300 bg-white px-3 py-1 text-sm shadow-xs transition-colors focus-visible:outline-none focus-visible:border-neutral-900" placeholder="Enter your email" />
+                <label className="text-sm font-medium text-foreground">Email</label>
+                <input className="flex h-9 w-full rounded-md border border-border bg-background px-3 py-1 text-sm shadow-xs transition-colors focus-visible:outline-none focus-visible:border-foreground" placeholder="Enter your email" />
               </div>
             </div>
             <DialogFooter>
-              <DialogClose className="inline-flex items-center justify-center rounded-md border border-neutral-300 bg-white px-4 py-2 text-sm font-medium text-neutral-700 cursor-pointer hover:bg-neutral-50 transition-colors">Cancel</DialogClose>
-              <DialogClose className="inline-flex items-center justify-center rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-neutral-50 cursor-pointer hover:bg-neutral-800 transition-colors">Save</DialogClose>
+              <DialogClose className="inline-flex items-center justify-center rounded-md border border-border bg-background px-4 py-2 text-sm font-medium text-muted-foreground cursor-pointer hover:bg-accent transition-colors">Cancel</DialogClose>
+<DialogClose className="inline-flex items-center justify-center rounded-md bg-muted px-4 py-2 text-sm font-medium text-foreground cursor-pointer hover:bg-accent transition-colors">Save</DialogClose>
             </DialogFooter>
           </DialogPopup>
         </DialogPortal>
@@ -199,10 +210,10 @@ const previewOverrides: Record<string, PreviewFactory> = {
     const HoverCardContent = mod.HoverCardContent;
     return (
       <HoverCard>
-        <HoverCardTrigger className="inline-flex items-center justify-center rounded-md border border-neutral-700 bg-neutral-800 px-4 py-2 text-sm font-medium text-neutral-300 cursor-pointer hover:bg-neutral-700 transition-colors">Hover me</HoverCardTrigger>
+        <HoverCardTrigger className="inline-flex items-center justify-center rounded-md border border-border bg-card px-4 py-2 text-sm font-medium text-foreground cursor-pointer hover:bg-accent transition-colors">Hover me</HoverCardTrigger>
         <HoverCardContent>
-          <div className="text-sm font-medium text-neutral-900">@username</div>
-          <div className="text-xs text-neutral-500 mt-1">Profile details appear here.</div>
+          <div className="text-sm font-medium text-foreground">@username</div>
+          <div className="text-xs text-muted-foreground mt-1">Profile details appear here.</div>
         </HoverCardContent>
       </HoverCard>
     );
@@ -212,7 +223,7 @@ const previewOverrides: Record<string, PreviewFactory> = {
     const SonnerTrigger = () => {
       const { toast } = mod.useSonner();
       return (
-        <button onClick={() => toast("Event created!", "Your changes have been saved.")} className="inline-flex items-center justify-center rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-neutral-50 cursor-pointer hover:bg-neutral-800 transition-colors">Show Toast</button>
+<button onClick={() => toast("Event created!", "Your changes have been saved.")} className="inline-flex items-center justify-center rounded-md bg-muted px-4 py-2 text-sm font-medium text-foreground cursor-pointer hover:bg-accent transition-colors">Show Toast</button>
       );
     };
     SonnerTrigger.displayName = "SonnerTrigger";
@@ -227,7 +238,7 @@ const previewOverrides: Record<string, PreviewFactory> = {
     return (
       <div className="flex items-center gap-2">
         <Switch />
-        <label className="text-sm text-neutral-300">Airplane Mode</label>
+        <label className="text-sm text-foreground">Airplane Mode</label>
       </div>
     );
   },
@@ -266,8 +277,8 @@ const previewOverrides: Record<string, PreviewFactory> = {
           <TabsTrigger value="account">Account</TabsTrigger>
           <TabsTrigger value="password">Password</TabsTrigger>
         </TabsList>
-        <TabsContent value="account"><p className="text-sm text-neutral-400">Manage your account settings here.</p></TabsContent>
-        <TabsContent value="password"><p className="text-sm text-neutral-400">Change your password here.</p></TabsContent>
+        <TabsContent value="account"><p className="text-sm text-muted-foreground">Manage your account settings here.</p></TabsContent>
+        <TabsContent value="password"><p className="text-sm text-muted-foreground">Change your password here.</p></TabsContent>
       </Tabs>
     );
   },
@@ -280,7 +291,7 @@ const previewOverrides: Record<string, PreviewFactory> = {
     const ToastTrigger = () => {
       const { toast } = mod.useToast();
       return (
-        <button onClick={() => toast({ title: "Saved!", description: "Your changes have been saved." })} className="inline-flex items-center justify-center rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-neutral-50 cursor-pointer hover:bg-neutral-800 transition-colors">Show Toast</button>
+<button onClick={() => toast({ title: "Saved!", description: "Your changes have been saved." })} className="inline-flex items-center justify-center rounded-md bg-muted px-4 py-2 text-sm font-medium text-foreground cursor-pointer hover:bg-accent transition-colors">Show Toast</button>
       );
     };
     ToastTrigger.displayName = "ToastTrigger";
@@ -308,7 +319,7 @@ const previewOverrides: Record<string, PreviewFactory> = {
     return (
       <TooltipProvider>
         <Tooltip>
-          <TooltipTrigger className="inline-flex items-center justify-center rounded-md bg-neutral-800 border border-neutral-700 px-4 py-2 text-sm font-medium text-neutral-300 cursor-pointer hover:bg-neutral-700 transition-colors">Hover me</TooltipTrigger>
+          <TooltipTrigger className="inline-flex items-center justify-center rounded-md bg-card border border-border px-4 py-2 text-sm font-medium text-foreground cursor-pointer hover:bg-accent transition-colors">Hover me</TooltipTrigger>
           <TooltipContent><p className="text-xs">This is a tooltip</p></TooltipContent>
         </Tooltip>
       </TooltipProvider>
@@ -576,8 +587,6 @@ class ErrorBoundary extends Component<
 
 export default function ComponentDetailClient({ slug: propSlug }: { slug: string }) {
   const [activeTab, setActiveTab] = useState<"preview" | "code">("preview");
-  const [copied, setCopied] = useState(false);
-  const [copiedInstall, setCopiedInstall] = useState(false);
 
   const slug = propSlug;
   const meta = registry[slug];
@@ -615,50 +624,46 @@ export default function ComponentDetailClient({ slug: propSlug }: { slug: string
     );
   }, [slug, isInstalled]);
 
-  const handleCopyCode = async () => {
-    await navigator.clipboard.writeText(meta.code);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const handleCopyInstall = async () => {
-    await navigator.clipboard.writeText(`npx @static-ui/cli add ${slug}`);
-    setCopiedInstall(true);
-    setTimeout(() => setCopiedInstall(false), 2000);
-  };
-
   return (
     <div className="flex flex-col gap-10 py-6">
       {/* Breadcrumb & Header */}
       <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-1 text-xs text-neutral-500 font-medium">
-          Docs <ChevronRight className="h-3 w-3" /> Components{" "}
-          <ChevronRight className="h-3 w-3" />{" "}
-          <span className="text-neutral-400">{meta.name}</span>
-        </div>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/docs">Docs</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/docs/components">Components</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{meta.name}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
         <div className="flex items-center gap-3">
-          <h1 className="text-4xl font-bold tracking-tight text-white">
+          <h1 className="text-4xl font-bold tracking-tight text-foreground">
             {meta.name}
           </h1>
-          <span className="rounded-full border border-neutral-800 bg-neutral-950 px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-neutral-500">
-            {categoryLabels[regEntry.category] || regEntry.category}
-          </span>
+          <Badge variant="outline" className="text-xs">{categoryLabels[regEntry.category] || regEntry.category}</Badge>
         </div>
-        <p className="text-base text-neutral-400 leading-relaxed max-w-2xl">
+        <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">
           {meta.description}
         </p>
       </div>
 
       {/* Preview / Code Tab Section */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between border-b border-neutral-900 pb-1">
+        <div className="flex items-center justify-between border-b border-border pb-1">
           <div className="flex gap-4 text-xs font-medium">
             <button
               onClick={() => setActiveTab("preview")}
               className={`pb-2 border-b-2 transition-colors cursor-pointer ${
                 activeTab === "preview"
-                  ? "border-[#22c55e] text-[#22c55e] font-semibold"
-                  : "border-transparent text-neutral-500 hover:text-neutral-300"
+                  ? "border-primary text-primary font-semibold"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
               }`}
             >
               Preview
@@ -667,37 +672,24 @@ export default function ComponentDetailClient({ slug: propSlug }: { slug: string
               onClick={() => setActiveTab("code")}
               className={`pb-2 border-b-2 transition-colors cursor-pointer ${
                 activeTab === "code"
-                  ? "border-[#22c55e] text-[#22c55e] font-semibold"
-                  : "border-transparent text-neutral-500 hover:text-neutral-300"
+                  ? "border-primary text-primary font-semibold"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
               }`}
             >
               Code
             </button>
           </div>
 
-          {activeTab === "code" && (
-            <button
-              onClick={handleCopyCode}
-              className="flex items-center gap-1.5 rounded-md border border-neutral-800 bg-neutral-950 px-2 py-1 text-[11px] font-medium text-neutral-300 hover:bg-neutral-900 hover:text-white transition-all cursor-pointer"
-            >
-              {copied ? (
-                <Check className="h-3 w-3 text-[#22c55e]" />
-              ) : (
-                <Copy className="h-3 w-3" />
-              )}
-              {copied ? "Copied" : "Copy Code"}
-            </button>
-          )}
         </div>
 
-        <div className="rounded-xl border border-neutral-900 bg-[#030303] min-h-[300px] flex items-center justify-center p-6 relative overflow-hidden bg-[radial-gradient(#161616_1px,transparent_1px)] bg-[size:16px_16px]">
+        <Card className="bg-background min-h-[300px] flex-row items-center justify-center p-6 relative bg-[radial-gradient(#161616_1px,transparent_1px)] bg-[size:16px_16px]">
           {activeTab === "preview" ? (
             isInstalled && LivePreview ? (
               <ErrorBoundary
                 fallback={
-                  <div className="flex flex-col items-center gap-2 text-neutral-500 py-8">
-                    <p className="text-xs font-medium text-neutral-400">Failed to load preview</p>
-                    <p className="text-[10px] text-neutral-600">The component may have unresolved dependencies</p>
+                  <div className="flex flex-col items-center gap-2 text-muted-foreground py-8">
+                    <p className="text-xs font-medium text-muted-foreground">Failed to load preview</p>
+                    <p className="text-[10px] text-muted-foreground">The component may have unresolved dependencies</p>
                   </div>
                 }
               >
@@ -706,106 +698,88 @@ export default function ComponentDetailClient({ slug: propSlug }: { slug: string
                 </div>
               </ErrorBoundary>
             ) : (
-              <div className="flex flex-col items-center gap-2 text-neutral-500 py-8">
-                <p className="text-xs font-medium text-neutral-400">Component not yet installed</p>
-                <p className="text-[10px] text-neutral-600">Use the CLI command below to add it to your project</p>
+              <div className="flex flex-col items-center gap-2 text-muted-foreground py-8">
+                <p className="text-xs font-medium text-muted-foreground">Component not yet installed</p>
+                <p className="text-[10px] text-muted-foreground">Use the CLI command below to add it to your project</p>
               </div>
             )
           ) : (
-            <pre className="w-full font-mono text-[11px] overflow-x-auto whitespace-pre p-0 rounded-lg bg-[#050505] border border-neutral-950 text-left leading-relaxed max-h-[400px] overflow-y-auto custom-scrollbar">
-              <code dangerouslySetInnerHTML={{ __html: highlightCode(meta.code) }} />
-            </pre>
+            <CodeBlock code={meta.code} language="tsx" showLineNumbers />
           )}
-        </div>
+        </Card>
       </div>
 
       {/* Installation */}
       <div className="space-y-3">
-        <h3 className="flex items-center gap-2 text-lg font-semibold text-white tracking-tight">
-          <Terminal className="h-4 w-4 text-[#22c55e]" />
+        <h3 className="flex items-center gap-2 text-lg font-semibold text-foreground tracking-tight">
+          <Terminal className="h-4 w-4 text-primary" />
           Installation
         </h3>
-        <p className="text-xs text-neutral-400">
+        <p className="text-xs text-muted-foreground">
           Run the following command to add this component to your project:
         </p>
-        <div className="flex items-center justify-between rounded-xl border border-neutral-900 bg-[#0a0a0a]/80 p-3 pl-4 max-w-xl shadow-md">
-          <div className="flex items-center gap-3 font-mono text-xs text-neutral-300">
-            <Terminal className="h-3.5 w-3.5 text-[#22c55e]" />
-            <span>npx @static-ui/cli add {slug}</span>
-          </div>
-          <button
-            onClick={handleCopyInstall}
-            className="flex items-center gap-1.5 rounded-md border border-neutral-800 bg-neutral-950 px-2 py-1 text-[11px] font-medium text-neutral-300 hover:bg-neutral-900 hover:text-white transition-all cursor-pointer ml-3"
-          >
-            {copiedInstall ? (
-              <Check className="h-3 w-3 text-[#22c55e]" />
-            ) : (
-              <Copy className="h-3 w-3" />
-            )}
-            {copiedInstall ? "Copied" : "Copy"}
-          </button>
-        </div>
+        <CodeBlock code={`npx @static-ui/cli add ${slug}`} language="bash" />
       </div>
 
       {/* Import Path */}
       <div className="space-y-3">
-        <h3 className="flex items-center gap-2 text-lg font-semibold text-white tracking-tight">
-          <Package className="h-4 w-4 text-[#22c55e]" />
+        <h3 className="flex items-center gap-2 text-lg font-semibold text-foreground tracking-tight">
+          <Package className="h-4 w-4 text-primary" />
           Import
         </h3>
-        <p className="text-xs text-neutral-400">
+        <p className="text-xs text-muted-foreground">
           Import the component directly from the package:
         </p>
-        <div className="rounded-xl border border-neutral-900 bg-[#0a0a0a]/80 p-3 pl-4 max-w-xl shadow-md">
-          <code className="font-mono text-xs text-neutral-300">
+        <Card className="bg-card/80 p-3 pl-4 max-w-xl shadow-md flex-row items-center justify-between">
+          <code className="font-mono text-xs text-foreground">
             {`import { ${meta.name.replace(/\s+/g, "")} } from "@static-ui/ui"`}
           </code>
-        </div>
+        </Card>
       </div>
 
       {/* Props / API */}
       <div className="space-y-3">
-        <h3 className="flex items-center gap-2 text-lg font-semibold text-white tracking-tight">
-          <Wrench className="h-4 w-4 text-[#22c55e]" />
+        <h3 className="flex items-center gap-2 text-lg font-semibold text-foreground tracking-tight">
+          <Wrench className="h-4 w-4 text-primary" />
           API Reference
         </h3>
-        <p className="text-xs text-neutral-400">
+        <p className="text-xs text-muted-foreground">
           Common props available for this component:
         </p>
-        <div className="overflow-hidden rounded-xl border border-neutral-900">
+        <Card className="block p-0">
           <table className="w-full text-xs">
             <thead>
-              <tr className="border-b border-neutral-900 bg-neutral-950/50">
-                <th className="text-left px-4 py-2.5 font-medium text-neutral-300">Prop</th>
-                <th className="text-left px-4 py-2.5 font-medium text-neutral-300">Type</th>
-                <th className="text-left px-4 py-2.5 font-medium text-neutral-300">Description</th>
+              <tr className="border-b border-border bg-card/50">
+                <th className="text-left px-4 py-2.5 font-medium text-foreground">Prop</th>
+                <th className="text-left px-4 py-2.5 font-medium text-foreground">Type</th>
+                <th className="text-left px-4 py-2.5 font-medium text-foreground">Description</th>
               </tr>
             </thead>
             <tbody>
               {props.map((prop: { name: string; type: string; description: string }) => (
-                <tr key={prop.name} className="border-b border-neutral-900 last:border-0">
-                  <td className="px-4 py-2.5 font-mono text-[11px] text-[#22c55e]">{prop.name}</td>
+                <tr key={prop.name} className="border-b border-border last:border-0">
+                  <td className="px-4 py-2.5 font-mono text-[11px] text-primary">{prop.name}</td>
                   <td className="px-4 py-2.5 font-mono text-[11px] text-amber-300">{prop.type}</td>
-                  <td className="px-4 py-2.5 text-neutral-400">{prop.description}</td>
+                  <td className="px-4 py-2.5 text-muted-foreground">{prop.description}</td>
                 </tr>
               ))}
             </tbody>
           </table>
-        </div>
+        </Card>
       </div>
 
       {/* Dependencies */}
       {regEntry.dependencies.length > 0 && (
         <div className="space-y-3">
-          <h3 className="flex items-center gap-2 text-lg font-semibold text-white tracking-tight">
-            <Package className="h-4 w-4 text-[#22c55e]" />
+          <h3 className="flex items-center gap-2 text-lg font-semibold text-foreground tracking-tight">
+            <Package className="h-4 w-4 text-primary" />
             Dependencies
           </h3>
           <ul className="flex flex-wrap gap-2">
             {regEntry.dependencies.map((dep: string) => (
               <li
                 key={dep}
-                className="rounded-md border border-neutral-800 bg-neutral-950 px-3 py-1.5 text-xs font-mono text-neutral-400"
+                className="rounded-md border border-border bg-card px-3 py-1.5 text-xs font-mono text-muted-foreground"
               >
                 {dep}
               </li>
@@ -817,11 +791,11 @@ export default function ComponentDetailClient({ slug: propSlug }: { slug: string
       {/* Accessibility */}
       {accessibility && (
         <div className="space-y-3">
-          <h3 className="flex items-center gap-2 text-lg font-semibold text-white tracking-tight">
-            <Accessibility className="h-4 w-4 text-[#22c55e]" />
+          <h3 className="flex items-center gap-2 text-lg font-semibold text-foreground tracking-tight">
+            <Accessibility className="h-4 w-4 text-primary" />
             Accessibility
           </h3>
-          <p className="text-xs text-neutral-400 leading-relaxed">
+          <p className="text-xs text-muted-foreground leading-relaxed">
             {accessibility}
           </p>
         </div>
@@ -830,25 +804,21 @@ export default function ComponentDetailClient({ slug: propSlug }: { slug: string
       {/* Related Components */}
       {related.length > 0 && (
         <div className="space-y-3">
-          <h3 className="flex items-center gap-2 text-lg font-semibold text-white tracking-tight">
-            <Layers className="h-4 w-4 text-[#22c55e]" />
+          <h3 className="flex items-center gap-2 text-lg font-semibold text-foreground tracking-tight">
+            <Layers className="h-4 w-4 text-primary" />
             Related Components
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {related.map((rel) => (
-              <Link
-                key={rel.slug}
-                href={`/docs/components/${rel.slug}`}
-                className="group flex items-center justify-between rounded-lg border border-neutral-900 bg-[#0a0a0a]/60 px-4 py-3 hover:bg-neutral-900/50 transition-colors"
-              >
+              <Card size="sm" className="group flex-row items-center justify-between bg-card/60 px-4 py-3 hover:bg-accent/50 transition-colors">
                 <div className="flex flex-col gap-0.5">
-                  <span className="text-sm font-medium text-white group-hover:text-[#22c55e] transition-colors">
+                  <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
                     {rel.name}
                   </span>
-                  <span className="text-[10px] text-neutral-500">{rel.description}</span>
+                  <span className="text-[10px] text-muted-foreground">{rel.description}</span>
                 </div>
-                <ChevronRight className="h-3.5 w-3.5 text-neutral-600 group-hover:text-[#22c55e] transition-colors shrink-0" />
-              </Link>
+                <ChevronRight className="h-3.5 w-3.5 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
+              </Card>
             ))}
           </div>
         </div>
@@ -859,93 +829,11 @@ export default function ComponentDetailClient({ slug: propSlug }: { slug: string
 
 function LoadingIndicator() {
   return (
-    <div className="flex flex-col items-center justify-center gap-2 text-neutral-500">
-      <Loader2 className="h-5 w-5 animate-spin text-[#22c55e]" />
+    <div className="flex flex-col items-center justify-center gap-2 text-muted-foreground">
+      <Loader2 className="h-5 w-5 animate-spin text-primary" />
       <p className="text-[10px] font-medium tracking-wide">Loading component...</p>
     </div>
   );
 }
 
-const KEYWORDS = new Set([
-  "import", "export", "from", "return", "function", "const", "let", "var",
-  "interface", "type", "typeof", "keyof", "extends", "as", "default", "new",
-  "if", "else", "for", "while", "class", "throw", "try", "catch", "finally",
-  "async", "await", "true", "false", "null", "undefined",
-]);
 
-function highlightCode(code: string): string {
-  const lines = code.split("\n");
-  const pad = String(lines.length).length;
-  return lines
-    .map((line, i) => {
-      const num = String(i + 1).padStart(pad, " ");
-      const highlighted = highlightLine(line);
-      return `<span class="flex"><span class="select-none w-10 shrink-0 text-right pr-3 text-neutral-600 text-[10px] leading-[1.7]">${num}</span><span class="text-neutral-300 leading-[1.7]">${highlighted}</span></span>`;
-    })
-    .join("");
-}
-
-function escapeHtml(text: string): string {
-  return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-}
-
-function highlightLine(line: string): string {
-  const parts: string[] = [];
-  let i = 0;
-  while (i < line.length) {
-    let matched = false;
-    if (line[i] === "/" && line[i + 1] === "/") {
-      parts.push(`<span class="text-emerald-500 italic">${escapeHtml(line.slice(i))}</span>`);
-      break;
-    }
-    if (line[i] === "/" && line[i + 1] === "*") {
-      const end = line.indexOf("*/", i + 2);
-      const slice = end === -1 ? line.slice(i) : line.slice(i, end + 2);
-      parts.push(`<span class="text-emerald-500 italic">${escapeHtml(slice)}</span>`);
-      i += slice.length;
-      continue;
-    }
-    const quoteMatch = /^(["'`])(?:(?!\1|\\).|\\.)*\1/.exec(line.slice(i));
-    if (quoteMatch) {
-      parts.push(`<span class="text-amber-300">${escapeHtml(quoteMatch[0])}</span>`);
-      i += quoteMatch[0].length;
-      continue;
-    }
-    const wordMatch = /^([a-zA-Z_$][a-zA-Z0-9_$]*)/.exec(line.slice(i));
-    if (wordMatch) {
-      const word = wordMatch[1];
-      if (KEYWORDS.has(word)) {
-        parts.push(`<span class="text-purple-400">${word}</span>`);
-      } else if (i > 0 && line[i - 1] === ".") {
-        parts.push(`<span class="text-neutral-300">${word}</span>`);
-      } else if (i + word.length < line.length && line[i + word.length] === "(") {
-        parts.push(`<span class="text-yellow-300">${word}</span>`);
-      } else {
-        parts.push(`<span class="text-neutral-300">${word}</span>`);
-      }
-      i += word.length;
-      continue;
-    }
-    const numMatch = /^(\d+(?:\.\d+)?)/.exec(line.slice(i));
-    if (numMatch) {
-      parts.push(`<span class="text-lime-300">${numMatch[1]}</span>`);
-      i += numMatch[1].length;
-      continue;
-    }
-    if (/[{}\[\]()]/.test(line[i])) {
-      parts.push(`<span class="text-yellow-400">${escapeHtml(line[i])}</span>`);
-      i++;
-      continue;
-    }
-    if (/[<>,;.:!?=+\-*/%&|^~]/.test(line[i])) {
-      const punctEnd = i + 1;
-      const punct = line.slice(i, punctEnd);
-      parts.push(`<span class="text-neutral-500">${escapeHtml(punct)}</span>`);
-      i = punctEnd;
-      continue;
-    }
-    parts.push(escapeHtml(line[i]));
-    i++;
-  }
-  return parts.join("");
-}

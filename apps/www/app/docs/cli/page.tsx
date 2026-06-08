@@ -1,7 +1,8 @@
 "use client"
 
-import React, { useState } from "react"
-import { Terminal, Check, Copy, ChevronRight } from "lucide-react"
+import { ChevronRight } from "lucide-react"
+import { Card } from "@/components/ui/card"
+import { CodeBlock } from "@/components/CodeBlock"
 
 interface CommandDef {
   name: string
@@ -113,66 +114,43 @@ const commands: CommandDef[] = [
 ]
 
 function CommandCard({ cmd }: { cmd: CommandDef }) {
-  const [copied, setCopied] = useState(false)
-
-  const handleCopy = async () => {
-    await navigator.clipboard.writeText(cmd.usage)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
-
   return (
-    <div className="rounded-xl border border-neutral-900 bg-[#0a0a0a] p-5 space-y-4">
+    <Card className="p-5 space-y-4">
       <div className="flex items-start justify-between gap-4">
         <div className="space-y-1">
-          <code className="inline-block rounded-md border border-neutral-800 bg-neutral-950 px-2.5 py-1 font-mono text-sm font-semibold text-[#22c55e]">
+          <code className="inline-block rounded-md border border-border bg-card px-2.5 py-1 font-mono text-sm font-semibold text-primary">
             {cmd.name}
           </code>
           {cmd.args && (
-            <p className="text-[11px] text-neutral-500 font-mono mt-1">{cmd.args}</p>
+            <p className="text-[11px] text-muted-foreground font-mono mt-1">{cmd.args}</p>
           )}
         </div>
       </div>
 
-      <p className="text-sm text-neutral-400 leading-relaxed">{cmd.description}</p>
+      <p className="text-sm text-muted-foreground leading-relaxed">{cmd.description}</p>
 
-      <div className="flex items-center justify-between rounded-lg border border-neutral-900 bg-[#050505] p-2.5 pl-4 max-w-xl">
-        <div className="flex items-center gap-2.5 font-mono text-xs text-neutral-300">
-          <Terminal className="h-3.5 w-3.5 text-[#22c55e] shrink-0" />
-          <span className="truncate">{cmd.usage}</span>
-        </div>
-        <button
-          onClick={handleCopy}
-          className="flex h-7 w-10 items-center justify-center rounded-md bg-neutral-900 border border-neutral-800 hover:bg-neutral-800 text-white transition-all active:scale-95 cursor-pointer shrink-0 ml-2"
-        >
-          {copied ? (
-            <Check className="h-3 w-3 text-[#22c55e]" />
-          ) : (
-            <Copy className="h-3 w-3 text-neutral-400" />
-          )}
-        </button>
-      </div>
+      <CodeBlock code={cmd.usage} language="bash" />
 
       {cmd.flags && cmd.flags.length > 0 && (
         <div className="space-y-1.5">
-          <p className="text-[11px] font-medium text-neutral-500 uppercase tracking-wider">
+          <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
             Flags
           </p>
           <div className="flex flex-wrap gap-2">
             {cmd.flags.map((f) => (
               <span
                 key={f.flag}
-                className="inline-flex items-center gap-1.5 rounded-md border border-neutral-800 bg-neutral-950/50 px-2 py-1 text-[11px] text-neutral-400"
+                className="inline-flex items-center gap-1.5 rounded-md border border-border bg-card/50 px-2 py-1 text-[11px] text-muted-foreground"
               >
-                <code className="text-neutral-300">{f.flag}</code>
-                <span className="text-neutral-500">—</span>
+                <code className="text-foreground">{f.flag}</code>
+                <span className="text-muted-foreground">—</span>
                 <span>{f.desc}</span>
               </span>
             ))}
           </div>
         </div>
       )}
-    </div>
+    </Card>
   )
 }
 
@@ -180,22 +158,22 @@ export default function DocsCliPage() {
   return (
     <div className="flex flex-col gap-6 py-6">
       <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-1 text-xs text-neutral-500 font-medium">
+        <div className="flex items-center gap-1 text-xs text-muted-foreground font-medium">
           Docs <ChevronRight className="h-3 w-3" /> Getting Started{" "}
           <ChevronRight className="h-3 w-3" />{" "}
-          <span className="text-neutral-400">CLI</span>
+          <span className="text-muted-foreground">CLI</span>
         </div>
-        <h1 className="text-4xl font-bold tracking-tight text-white">CLI Reference</h1>
-        <p className="text-lg text-neutral-400 leading-relaxed">
+        <h1 className="text-4xl font-bold tracking-tight text-foreground">CLI Reference</h1>
+        <p className="text-lg text-muted-foreground leading-relaxed">
           Complete command reference for the Static UI command-line interface.
         </p>
       </div>
 
-      <hr className="border-neutral-900 my-2" />
+      <hr className="border-border my-2" />
 
-      <div className="space-y-4 text-sm leading-relaxed text-neutral-400">
+      <div className="space-y-4 text-sm leading-relaxed text-muted-foreground">
         <p>
-          The Static UI CLI (<code className="text-white text-xs font-mono bg-neutral-900 px-1 py-0.5 rounded-sm">@static-ui/cli</code>) is the primary gateway for generating components, managing themes, and maintaining your workspace configuration. All commands follow the <code className="text-white text-xs font-mono bg-neutral-900 px-1 py-0.5 rounded-sm">npx @static-ui/cli &lt;command&gt;</code> pattern.
+          The Static UI CLI (<code className="text-foreground text-xs font-mono bg-muted px-1 py-0.5 rounded-sm">@static-ui/cli</code>) is the primary gateway for generating components, managing themes, and maintaining your workspace configuration. All commands follow the <code className="text-foreground text-xs font-mono bg-muted px-1 py-0.5 rounded-sm">npx @static-ui/cli &lt;command&gt;</code> pattern.
         </p>
       </div>
 

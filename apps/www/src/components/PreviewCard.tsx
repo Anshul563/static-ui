@@ -3,6 +3,8 @@
 import React, { useState } from "react"
 import { Check, Copy, Terminal } from "lucide-react"
 import { CommandCopy } from "./CommandCopy"
+import { Card } from "@/components/ui/card"
+import { CodeBlock } from "@/components/CodeBlock"
 
 interface PreviewCardProps {
   title: string
@@ -12,43 +14,6 @@ interface PreviewCardProps {
   cliCommand?: string
   isInstalled?: boolean
   dependencies?: string[]
-}
-
-function highlightCode(code: string): React.ReactNode {
-  const tokens = code.split(
-    /(\b(?:import|from|export|default|function|return|const|let|var|class|extends|interface|type|typeof|void|if|else|for|while|as|async|await)\b|("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`)|(\/\/.*$|\/\*[\s\S]*?\*\/))/m
-  )
-
-  return tokens.map((token, i) => {
-    if (
-      /^("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`)$/.test(token)
-    ) {
-      return (
-        <span key={i} className="text-amber-400/80">
-          {token}
-        </span>
-      )
-    }
-    if (/^(\/\/.*|\/\*[\s\S]*?\*\/)$/.test(token)) {
-      return (
-        <span key={i} className="text-neutral-600">
-          {token}
-        </span>
-      )
-    }
-    if (
-      /^(import|from|export|default|function|return|const|let|var|class|extends|interface|type|typeof|void|if|else|for|while|as|async|await)$/.test(
-        token
-      )
-    ) {
-      return (
-        <span key={i} className="text-purple-400/80">
-          {token}
-        </span>
-      )
-    }
-    return token
-  })
 }
 
 export function PreviewCard({
@@ -78,13 +43,13 @@ export function PreviewCard({
   if (cliCommand) tabs.push({ id: "cli" as const, label: "CLI" })
 
   return (
-    <div className="rounded-xl border border-neutral-900 bg-[#0a0a0a] overflow-hidden">
+    <Card>
       <div className="p-4 pb-0 space-y-2">
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-1">
-            <h3 className="text-base font-semibold text-white">{title}</h3>
+            <h3 className="text-base font-semibold text-foreground">{title}</h3>
             {description && (
-              <p className="text-xs text-neutral-400 leading-relaxed">
+              <p className="text-xs text-muted-foreground leading-relaxed">
                 {description}
               </p>
             )}
@@ -94,7 +59,7 @@ export function PreviewCard({
               className={`shrink-0 rounded-md border px-2 py-0.5 text-[10px] font-medium ${
                 isInstalled
                   ? "border-green-900 bg-green-950/50 text-green-400"
-                  : "border-neutral-800 bg-neutral-900 text-neutral-500"
+                  : "border-border bg-muted text-muted-foreground"
               }`}
             >
               {isInstalled ? "Installed" : "Not installed"}
@@ -102,7 +67,7 @@ export function PreviewCard({
           )}
         </div>
 
-        <div className="flex items-center justify-between border-b border-neutral-900 pb-1">
+        <div className="flex items-center justify-between border-b border-border pb-1">
           <div className="flex gap-4 text-xs font-medium">
             {tabs.map((tab) => (
               <button
@@ -110,8 +75,8 @@ export function PreviewCard({
                 onClick={() => setActiveTab(tab.id)}
                 className={`pb-2 border-b-2 transition-colors cursor-pointer ${
                   activeTab === tab.id
-                    ? "border-[#22c55e] text-[#22c55e] font-semibold"
-                    : "border-transparent text-neutral-500 hover:text-neutral-300"
+                    ? "border-primary text-primary font-semibold"
+                    : "border-transparent text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {tab.label}
@@ -121,10 +86,10 @@ export function PreviewCard({
           {activeTab === "code" && code && (
             <button
               onClick={handleCopyCode}
-              className="flex items-center gap-1.5 rounded-md border border-neutral-800 bg-neutral-950 px-2 py-1 text-[11px] font-medium text-neutral-300 hover:bg-neutral-900 hover:text-white transition-all cursor-pointer"
+              className="flex items-center gap-1.5 rounded-md border border-border bg-card px-2 py-1 text-[11px] font-medium text-foreground hover:bg-accent hover:text-foreground transition-all cursor-pointer"
             >
               {copied ? (
-                <Check className="h-3 w-3 text-[#22c55e]" />
+                <Check className="h-3 w-3 text-primary" />
               ) : (
                 <Copy className="h-3 w-3" />
               )}
@@ -137,13 +102,13 @@ export function PreviewCard({
       {dependencies && dependencies.length > 0 && (
         <div className="px-4 pt-3">
           <div className="flex flex-wrap gap-1.5">
-            <span className="text-[10px] text-neutral-500 font-medium">
+            <span className="text-[10px] text-muted-foreground font-medium">
               Dependencies:
             </span>
             {dependencies.map((dep) => (
               <span
                 key={dep}
-                className="rounded-md border border-neutral-800 bg-neutral-900 px-1.5 py-0.5 text-[10px] font-mono text-neutral-400"
+                className="rounded-md border border-border bg-muted px-1.5 py-0.5 text-[10px] font-mono text-muted-foreground"
               >
                 {dep}
               </span>
@@ -154,15 +119,13 @@ export function PreviewCard({
 
       <div className="p-4">
         {activeTab === "preview" && preview && (
-          <div className="rounded-lg border border-neutral-900 bg-[#030303] min-h-48 flex items-center justify-center p-6 relative overflow-hidden bg-[radial-gradient(#161616_1px,transparent_1px)] bg-size-[16px_16px]">
+          <Card size="sm" className="bg-background min-h-48 flex-row items-center justify-center p-6 relative bg-[radial-gradient(#161616_1px,transparent_1px)] bg-size-[16px_16px]">
             {preview}
-          </div>
+          </Card>
         )}
 
         {activeTab === "code" && code && (
-          <pre className="w-full font-mono text-[11px] text-neutral-300 overflow-x-auto whitespace-pre rounded-lg bg-[#050505] border border-neutral-950 p-4 leading-relaxed">
-            <code>{highlightCode(code)}</code>
-          </pre>
+          <CodeBlock code={code} language="tsx" showLineNumbers />
         )}
 
         {activeTab === "cli" && cliCommand && (
@@ -171,6 +134,6 @@ export function PreviewCard({
           </div>
         )}
       </div>
-    </div>
+    </Card>
   )
 }

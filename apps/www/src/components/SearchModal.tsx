@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { Search, Command, FileText, Palette, Layout, FileCode, ArrowRight } from "lucide-react"
 import fuzzysort from "fuzzysort"
 import { trackSearch } from "@/lib/analytics"
+import { Card } from "@/components/ui/card"
 
 interface SearchItem {
   title: string
@@ -140,12 +141,12 @@ export function SearchModal() {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="flex items-center gap-2 rounded-md border border-neutral-800 bg-neutral-950 px-3 py-1.5 text-xs text-neutral-500 hover:text-neutral-300 hover:border-neutral-700 transition-colors cursor-pointer"
+        className="flex items-center gap-2 rounded-md border border-border bg-card px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground hover:border-border transition-colors cursor-pointer"
         aria-label="Search documentation"
       >
         <Search className="h-3.5 w-3.5" />
         <span className="hidden sm:inline">Search docs...</span>
-        <span className="hidden sm:inline-flex items-center gap-0.5 rounded border border-neutral-800 bg-neutral-900 px-1 py-0.5 text-[9px] font-mono text-neutral-600 ml-2">
+          <span className="hidden sm:inline-flex items-center gap-0.5 rounded border border-border bg-muted px-1 py-0.5 text-[9px] font-mono text-muted-foreground ml-2">
           <Command className="h-2.5 w-2.5" />K
         </span>
       </button>
@@ -156,9 +157,9 @@ export function SearchModal() {
             className="fixed inset-0 bg-black/70 backdrop-blur-sm"
             onClick={() => setOpen(false)}
           />
-          <div className="relative z-10 w-full max-w-lg rounded-xl border border-neutral-800 bg-[#0a0a0a] shadow-2xl shadow-black/60 overflow-hidden">
-            <div className="flex items-center gap-3 border-b border-neutral-800 px-4 py-3">
-              <Search className="h-4 w-4 text-neutral-500 shrink-0" />
+          <Card className="relative z-10 w-full max-w-lg shadow-2xl shadow-black/60">
+            <div className="flex items-center gap-3 border-b border-border px-4 py-3">
+              <Search className="h-4 w-4 text-muted-foreground shrink-0" />
               <input
                 ref={inputRef}
                 type="text"
@@ -166,15 +167,15 @@ export function SearchModal() {
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Search components, blocks, themes..."
-                className="flex-1 bg-transparent text-sm text-white placeholder:text-neutral-500 outline-none"
+                className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none"
               />
-              <kbd className="hidden sm:inline-flex items-center gap-0.5 rounded border border-neutral-800 bg-neutral-900 px-1.5 py-0.5 text-[10px] font-mono text-neutral-500">
+              <kbd className="hidden sm:inline-flex items-center gap-0.5 rounded border border-border bg-muted px-1.5 py-0.5 text-[10px] font-mono text-muted-foreground">
                 ESC
               </kbd>
             </div>
             <div ref={listRef} className="max-h-80 overflow-y-auto p-2 space-y-0.5">
               {results.length === 0 ? (
-                <div className="flex flex-col items-center gap-2 py-8 text-neutral-500">
+                  <div className="flex flex-col items-center gap-2 py-8 text-muted-foreground">
                   <Search className="h-5 w-5" />
                   <p className="text-xs">No results found</p>
                 </div>
@@ -186,26 +187,26 @@ export function SearchModal() {
                     onMouseEnter={() => setSelectedIndex(index)}
                     className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors cursor-pointer ${
                       index === selectedIndex
-                        ? "bg-neutral-800 text-white"
-                        : "text-neutral-400 hover:bg-neutral-900 hover:text-neutral-200"
+                        ? "bg-accent text-foreground"
+                        : "text-muted-foreground hover:bg-accent hover:text-foreground"
                     }`}
                   >
                     <span className="shrink-0">{categoryIcons[item.category]}</span>
                     <div className="flex-1 min-w-0">
                       <div className="text-sm font-medium truncate">{item.title}</div>
-                      <div className="text-[10px] text-neutral-500 truncate">{item.description}</div>
+                      <div className="text-[10px] text-muted-foreground truncate">{item.description}</div>
                     </div>
-                    <ArrowRight className="h-3 w-3 text-neutral-600 shrink-0 opacity-0 group-hover:opacity-100" />
+                    <ArrowRight className="h-3 w-3 text-muted-foreground shrink-0 opacity-0 group-hover:opacity-100" />
                   </button>
                 ))
               )}
             </div>
-            <div className="border-t border-neutral-800 px-4 py-2 flex items-center gap-4 text-[10px] text-neutral-600">
-              <span className="flex items-center gap-1"><kbd className="rounded border border-neutral-800 bg-neutral-900 px-1 py-0.5 font-mono">↑↓</kbd> Navigate</span>
-              <span className="flex items-center gap-1"><kbd className="rounded border border-neutral-800 bg-neutral-900 px-1 py-0.5 font-mono">↵</kbd> Open</span>
-              <span className="flex items-center gap-1"><kbd className="rounded border border-neutral-800 bg-neutral-900 px-1 py-0.5 font-mono">Esc</kbd> Close</span>
+            <div className="border-t border-border px-4 py-2 flex items-center gap-4 text-[10px] text-muted-foreground">
+              <span className="flex items-center gap-1"><kbd className="rounded border border-border bg-muted px-1 py-0.5 font-mono">↑↓</kbd> Navigate</span>
+              <span className="flex items-center gap-1"><kbd className="rounded border border-border bg-muted px-1 py-0.5 font-mono">↵</kbd> Open</span>
+              <span className="flex items-center gap-1"><kbd className="rounded border border-border bg-muted px-1 py-0.5 font-mono">Esc</kbd> Close</span>
             </div>
-          </div>
+          </Card>
         </div>
       )}
     </>

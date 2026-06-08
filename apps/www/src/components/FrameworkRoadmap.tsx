@@ -1,6 +1,7 @@
 "use client"
 
 import { frameworkCategories, statusConfig } from "@/lib/frameworks"
+import { Card } from "@/components/ui/card"
 
 export function FrameworkRoadmap() {
   const totalPhases = frameworkCategories.length
@@ -10,17 +11,17 @@ export function FrameworkRoadmap() {
   const progressPercent = Math.round((completedPhases / totalPhases) * 100)
 
   return (
-    <div className="rounded-xl border border-neutral-800 bg-[#0a0a0a]/40 p-6 md:p-8 backdrop-blur-sm">
+    <Card className="bg-card/40 p-6 md:p-8 backdrop-blur-sm">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-sm font-semibold text-white">Framework Roadmap</h3>
-        <span className="text-[11px] text-neutral-500 font-mono">
+        <h3 className="text-sm font-semibold text-foreground">Framework Roadmap</h3>
+        <span className="text-[11px] text-muted-foreground font-mono">
           {progressPercent}% complete
         </span>
       </div>
 
-      <div className="relative mb-8 h-1.5 rounded-full bg-neutral-800 overflow-hidden">
+      <div className="relative mb-8 h-1.5 rounded-full bg-muted overflow-hidden">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-[#22c55e] to-emerald-400 transition-all duration-1000"
+          className="h-full rounded-full bg-gradient-to-r from-primary to-emerald-400 transition-all duration-1000"
           style={{ width: `${progressPercent}%` }}
         />
       </div>
@@ -32,24 +33,25 @@ export function FrameworkRoadmap() {
           const isFuture = category.status === "planned"
 
           return (
-            <div
+            <Card
               key={category.phase}
-              className={`relative rounded-lg border p-3.5 transition-all ${
+              size="sm"
+              className={`relative border p-3.5 transition-all ${
                 isComplete
-                  ? "border-[#22c55e]/20 bg-[#22c55e]/5"
+                  ? "border-primary/20 bg-primary/5"
                   : isActive
                     ? "border-blue-400/20 bg-blue-400/5"
-                    : "border-neutral-800 bg-neutral-900/30"
+                    : "border-border bg-muted/30"
               }`}
             >
               <div className="flex items-center justify-between mb-2">
                 <span
                   className={`text-[10px] font-mono font-medium uppercase tracking-wider ${
                     isComplete
-                      ? "text-[#22c55e]"
+                      ? "text-primary"
                       : isActive
                         ? "text-blue-400"
-                        : "text-neutral-600"
+                        : "text-muted-foreground"
                   }`}
                 >
                   {category.title}
@@ -68,7 +70,7 @@ export function FrameworkRoadmap() {
                   <div
                     key={fw.slug}
                     className={`flex items-center gap-2 text-xs ${
-                      isFuture ? "text-neutral-600" : "text-neutral-300"
+                      isFuture ? "text-muted-foreground" : "text-foreground"
                     }`}
                   >
                     <span className="h-1 w-1 rounded-full bg-current shrink-0" />
@@ -76,10 +78,10 @@ export function FrameworkRoadmap() {
                   </div>
                 ))}
               </div>
-            </div>
+            </Card>
           )
         })}
       </div>
-    </div>
+    </Card>
   )
 }

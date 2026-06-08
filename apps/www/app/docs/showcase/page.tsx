@@ -2,6 +2,7 @@ import React from "react"
 import { ArrowUpRight } from "lucide-react"
 import Link from "next/link"
 import { createMetadata } from "@/lib/seo"
+import { Card } from "@/components/ui/card"
 
 export const metadata = createMetadata({
   title: "Showcase",
@@ -53,14 +54,14 @@ export default function DocsShowcasePage() {
   return (
     <div className="flex flex-col gap-6 py-6">
       <div className="flex flex-col gap-2">
-        <p className="text-xs font-medium text-neutral-500">Community</p>
-        <h1 className="text-4xl font-bold tracking-tight text-white">Showcase</h1>
-        <p className="text-lg text-neutral-400 leading-relaxed">
+        <p className="text-xs font-medium text-muted-foreground">Community</p>
+        <h1 className="text-4xl font-bold tracking-tight text-foreground">Showcase</h1>
+        <p className="text-lg text-muted-foreground leading-relaxed">
           Projects and applications built with Static UI. Submit your own to be featured here.
         </p>
       </div>
 
-      <hr className="border-neutral-900 my-2" />
+      <hr className="border-border my-2" />
 
       <div className="grid gap-5 sm:grid-cols-2">
         {projects.map((project) => (
@@ -68,11 +69,11 @@ export default function DocsShowcasePage() {
         ))}
       </div>
 
-      <div className="mt-8 rounded-xl border border-neutral-900 bg-[#0a0a0a] p-6 text-center space-y-4">
-        <h2 className="text-xl font-semibold tracking-tight text-white">
+      <Card className="mt-8 bg-card p-6 text-center space-y-4">
+        <h2 className="text-xl font-semibold tracking-tight text-foreground">
           Built something with Static UI?
         </h2>
-        <p className="text-sm text-neutral-400 max-w-lg mx-auto leading-relaxed">
+        <p className="text-sm text-muted-foreground max-w-lg mx-auto leading-relaxed">
           We would love to feature your project. Submit a pull request to our showcase directory
           or share your work with the community.
         </p>
@@ -81,14 +82,14 @@ export default function DocsShowcasePage() {
             href="https://github.com/Anshul563/static-ui"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex h-9 items-center gap-2 rounded-md border border-neutral-800 bg-neutral-950 px-4 text-xs font-medium text-neutral-300 hover:bg-neutral-900 hover:text-white transition-colors"
+            className="inline-flex h-9 items-center gap-2 rounded-md border border-border bg-card px-4 text-xs font-medium text-foreground hover:bg-accent hover:text-foreground transition-colors"
           >
             <ArrowUpRight className="h-3.5 w-3.5" />
             Submit on GitHub
-            <ArrowUpRight className="h-3 w-3 text-neutral-500" />
+            <ArrowUpRight className="h-3 w-3 text-muted-foreground" />
           </Link>
         </div>
-      </div>
+      </Card>
     </div>
   )
 }

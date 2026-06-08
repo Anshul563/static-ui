@@ -1,14 +1,4 @@
-import type { LucideIcon } from "lucide-react"
-import {
-  Globe,
-  Code2,
-  Atom,
-  Box,
-  Database,
-  Wind,
-  Rocket,
-  Repeat,
-} from "lucide-react"
+
 
 export type FrameworkStatus = "stable" | "beta" | "planned"
 
@@ -19,7 +9,7 @@ export interface Framework {
   autoDetect: boolean
   website: string
   description: string
-  icon: LucideIcon
+  icon: string
   gradient: string
   detectionBadge: string
 }
@@ -39,8 +29,8 @@ export const frameworks: Framework[] = [
     autoDetect: true,
     website: "https://nextjs.org",
     description: "React framework with server components, routing, and SSR.",
-    icon: Globe,
-    gradient: "from-[#22c55e] to-emerald-400",
+    icon: "./icons/nextdotjs.svg",
+    gradient: "from-primary to-emerald-400",
     detectionBadge: "✓ Auto Detect",
   },
   {
@@ -50,8 +40,8 @@ export const frameworks: Framework[] = [
     autoDetect: true,
     website: "https://react.dev",
     description: "The industry-standard UI library for building interfaces.",
-    icon: Atom,
-    gradient: "from-[#22c55e] to-emerald-400",
+    icon: "./icons/react.svg",
+    gradient: "from-primary to-emerald-400",
     detectionBadge: "✓ Auto Detect",
   },
   {
@@ -61,7 +51,7 @@ export const frameworks: Framework[] = [
     autoDetect: true,
     website: "https://vuejs.org",
     description: "Progressive framework for building SPAs with ease.",
-    icon: Code2,
+    icon: "./icons/vue.svg",
     gradient: "from-blue-400 to-blue-600",
     detectionBadge: "✓ Auto Detect",
   },
@@ -72,7 +62,7 @@ export const frameworks: Framework[] = [
     autoDetect: true,
     website: "https://nuxt.com",
     description: "Hybrid Vue framework with file-based routing and SSR.",
-    icon: Box,
+    icon: "./icons/nuxt.svg",
     gradient: "from-blue-400 to-blue-600",
     detectionBadge: "✓ Auto Detect",
   },
@@ -83,7 +73,7 @@ export const frameworks: Framework[] = [
     autoDetect: false,
     website: "https://solidjs.com",
     description: "Reactive UI library with fine-grained updates.",
-    icon: Database,
+    icon: "./icons/solidjs.svg",
     gradient: "from-neutral-600 to-neutral-500",
     detectionBadge: "Coming Soon",
   },
@@ -94,7 +84,7 @@ export const frameworks: Framework[] = [
     autoDetect: false,
     website: "https://svelte.dev",
     description: "Compiler-driven UI framework with minimal boilerplate.",
-    icon: Wind,
+    icon: "./icons/svelte.svg",
     gradient: "from-neutral-600 to-neutral-500",
     detectionBadge: "Coming Soon",
   },
@@ -105,7 +95,7 @@ export const frameworks: Framework[] = [
     autoDetect: false,
     website: "https://astro.build",
     description: "All-in-one web framework for content-driven sites.",
-    icon: Rocket,
+    icon: "./icons/astro.svg",
     gradient: "from-neutral-600 to-neutral-500",
     detectionBadge: "Coming Soon",
   },
@@ -116,7 +106,7 @@ export const frameworks: Framework[] = [
     autoDetect: false,
     website: "https://remix.run",
     description: "Full-stack web framework with nested routing.",
-    icon: Repeat,
+    icon: "./icons/remix.svg",
     gradient: "from-neutral-600 to-neutral-500",
     detectionBadge: "Coming Soon",
   },
@@ -152,9 +142,9 @@ export const frameworkCategories: FrameworkCategory[] = [
 export const statusConfig: Record<FrameworkStatus, { label: string; color: string; bgColor: string; borderColor: string }> = {
   stable: {
     label: "Stable",
-    color: "text-[#22c55e]",
-    bgColor: "bg-[#22c55e]/10",
-    borderColor: "border-[#22c55e]/20",
+    color: "text-primary",
+    bgColor: "bg-primary/10",
+    borderColor: "border-primary/20",
   },
   beta: {
     label: "Beta",

@@ -3,5 +3,6 @@ packages:
   - "packages/*"
 allowBuilds:
   esbuild: true
+  msw: true
   sharp: false
   unrs-resolver: true

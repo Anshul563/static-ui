@@ -1,7 +1,8 @@
 "use client"
 
-import { useEffect, useState, useCallback } from "react"
+import { useEffect, useState, useCallback, useRef } from "react"
 import { Terminal as TerminalIcon } from "lucide-react"
+import { Card } from "@/components/ui/card"
 
 interface Line {
   text: string
@@ -23,21 +24,53 @@ const totalDuration = 4200
 
 export function FrameworkTerminal() {
   const [visibleLines, setVisibleLines] = useState<number[]>([])
+  const [typedChars, setTypedChars] = useState(0)
   const [showCursor, setShowCursor] = useState(true)
+  const [phase, setPhase] = useState<"idle" | "typing" | "executing" | "done">("idle")
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   const runAnimation = useCallback(() => {
     setVisibleLines([])
-    lines.forEach((line) => {
-      setTimeout(() => {
-        setVisibleLines((prev) => [...prev, lines.indexOf(line)])
-      }, line.delay)
-    })
+    setTypedChars(0)
+    setPhase("typing")
   }, [])
 
   useEffect(() => {
     const timer = setTimeout(runAnimation, 500)
     return () => clearTimeout(timer)
   }, [runAnimation])
+
+  useEffect(() => {
+    if (phase === "typing") {
+      intervalRef.current = setInterval(() => {
+        setTypedChars((prev) => {
+          if (prev >= lines[0].text.length) {
+            if (intervalRef.current) clearInterval(intervalRef.current)
+            setPhase("executing")
+            setVisibleLines([0])
+            return prev
+          }
+          return prev + 1
+        })
+      }, 50)
+      return () => {
+        if (intervalRef.current) clearInterval(intervalRef.current)
+      }
+    }
+  }, [phase])
+
+  useEffect(() => {
+    if (phase === "executing") {
+      lines.slice(1).forEach((line, i) => {
+        setTimeout(() => {
+          setVisibleLines((prev) => [...prev, i + 1])
+          if (i === lines.slice(1).length - 1) {
+            setTimeout(() => setPhase("done"), 200)
+          }
+        }, line.delay)
+      })
+    }
+  }, [phase])
 
   useEffect(() => {
     const cursorInterval = setInterval(() => {
@@ -47,61 +80,64 @@ export function FrameworkTerminal() {
   }, [])
 
   useEffect(() => {
-    const restartInterval = setInterval(() => {
-      runAnimation()
-    }, totalDuration + 3000)
-    return () => clearInterval(restartInterval)
-  }, [runAnimation])
-
-  const getLineContent = (line: Line, index: number) => {
-    if (line.type === "command") {
-      return (
-        <span className="flex items-center gap-2">
-          <span className="text-neutral-400 select-none">$</span>
-          <span className="text-white">{line.text}</span>
-        </span>
-      )
+    if (phase === "done") {
+      const restartTimeout = setTimeout(() => {
+        runAnimation()
+      }, 3000)
+      return () => clearTimeout(restartTimeout)
     }
-    if (line.type === "success") {
-      return <span className="text-[#22c55e]">{line.text}</span>
-    }
-    return <span className="text-neutral-400">{line.text}</span>
-  }
+  }, [phase, runAnimation])
 
   return (
-    <div className="rounded-xl border border-neutral-800 bg-[#050505] overflow-hidden shadow-2xl">
-      <div className="flex items-center gap-1.5 border-b border-neutral-800 px-4 py-2.5">
+    <Card className="shadow-2xl overflow-hidden">
+      <div className="flex items-center gap-1.5 border-b border-border px-4 py-2.5 bg-card/50">
         <span className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
         <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/80" />
-        <span className="h-2.5 w-2.5 rounded-full bg-[#22c55e]/80" />
-        <span className="ml-2 text-[11px] text-neutral-600 font-mono">terminal</span>
+        <span className="h-2.5 w-2.5 rounded-full bg-primary/80" />
+        <span className="ml-2 text-[11px] text-muted-foreground font-mono">terminal</span>
       </div>
 
-      <div className="p-4 font-mono text-xs leading-relaxed min-h-[200px]">
-        <div className="flex items-center gap-2 text-neutral-500 mb-3">
+      <div className="p-4 font-mono text-xs leading-relaxed min-h-[200px] bg-card/30">
+        <div className="flex items-center gap-2 text-muted-foreground mb-3">
           <TerminalIcon className="h-3.5 w-3.5" />
           <span>Framework Auto Detection</span>
         </div>
 
-        {lines.map((line, index) => (
-          <div
-            key={index}
-            className={`mb-1 transition-opacity duration-200 ${
-              visibleLines.includes(index) ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            {getLineContent(line, index)}
-          </div>
-        ))}
+        <div className="flex items-center gap-2 mb-1">
+          <span className="text-muted-foreground select-none">$</span>
+          <span className="text-chart-2">
+            {lines[0].text.slice(0, typedChars)}
+            {(phase === "typing" || (phase === "idle" && typedChars === 0)) && (
+              <span className="inline-block w-2 h-4 bg-chart-2 ml-0.5 align-middle animate-typing-cursor" />
+            )}
+          </span>
+        </div>
 
-        {visibleLines.length >= lines.length && (
+        {lines.slice(1).map((line, index) => {
+          const lineIndex = index + 1
+          return (
+            <div
+              key={lineIndex}
+              className={`mb-1 transition-all duration-300 ${
+                visibleLines.includes(lineIndex)
+                  ? "opacity-100 translate-x-0"
+                  : "opacity-0 -translate-x-2"
+              }`}
+            >
+              {line.type === "success" && <span className="text-chart-2">{line.text}</span>}
+              {line.type === "output" && <span className="text-muted-foreground">{line.text}</span>}
+            </div>
+          )
+        })}
+
+        {phase === "done" && (
           <span
-            className={`inline-block w-2 h-4 bg-neutral-300 ml-0.5 transition-opacity ${
+            className={`inline-block w-2 h-4 bg-foreground ml-0.5 align-middle transition-opacity ${
               showCursor ? "opacity-100" : "opacity-0"
             }`}
           />
         )}
       </div>
-    </div>
+    </Card>
   )
 }

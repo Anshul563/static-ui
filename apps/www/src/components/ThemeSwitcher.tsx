@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react"
 import { Check, ChevronDown } from "lucide-react"
+import { Card } from "@/components/ui/card"
 
 interface ThemeVars {
   ":root": Record<string, string>
@@ -359,14 +360,6 @@ export function ThemeSwitcher() {
   const [open, setOpen] = useState(false)
   const [current, setCurrent] = useState("green")
 
-  useEffect(() => {
-    const saved = localStorage.getItem("static-ui-theme")
-    if (saved && themes[saved]) {
-      applyTheme(saved)
-      setCurrent(saved)
-    }
-  }, [])
-
   const applyTheme = useCallback((key: string) => {
     const theme = themes[key]
     if (!theme) return
@@ -385,18 +378,43 @@ export function ThemeSwitcher() {
     setOpen(false)
   }, [])
 
+  useEffect(() => {
+    const saved = localStorage.getItem("static-ui-theme")
+    if (saved && themes[saved]) {
+      applyTheme(saved)
+      setCurrent(saved)
+    }
+  }, [applyTheme])
+
+  useEffect(() => {
+    const el = document.documentElement
+    const observer = new MutationObserver(() => {
+      const saved = localStorage.getItem("static-ui-theme")
+      if (!saved) return
+      const theme = themes[saved]
+      if (!theme) return
+      const isDark = el.classList.contains("dark")
+      const vars = isDark ? theme.css.dark : theme.css[":root"]
+      Object.entries(vars).forEach(([prop, val]) => {
+        el.style.setProperty(prop, val)
+      })
+    })
+    observer.observe(el, { attributes: true, attributeFilter: ["class"] })
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <div className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 rounded-md border border-neutral-800 bg-neutral-950 px-2.5 py-1.5 text-xs text-neutral-300 hover:bg-neutral-900 hover:text-white transition-colors cursor-pointer"
+        className="flex items-center gap-2 rounded-md border border-border bg-card px-2.5 py-1.5 text-xs text-foreground hover:bg-accent hover:text-foreground transition-colors cursor-pointer"
       >
         <span
           className="inline-block h-2.5 w-2.5 rounded-full shrink-0"
           style={{ backgroundColor: themes[current]?.color }}
         />
         <span>{themes[current]?.label}</span>
-        <ChevronDown className="h-3 w-3 text-neutral-500" />
+        <ChevronDown className="h-3 w-3 text-muted-foreground" />
       </button>
 
       {open && (
@@ -405,14 +423,14 @@ export function ThemeSwitcher() {
             className="fixed inset-0 z-40"
             onClick={() => setOpen(false)}
           />
-          <div className="absolute right-0 top-full mt-1 z-50 w-40 rounded-xl border border-neutral-900 bg-[#0a0a0a] p-1.5 shadow-xl shadow-black/50">
+          <Card className="absolute right-0 top-full mt-1 z-50 w-40 bg-card p-1.5 shadow-xl shadow-black/50">
             {themeOrder.map((key) => {
               const theme = themes[key]
               return (
                 <button
                   key={key}
                   onClick={() => applyTheme(key)}
-                  className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs text-neutral-300 hover:bg-neutral-900 hover:text-white transition-colors cursor-pointer"
+                  className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs text-foreground hover:bg-accent hover:text-foreground transition-colors cursor-pointer"
                 >
                   <span
                     className="inline-block h-2.5 w-2.5 rounded-full shrink-0"
@@ -420,12 +438,12 @@ export function ThemeSwitcher() {
                   />
                   <span className="flex-1 text-left">{theme.label}</span>
                   {current === key && (
-                    <Check className="h-3 w-3 text-[#22c55e]" />
+                    <Check className="h-3 w-3 text-primary" />
                   )}
                 </button>
               )
             })}
-          </div>
+          </Card>
         </>
       )}
     </div>

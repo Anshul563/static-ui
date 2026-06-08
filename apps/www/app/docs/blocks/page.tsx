@@ -26,34 +26,34 @@ export default function BlocksListingPage() {
   return (
     <div className="flex flex-col gap-6 py-6">
       <div className="flex flex-col gap-2">
-        <p className="text-xs font-medium text-neutral-500">Blocks</p>
-        <h1 className="text-4xl font-bold tracking-tight text-white">Blocks</h1>
-        <p className="text-base text-neutral-400 leading-relaxed max-w-xl">
+        <p className="text-xs font-medium text-muted-foreground">Blocks</p>
+        <h1 className="text-4xl font-bold tracking-tight text-foreground">Blocks</h1>
+        <p className="text-base text-muted-foreground leading-relaxed max-w-xl">
           Pre-built layout sections and page patterns. Copy and paste entire blocks into your project.
         </p>
       </div>
 
-      <hr className="border-neutral-900 my-2" />
+      <hr className="border-border my-2" />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-neutral-900 rounded-xl overflow-hidden border border-neutral-900">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-muted rounded-xl overflow-hidden ring-1 ring-foreground/10">
         {blocks.map((block) => (
           <Link
             key={block.slug}
             href={`/docs/blocks/${block.slug}`}
-            className="flex flex-col gap-1.5 bg-[#030303] px-5 py-4 hover:bg-neutral-950/80 transition-colors group"
+            className="flex flex-col gap-1.5 bg-background px-5 py-4 hover:bg-card/80 transition-colors group"
           >
-            <span className="text-sm font-medium text-white group-hover:text-[#22c55e] transition-colors">
+            <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
               {block.name}
             </span>
-            <span className="text-[11px] text-neutral-500 leading-relaxed line-clamp-1">
+            <span className="text-[11px] text-muted-foreground leading-relaxed line-clamp-1">
               {block.description}
             </span>
             <div className="flex items-center gap-3 mt-0.5">
-              <span className="flex items-center gap-1.5 text-[10px] font-mono text-neutral-700">
+              <span className="flex items-center gap-1.5 text-[10px] font-mono text-muted-foreground">
                 <Terminal className="h-2.5 w-2.5" />
                 npx @static-ui/cli add {block.slug}
               </span>
-              <span className="text-[10px] text-neutral-700">
+              <span className="text-[10px] text-muted-foreground">
                 {block.deps} dependencies
               </span>
             </div>

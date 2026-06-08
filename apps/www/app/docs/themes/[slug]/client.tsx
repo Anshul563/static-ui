@@ -1,8 +1,10 @@
 "use client"
 
 import React, { useState } from "react"
+import { Card } from "@/components/ui/card"
 import { notFound, useParams } from "next/navigation"
-import { ChevronRight, Terminal, Check, Copy } from "lucide-react"
+import { ChevronRight, Terminal } from "lucide-react"
+import { CodeBlock } from "@/components/CodeBlock"
 
 const THEMES_META = [
   { name: "Green", slug: "green", description: "Fresh and clean green accent theme", color: "#22c55e", isDefault: true },
@@ -151,13 +153,13 @@ function oklchToHex(oklch: string): string {
 function ColorSwatch({ label, value }: { label: string; value: string }) {
   const hexLabel = oklchToHex(value)
   return (
-    <div className="flex items-center gap-3 py-2 px-3 rounded-lg border border-neutral-900 bg-neutral-950/50">
-      <span className="h-8 w-8 rounded-md border border-neutral-800 shrink-0" style={{ backgroundColor: hexLabel }} />
+    <Card size="sm" className="flex-row items-center gap-3 py-2 px-3 bg-card/50">
+      <span className="h-8 w-8 rounded-md border border-border shrink-0" style={{ backgroundColor: hexLabel }} />
       <div className="flex flex-col min-w-0">
-        <span className="text-xs font-medium text-white">{label}</span>
-        <span className="text-[10px] font-mono text-neutral-500 truncate">{value.replace("oklch(", "").replace(")", "")}</span>
+        <span className="text-xs font-medium text-foreground">{label}</span>
+        <span className="text-[10px] font-mono text-muted-foreground truncate">{value.replace("oklch(", "").replace(")", "")}</span>
       </div>
-    </div>
+    </Card>
   )
 }
 
@@ -171,14 +173,7 @@ export default function ThemeDetailPage() {
   const css = THEMES_DATA[slug]
   if (!css) return notFound()
 
-  const [copiedCommand, setCopiedCommand] = useState(false)
   const [activePreview, setActivePreview] = useState(false)
-
-  const handleCopyCommand = async () => {
-    await navigator.clipboard.writeText(`npx @static-ui/cli theme ${slug}`)
-    setCopiedCommand(true)
-    setTimeout(() => setCopiedCommand(false), 2000)
-  }
 
   const rootVars = css[":root"]
   const darkVars = css.dark
@@ -199,31 +194,31 @@ export default function ThemeDetailPage() {
   return (
     <div className="flex flex-col gap-8 py-6">
       <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-1 text-xs text-neutral-500 font-medium">
+        <div className="flex items-center gap-1 text-xs text-muted-foreground font-medium">
           Docs <ChevronRight className="h-3 w-3" /> Themes <ChevronRight className="h-3 w-3" />{" "}
-          <span className="text-neutral-400">{meta.name}</span>
+          <span className="text-muted-foreground">{meta.name}</span>
         </div>
         <div className="flex items-center gap-3">
-          <h1 className="text-4xl font-bold tracking-tight text-white">{meta.name}</h1>
+          <h1 className="text-4xl font-bold tracking-tight text-foreground">{meta.name}</h1>
           {meta.isDefault && (
-            <span className="inline-flex items-center rounded-full border border-[#22c55e]/30 bg-[#22c55e]/10 px-2.5 py-0.5 text-xs font-medium text-[#22c55e]">
+            <span className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
               Default
             </span>
           )}
         </div>
-        <p className="text-base text-neutral-400 leading-relaxed max-w-2xl">{meta.description}</p>
+        <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">{meta.description}</p>
       </div>
 
-      <hr className="border-neutral-900" />
+      <hr className="border-border" />
 
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-white tracking-tight">Color Palette</h2>
+          <h2 className="text-lg font-semibold text-foreground tracking-tight">Color Palette</h2>
         </div>
 
         <div className="space-y-6">
           <div>
-            <h3 className="text-sm font-medium text-neutral-400 mb-3">Light Mode — <code className="text-white font-mono">:root</code></h3>
+            <h3 className="text-sm font-medium text-muted-foreground mb-3">Light Mode — <code className="text-foreground font-mono">:root</code></h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
               {Object.entries(rootVars).filter(([k]) => k !== "--radius").map(([key, val]) => (
                 <ColorSwatch key={key} label={colorLabels[key] || key} value={val} />
@@ -231,7 +226,7 @@ export default function ThemeDetailPage() {
             </div>
           </div>
           <div>
-            <h3 className="text-sm font-medium text-neutral-400 mb-3">Dark Mode — <code className="text-white font-mono">.dark</code></h3>
+            <h3 className="text-sm font-medium text-muted-foreground mb-3">Dark Mode — <code className="text-foreground font-mono">.dark</code></h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
               {Object.entries(darkVars).filter(([k]) => k !== "--radius").map(([key, val]) => (
                 <ColorSwatch key={key} label={colorLabels[key] || key} value={val} />
@@ -242,49 +237,37 @@ export default function ThemeDetailPage() {
       </div>
 
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold text-white tracking-tight">Installation</h2>
-        <p className="text-xs text-neutral-400">Apply this theme to your project using the CLI:</p>
-        <div className="flex items-center justify-between rounded-xl border border-neutral-900 bg-[#0a0a0a]/80 p-3 pl-4 max-w-xl shadow-md">
-          <div className="flex items-center gap-3 font-mono text-xs text-neutral-300">
-            <Terminal className="h-3.5 w-3.5 text-[#22c55e]" />
-            <span>npx @static-ui/cli theme {slug}</span>
-          </div>
-          <button
-            onClick={handleCopyCommand}
-            className="flex items-center gap-1.5 rounded-md border border-neutral-800 bg-neutral-950 px-2 py-1 text-[11px] font-medium text-neutral-300 hover:bg-neutral-900 hover:text-white transition-all cursor-pointer ml-3"
-          >
-            {copiedCommand ? <Check className="h-3 w-3 text-[#22c55e]" /> : <Copy className="h-3 w-3" />}
-            {copiedCommand ? "Copied" : "Copy"}
-          </button>
-        </div>
+        <h2 className="text-lg font-semibold text-foreground tracking-tight">Installation</h2>
+        <p className="text-xs text-muted-foreground">Apply this theme to your project using the CLI:</p>
+        <CodeBlock code={`npx @static-ui/cli theme ${slug}`} language="bash" />
       </div>
 
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold text-white tracking-tight">Installation Instructions</h2>
-        <div className="text-sm text-neutral-400 leading-relaxed space-y-3">
+        <h2 className="text-lg font-semibold text-foreground tracking-tight">Installation Instructions</h2>
+        <div className="text-sm text-muted-foreground leading-relaxed space-y-3">
           <p>1. Run the CLI command above to generate the theme CSS file in your project.</p>
-          <p>2. Import the generated CSS file in your <code className="text-white text-xs font-mono bg-neutral-900 px-1 py-0.5 rounded-sm">globals.css</code> or layout file.</p>
-          <p>3. The theme variables will override the default palette for both <code className="text-white text-xs font-mono bg-neutral-900 px-1 py-0.5 rounded-sm">:root</code> (light) and <code className="text-white text-xs font-mono bg-neutral-900 px-1 py-0.5 rounded-sm">.dark</code> (dark) modes.</p>
-          <p>4. Components using <code className="text-white text-xs font-mono bg-neutral-900 px-1 py-0.5 rounded-sm">bg-primary</code>, <code className="text-white text-xs font-mono bg-neutral-900 px-1 py-0.5 rounded-sm">text-foreground</code>, and other themed utilities will automatically reflect the new colors.</p>
+          <p>2. Import the generated CSS file in your <code className="text-foreground text-xs font-mono bg-muted px-1 py-0.5 rounded-sm">globals.css</code> or layout file.</p>
+          <p>3. The theme variables will override the default palette for both <code className="text-foreground text-xs font-mono bg-muted px-1 py-0.5 rounded-sm">:root</code> (light) and <code className="text-foreground text-xs font-mono bg-muted px-1 py-0.5 rounded-sm">.dark</code> (dark) modes.</p>
+          <p>4. Components using <code className="text-foreground text-xs font-mono bg-muted px-1 py-0.5 rounded-sm">bg-primary</code>, <code className="text-foreground text-xs font-mono bg-muted px-1 py-0.5 rounded-sm">text-foreground</code>, and other themed utilities will automatically reflect the new colors.</p>
         </div>
       </div>
 
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-white tracking-tight">Live Preview</h2>
+          <h2 className="text-lg font-semibold text-foreground tracking-tight">Live Preview</h2>
           <button
             onClick={() => setActivePreview(!activePreview)}
             className={`inline-flex h-8 items-center justify-center rounded-md border px-3 text-xs font-medium transition-all cursor-pointer ${
               activePreview
-                ? "border-[#22c55e]/30 bg-[#22c55e]/10 text-[#22c55e]"
-                : "border-neutral-800 bg-neutral-950 text-neutral-400 hover:text-white hover:bg-neutral-900"
+                ? "border-primary/30 bg-primary/10 text-primary"
+                : "border-border bg-card text-muted-foreground hover:text-foreground hover:bg-accent"
             }`}
           >
             {activePreview ? "Applied" : "Apply Theme"}
           </button>
         </div>
-        <div
-          className="rounded-xl border border-neutral-900 bg-[#030303] p-6 relative overflow-hidden bg-[radial-gradient(#161616_1px,transparent_1px)] bg-[size:16px_16px]"
+        <Card
+          className="bg-background p-6 relative bg-[radial-gradient(#161616_1px,transparent_1px)] bg-[size:16px_16px]"
           style={previewStyle as React.CSSProperties}
         >
           <div className="flex flex-col gap-4 max-w-md mx-auto">
@@ -329,7 +312,7 @@ export default function ThemeDetailPage() {
               Badge
             </span>
           </div>
-        </div>
+        </Card>
       </div>
     </div>
   )

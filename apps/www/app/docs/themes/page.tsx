@@ -2,6 +2,7 @@ import React from "react"
 import Link from "next/link"
 import { Terminal, Check } from "lucide-react"
 import { createMetadata } from "@/lib/seo"
+import { Card } from "@/components/ui/card"
 
 export const metadata = createMetadata({
   title: "Themes",
@@ -33,14 +34,14 @@ export default function ThemesListingPage() {
   return (
     <div className="flex flex-col gap-6 py-6">
       <div className="flex flex-col gap-2">
-        <p className="text-xs font-medium text-neutral-500">Themes</p>
-        <h1 className="text-4xl font-bold tracking-tight text-white">Themes</h1>
-        <p className="text-base text-neutral-400 leading-relaxed max-w-xl">
+        <p className="text-xs font-medium text-muted-foreground">Themes</p>
+        <h1 className="text-4xl font-bold tracking-tight text-foreground">Themes</h1>
+        <p className="text-base text-muted-foreground leading-relaxed max-w-xl">
           Pre-built color themes for Static UI. Each theme provides a complete set of CSS variables for both light and dark mode.
         </p>
       </div>
 
-      <hr className="border-neutral-900 my-2" />
+      <hr className="border-border my-2" />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {themes.map((theme) => {
@@ -49,39 +50,40 @@ export default function ThemesListingPage() {
             <Link
               key={theme.slug}
               href={`/docs/themes/${theme.slug}`}
-              className="group relative flex flex-col rounded-xl border border-neutral-900 bg-[#0a0a0a] overflow-hidden hover:border-neutral-700 transition-all"
             >
-              <div
-                className="h-24 flex items-end p-4"
-                style={{ background: `linear-gradient(135deg, ${theme.color}33, ${theme.color}11)` }}
-              >
-                <div className="flex gap-1.5">
-                  <span className="h-6 w-6 rounded-full border border-white/20" style={{ backgroundColor: s.primary }} />
-                  <span className="h-6 w-6 rounded-full border border-white/20" style={{ backgroundColor: s.secondary }} />
-                  <span className="h-6 w-6 rounded-full border border-white/20" style={{ backgroundColor: s.accent }} />
-                  <span className="h-6 w-6 rounded-full border border-white/20" style={{ backgroundColor: s.ring }} />
+              <Card className="group relative transition-all">
+                <div
+                  className="h-24 flex items-end p-4"
+                  style={{ background: `linear-gradient(135deg, ${theme.color}33, ${theme.color}11)` }}
+                >
+                  <div className="flex gap-1.5">
+                    <span className="h-6 w-6 rounded-full border border-white/20" style={{ backgroundColor: s.primary }} />
+                    <span className="h-6 w-6 rounded-full border border-white/20" style={{ backgroundColor: s.secondary }} />
+                    <span className="h-6 w-6 rounded-full border border-white/20" style={{ backgroundColor: s.accent }} />
+                    <span className="h-6 w-6 rounded-full border border-white/20" style={{ backgroundColor: s.ring }} />
+                  </div>
                 </div>
-              </div>
-              <div className="p-4 flex flex-col gap-1.5">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-white group-hover:text-[#22c55e] transition-colors">
-                    {theme.name}
-                  </span>
-                  {theme.isDefault && (
-                    <span className="inline-flex items-center rounded-full border border-[#22c55e]/30 bg-[#22c55e]/10 px-2 py-0.5 text-[10px] font-medium text-[#22c55e]">
-                      <Check className="h-2.5 w-2.5 mr-0.5" />
-                      Default
+                <div className="p-4 flex flex-col gap-1.5">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+                      {theme.name}
                     </span>
-                  )}
+                    {theme.isDefault && (
+                      <span className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-2 py-0.5 text-[10px] font-medium text-primary">
+                        <Check className="h-2.5 w-2.5 mr-0.5" />
+                        Default
+                      </span>
+                    )}
+                  </div>
+                  <span className="text-[11px] text-muted-foreground leading-relaxed line-clamp-1">
+                    {theme.description}
+                  </span>
+                  <span className="flex items-center gap-1.5 text-[10px] font-mono text-muted-foreground mt-1">
+                    <Terminal className="h-2.5 w-2.5" />
+                    npx @static-ui/cli theme {theme.slug}
+                  </span>
                 </div>
-                <span className="text-[11px] text-neutral-500 leading-relaxed line-clamp-1">
-                  {theme.description}
-                </span>
-                <span className="flex items-center gap-1.5 text-[10px] font-mono text-neutral-700 mt-1">
-                  <Terminal className="h-2.5 w-2.5" />
-                  npx @static-ui/cli theme {theme.slug}
-                </span>
-              </div>
+              </Card>
             </Link>
           )
         })}

@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
+import { Card } from "@/components/ui/card"
 import { notFound, useParams } from "next/navigation"
 import { ChevronRight, Terminal, Check, Copy } from "lucide-react"
 
@@ -44,17 +45,17 @@ export function Dashboard01() {
             { label: "Active Users", value: "2,350", change: "+180.1%" },
             { label: "Sales", value: "12,234", change: "+19%" },
           ].map((stat) => (
-            <div key={stat.label} className="rounded-xl border border-border bg-card p-4 text-card-foreground shadow-xs">
+            <Card key={stat.label} className="p-4">
               <p className="text-sm text-muted-foreground">{stat.label}</p>
               <p className="text-2xl font-bold text-foreground">{stat.value}</p>
               <p className="text-xs text-green-500">{stat.change}</p>
-            </div>
+            </Card>
           ))}
         </div>
-        <div className="rounded-xl border border-border bg-card p-4 text-card-foreground shadow-xs">
-          <p className="text-sm text-muted-foreground mb-2">Recent Activity</p>
-          <div className="text-sm text-foreground">No recent activity to show.</div>
-        </div>
+            <Card className="p-4">
+              <p className="text-sm text-muted-foreground mb-2">Recent Activity</p>
+              <div className="text-sm text-foreground">No recent activity to show.</div>
+            </Card>
       </main>
     </div>
   )
@@ -87,20 +88,20 @@ export function Dashboard02() {
           </select>
         </header>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
-          <div className="rounded-xl border border-border bg-card p-4 text-card-foreground shadow-xs">
-            <p className="text-sm text-muted-foreground mb-2">Page Views</p>
-            <p className="text-3xl font-bold text-foreground">54,321</p>
-            <div className="mt-4 h-32 flex items-end gap-2">
-              {[40, 65, 45, 80, 55, 90, 70].map((h, i) => (
-                <div key={i} className="flex-1 bg-primary/20 rounded-t-sm" style={{ height: h + "%" }} />
-              ))}
-            </div>
-          </div>
-          <div className="rounded-xl border border-border bg-card p-4 text-card-foreground shadow-xs">
-            <p className="text-sm text-muted-foreground mb-2">Conversion Rate</p>
-            <p className="text-3xl font-bold text-foreground">3.24%</p>
-            <p className="text-xs text-green-500 mt-2">+0.5% from last month</p>
-          </div>
+            <Card className="p-4">
+              <p className="text-sm text-muted-foreground mb-2">Page Views</p>
+              <p className="text-3xl font-bold text-foreground">54,321</p>
+              <div className="mt-4 h-32 flex items-end gap-2">
+                {[40, 65, 45, 80, 55, 90, 70].map((h, i) => (
+                  <div key={i} className="flex-1 bg-primary/20 rounded-t-sm" style={{ height: h + "%" }} />
+                ))}
+              </div>
+            </Card>
+            <Card className="p-4">
+              <p className="text-sm text-muted-foreground mb-2">Conversion Rate</p>
+              <p className="text-3xl font-bold text-foreground">3.24%</p>
+              <p className="text-xs text-green-500 mt-2">+0.5% from last month</p>
+            </Card>
         </div>
       </main>
     </div>
@@ -113,7 +114,7 @@ import * as React from "react"
 export function Login01() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/50 p-4">
-      <div className="w-full max-w-sm rounded-xl border border-border bg-card p-6 text-card-foreground shadow-xs">
+      <Card className="w-full max-w-sm p-6">
         <div className="text-center mb-6">
           <h1 className="text-2xl font-bold text-foreground">Welcome back</h1>
           <p className="text-sm text-muted-foreground">Sign in to your account</p>
@@ -129,7 +130,7 @@ export function Login01() {
           </div>
           <button type="submit" className="inline-flex h-10 w-full items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors">Sign in</button>
         </form>
-      </div>
+      </Card>
     </div>
   )
 }`,
@@ -140,7 +141,7 @@ import * as React from "react"
 export function Login02() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/50 p-4">
-      <div className="w-full max-w-sm rounded-xl border border-border bg-card p-6 text-card-foreground shadow-xs">
+      <Card className="w-full max-w-sm p-6">
         <div className="text-center mb-6">
           <h1 className="text-2xl font-bold text-foreground">Create an account</h1>
           <p className="text-sm text-muted-foreground">Choose your sign up method</p>
@@ -154,7 +155,7 @@ export function Login02() {
           </div>
           <button type="submit" className="inline-flex h-10 w-full items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors">Create account</button>
         </div>
-      </div>
+      </Card>
     </div>
   )
 }`,
@@ -176,13 +177,13 @@ export function Pricing01() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
         {tiers.map((tier) => (
-          <div key={tier.name} className={\`rounded-xl border \${tier.popular ? "border-primary" : "border-border"} bg-card p-6 text-card-foreground shadow-xs relative\`}>
+          <Card key={tier.name} className={\`\${tier.popular ? "ring-primary" : ""} p-6 relative\`}>
             {tier.popular && <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 inline-flex items-center rounded-full border border-border bg-background px-2.5 py-0.5 text-xs font-semibold text-foreground">Most Popular</span>}
             <h3 className="text-lg font-semibold text-foreground">{tier.name}</h3>
             <p className="text-sm text-muted-foreground mt-1">{tier.description}</p>
             <p className="mt-4"><span className="text-4xl font-bold text-foreground">{tier.price}</span><span className="text-sm text-muted-foreground">/month</span></p>
             <button className="mt-6 inline-flex h-10 w-full items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors">Get started</button>
-          </div>
+          </Card>
         ))}
       </div>
     </section>
@@ -266,9 +267,9 @@ export function Hero02() {
             <button className="inline-flex h-10 items-center justify-center rounded-md border border-border bg-background px-6 py-2 text-sm font-medium text-foreground hover:bg-muted transition-colors">View on GitHub</button>
           </div>
         </div>
-        <div className="rounded-xl border border-border bg-card p-8 text-card-foreground shadow-xs aspect-[4/3] flex items-center justify-center">
-          <p className="text-muted-foreground">Preview</p>
-        </div>
+        <Card className="p-8 aspect-[4/3] flex-row items-center justify-center">
+              <p className="text-muted-foreground">Preview</p>
+            </Card>
       </div>
     </section>
   )
@@ -292,10 +293,10 @@ export function Feature01() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {features.map((f) => (
-            <div key={f.title} className="rounded-xl border border-border bg-card p-6 text-card-foreground shadow-xs">
+            <Card key={f.title} className="p-6">
               <h3 className="font-semibold text-foreground">{f.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{f.description}</p>
-            </div>
+            </Card>
           ))}
         </div>
       </div>
@@ -321,9 +322,9 @@ export function Feature02() {
               <h3 className="text-xl font-semibold text-foreground">{f.title}</h3>
               <p className="mt-2 text-muted-foreground">{f.description}</p>
             </div>
-            <div className="flex-1 rounded-xl border border-border bg-card p-8 text-card-foreground shadow-xs aspect-video flex items-center justify-center">
+            <Card className="flex-1 p-8 aspect-video flex-row items-center justify-center">
               <p className="text-muted-foreground text-sm">Illustration</p>
-            </div>
+            </Card>
           </div>
         ))}
       </div>
@@ -364,28 +365,28 @@ export default function BlockDetailPage() {
   return (
     <div className="flex flex-col gap-8 py-6">
       <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-1 text-xs text-neutral-500 font-medium">
+        <div className="flex items-center gap-1 text-xs text-muted-foreground font-medium">
           Docs <ChevronRight className="h-3 w-3" /> Blocks <ChevronRight className="h-3 w-3" />{" "}
-          <span className="text-neutral-400">{blockName}</span>
+          <span className="text-muted-foreground">{blockName}</span>
         </div>
-        <h1 className="text-4xl font-bold tracking-tight text-white">{blockName}</h1>
-        <p className="text-base text-neutral-400 leading-relaxed max-w-2xl">{meta.description}</p>
+        <h1 className="text-4xl font-bold tracking-tight text-foreground">{blockName}</h1>
+        <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">{meta.description}</p>
       </div>
 
-      <hr className="border-neutral-900" />
+      <hr className="border-border" />
 
       <div className="space-y-4">
-        <div className="flex items-center justify-between border-b border-neutral-900 pb-1">
+        <div className="flex items-center justify-between border-b border-border pb-1">
           <div className="flex gap-4 text-xs font-medium">
             <button
               onClick={() => setActiveTab("preview")}
-              className={`pb-2 border-b-2 transition-colors cursor-pointer ${activeTab === "preview" ? "border-[#22c55e] text-[#22c55e] font-semibold" : "border-transparent text-neutral-500 hover:text-neutral-300"}`}
+              className={`pb-2 border-b-2 transition-colors cursor-pointer ${activeTab === "preview" ? "border-primary text-primary font-semibold" : "border-transparent text-muted-foreground hover:text-foreground"}`}
             >
               Preview
             </button>
             <button
               onClick={() => setActiveTab("code")}
-              className={`pb-2 border-b-2 transition-colors cursor-pointer ${activeTab === "code" ? "border-[#22c55e] text-[#22c55e] font-semibold" : "border-transparent text-neutral-500 hover:text-neutral-300"}`}
+              className={`pb-2 border-b-2 transition-colors cursor-pointer ${activeTab === "code" ? "border-primary text-primary font-semibold" : "border-transparent text-muted-foreground hover:text-foreground"}`}
             >
               Code
             </button>
@@ -393,15 +394,15 @@ export default function BlockDetailPage() {
           {activeTab === "code" && (
             <button
               onClick={handleCopyCode}
-              className="flex items-center gap-1.5 rounded-md border border-neutral-800 bg-neutral-950 px-2 py-1 text-[11px] font-medium text-neutral-300 hover:bg-neutral-900 hover:text-white transition-all cursor-pointer"
+              className="flex items-center gap-1.5 rounded-md border border-border bg-card px-2 py-1 text-[11px] font-medium text-foreground hover:bg-accent hover:text-foreground transition-all cursor-pointer"
             >
-              {copiedCode ? <Check className="h-3 w-3 text-[#22c55e]" /> : <Copy className="h-3 w-3" />}
+              {copiedCode ? <Check className="h-3 w-3 text-primary" /> : <Copy className="h-3 w-3" />}
               {copiedCode ? "Copied" : "Copy Code"}
             </button>
           )}
         </div>
 
-        <div className="rounded-xl border border-neutral-900 bg-[#030303] min-h-[300px] flex items-center justify-center p-6 relative overflow-hidden bg-[radial-gradient(#161616_1px,transparent_1px)] bg-[size:16px_16px]">
+        <Card className="bg-background min-h-[300px] flex-row items-center justify-center p-6 relative bg-[radial-gradient(#161616_1px,transparent_1px)] bg-[size:16px_16px]">
           {activeTab === "preview" ? (
             <div
               className="w-full h-64 rounded-lg flex items-center justify-center"
@@ -414,51 +415,51 @@ export default function BlockDetailPage() {
                 >
                   {blockName.charAt(0)}
                 </div>
-                <p className="text-sm font-medium text-neutral-400">{blockName}</p>
-                <p className="text-xs text-neutral-600 mt-1">Block preview — add to your project to see it live</p>
+                <p className="text-sm font-medium text-muted-foreground">{blockName}</p>
+                <p className="text-xs text-muted-foreground mt-1">Block preview — add to your project to see it live</p>
               </div>
             </div>
           ) : (
-            <pre className="w-full font-mono text-[11px] overflow-x-auto whitespace-pre p-4 rounded-lg bg-[#050505] border border-neutral-950 text-left leading-relaxed max-h-[400px] overflow-y-auto">
+            <Card size="sm" className="w-full font-mono text-[11px] overflow-x-auto whitespace-pre p-4 bg-card text-left leading-relaxed max-h-[400px] overflow-y-auto">
               <code>{code}</code>
-            </pre>
+            </Card>
           )}
-        </div>
+        </Card>
       </div>
 
       <div className="space-y-4 pt-4">
-        <h3 className="text-lg font-semibold text-white tracking-tight">Installation</h3>
-        <p className="text-xs text-neutral-400">Run the following command to add this block to your project:</p>
-        <div className="flex items-center justify-between rounded-xl border border-neutral-900 bg-[#0a0a0a]/80 p-3 pl-4 max-w-xl shadow-md">
-          <div className="flex items-center gap-3 font-mono text-xs text-neutral-300">
-            <Terminal className="h-3.5 w-3.5 text-[#22c55e]" />
+        <h3 className="text-lg font-semibold text-foreground tracking-tight">Installation</h3>
+        <p className="text-xs text-muted-foreground">Run the following command to add this block to your project:</p>
+        <Card className="bg-card/80 p-3 pl-4 max-w-xl shadow-md flex-row items-center justify-between">
+          <div className="flex items-center gap-3 font-mono text-xs text-foreground">
+            <Terminal className="h-3.5 w-3.5 text-primary" />
             <span>npx @static-ui/cli add {slug}</span>
           </div>
           <button
             onClick={handleCopyInstall}
-            className="flex items-center gap-1.5 rounded-md border border-neutral-800 bg-neutral-950 px-2 py-1 text-[11px] font-medium text-neutral-300 hover:bg-neutral-900 hover:text-white transition-all cursor-pointer ml-3"
+            className="flex items-center gap-1.5 rounded-md border border-border bg-card px-2 py-1 text-[11px] font-medium text-foreground hover:bg-accent hover:text-foreground transition-all cursor-pointer ml-3"
           >
-            {copiedInstall ? <Check className="h-3 w-3 text-[#22c55e]" /> : <Copy className="h-3 w-3" />}
+            {copiedInstall ? <Check className="h-3 w-3 text-primary" /> : <Copy className="h-3 w-3" />}
             {copiedInstall ? "Copied" : "Copy"}
           </button>
-        </div>
+        </Card>
       </div>
 
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-white tracking-tight">Dependencies</h3>
+        <h3 className="text-lg font-semibold text-foreground tracking-tight">Dependencies</h3>
         <div className="space-y-2">
-          <p className="text-xs text-neutral-400">Package dependencies:</p>
+          <p className="text-xs text-muted-foreground">Package dependencies:</p>
           <div className="flex flex-wrap gap-2">
             {meta.deps.map((dep) => (
-              <span key={dep} className="inline-flex items-center rounded-md border border-neutral-800 bg-neutral-950 px-2.5 py-1 text-[11px] font-mono text-neutral-300">{dep}</span>
+              <span key={dep} className="inline-flex items-center rounded-md border border-border bg-card px-2.5 py-1 text-[11px] font-mono text-foreground">{dep}</span>
             ))}
           </div>
         </div>
         <div className="space-y-2">
-          <p className="text-xs text-neutral-400">Required components (also installed):</p>
+          <p className="text-xs text-muted-foreground">Required components (also installed):</p>
           <div className="flex flex-wrap gap-2">
             {meta.registryDeps.map((dep) => (
-              <span key={dep} className="inline-flex items-center rounded-md border border-neutral-800 bg-neutral-950 px-2.5 py-1 text-[11px] font-mono text-neutral-300">{dep}</span>
+              <span key={dep} className="inline-flex items-center rounded-md border border-border bg-card px-2.5 py-1 text-[11px] font-mono text-foreground">{dep}</span>
             ))}
           </div>
         </div>

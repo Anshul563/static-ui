@@ -7,6 +7,8 @@ import { cn } from "@/lib/utils"
 import { Menu, X, ExternalLink } from "lucide-react"
 import { SearchModal } from "@/components/SearchModal"
 import { ThemeSwitcher } from "@/components/ThemeSwitcher"
+import { ThemeToggleButton } from "@/components/ThemeToggleButton"
+import { Badge } from "@/components/ui/badge"
 
 const sidebarNavigation = [
   {
@@ -119,10 +121,10 @@ function SidebarContent({ pathname }: { pathname: string }) {
     <div className="space-y-6 text-sm">
       {sidebarNavigation.map((group) => (
         <div key={group.title} className="space-y-2">
-          <h4 className="text-xs font-semibold uppercase tracking-wider text-neutral-200">
+          <h4 className="text-xs font-semibold uppercase tracking-wider text-chart-2">
             {group.title}
           </h4>
-          <ul className="space-y-1 border-l border-neutral-900">
+          <ul className="space-y-1 border-l border-border">
             {group.items.map((item) => {
               const isActive = pathname === item.href
               return (
@@ -132,8 +134,8 @@ function SidebarContent({ pathname }: { pathname: string }) {
                     className={cn(
                       "block py-1.5 pl-3 text-xs font-medium border-l transition-all",
                       isActive
-                        ? "text-[#22c55e] border-[#22c55e] bg-neutral-950/40 font-semibold"
-                        : "text-neutral-400 border-transparent hover:text-neutral-200 hover:border-neutral-800"
+                        ? "text-primary border-primary bg-card/40 font-semibold"
+                        : "text-muted-foreground border-transparent hover:text-foreground hover:border-border"
                     )}
                   >
                     {item.name}
@@ -168,14 +170,14 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
   }, [mobileSidebarOpen])
 
   return (
-    <div className="min-h-screen bg-[#030303] text-neutral-300">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Top Navigation Bar */}
-      <header className="sticky top-0 z-50 w-full border-b border-neutral-900 bg-[#030303]/80 backdrop-blur-md">
+      <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md">
         <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-              className="md:hidden flex h-8 w-8 items-center justify-center rounded-md border border-neutral-800 bg-neutral-950 text-neutral-400 hover:text-white transition-colors cursor-pointer"
+              className="md:hidden flex h-8 w-8 items-center justify-center rounded-md border border-border bg-card text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
               aria-label="Toggle sidebar"
             >
               {mobileSidebarOpen ? (
@@ -184,23 +186,23 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
                 <Menu className="h-4 w-4" />
               )}
             </button>
-            <Link href="/" className="flex items-center gap-2 font-semibold text-white">
+            <Link href="/" className="flex items-center gap-1 font-semibold text-foreground">
               <img src="/logo.svg" alt="Static UI" className="h-5 w-auto" />
-              Static UI <span className="text-xs font-normal text-neutral-500">Docs</span>
+              Static UI <Badge variant="outline" className="">Docs</Badge>
             </Link>
           </div>
-          <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-neutral-400">
-            <Link href="/" className="transition-colors hover:text-white">Home</Link>
-            <Link href="/docs/components" className="transition-colors hover:text-white">Components</Link>
-            <Link href="/docs/blocks" className="transition-colors hover:text-white">Blocks</Link>
-            <Link href="/docs/templates" className="transition-colors hover:text-white">Templates</Link>
-            <Link href="/docs/themes" className="transition-colors hover:text-white">Themes</Link>
-            <Link href="/docs/showcase" className="transition-colors hover:text-white">Showcase</Link>
-            <a href={process.env.NEXT_PUBLIC_STORYBOOK_URL || "https://registry-staticui.vercel.app"} target="_blank" rel="noreferrer" className="transition-colors hover:text-white flex items-center gap-1">
+          <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-muted-foreground">
+            <Link href="/" className="transition-colors hover:text-foreground">Home</Link>
+            <Link href="/docs/components" className="transition-colors hover:text-foreground">Components</Link>
+            <Link href="/docs/blocks" className="transition-colors hover:text-foreground">Blocks</Link>
+            <Link href="/docs/templates" className="transition-colors hover:text-foreground">Templates</Link>
+            <Link href="/docs/themes" className="transition-colors hover:text-foreground">Themes</Link>
+            <Link href="/docs/showcase" className="transition-colors hover:text-foreground">Showcase</Link>
+            <a href={process.env.NEXT_PUBLIC_STORYBOOK_URL || "https://registry-staticui.vercel.app"} target="_blank" rel="noreferrer" className="transition-colors hover:text-foreground flex items-center gap-1">
               <ExternalLink className="h-3.5 w-3.5" />
               Storybook
             </a>
-            <a href={process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/Anshul563/static-ui"} target="_blank" rel="noreferrer" className="transition-colors hover:text-white flex items-center gap-1">
+            <a href={process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/Anshul563/static-ui"} target="_blank" rel="noreferrer" className="transition-colors hover:text-foreground flex items-center gap-1">
               <ExternalLink className="h-3.5 w-3.5" />
               GitHub
             </a>
@@ -208,6 +210,7 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
           <div className="flex items-center gap-2">
             <SearchModal />
             <ThemeSwitcher />
+            <ThemeToggleButton />
           </div>
         </div>
       </header>
@@ -215,7 +218,7 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
       {/* Mobile Sidebar Overlay */}
       {mobileSidebarOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
+          className="fixed inset-0 z-40 bg-background/60 backdrop-blur-sm md:hidden"
           onClick={() => setMobileSidebarOpen(false)}
         />
       )}
@@ -223,7 +226,7 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
       {/* Mobile Sidebar Drawer */}
       <aside
         className={cn(
-          "fixed top-14 left-0 z-40 h-[calc(100vh-3.5rem)] w-64 overflow-y-auto border-r border-neutral-900 bg-[#030303] p-4 transition-transform duration-200 md:hidden",
+          "fixed top-14 left-0 z-40 h-[calc(100vh-3.5rem)] w-64 overflow-y-auto border-r border-border bg-background p-4 transition-transform duration-200 md:hidden",
           mobileSidebarOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
@@ -244,14 +247,14 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-neutral-900 bg-[#030303] py-8 text-xs text-neutral-500">
+      <footer className="border-t border-border bg-background py-8 text-xs text-muted-foreground">
         <div className="mx-auto max-w-7xl px-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p>© 2026 Static UI. Built open-source for modern developers.</p>
             <div className="flex gap-4">
-              <Link href="/docs" className="hover:text-neutral-300 transition-colors">Docs</Link>
-              <a href={process.env.NEXT_PUBLIC_STORYBOOK_URL || "https://registry-staticui.vercel.app"} target="_blank" rel="noreferrer" className="hover:text-neutral-300 transition-colors">Storybook</a>
-              <a href={process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/Anshul563/static-ui"} target="_blank" rel="noreferrer" className="hover:text-neutral-300 transition-colors">GitHub</a>
+              <Link href="/docs" className="hover:text-foreground transition-colors">Docs</Link>
+              <a href={process.env.NEXT_PUBLIC_STORYBOOK_URL || "https://registry-staticui.vercel.app"} target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">Storybook</a>
+              <a href={process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/Anshul563/static-ui"} target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">GitHub</a>
             </div>
           </div>
         </div>
@@ -259,3 +262,4 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
     </div>
   )
 }
+
