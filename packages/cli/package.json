@@ -1,6 +1,6 @@
 {
   "name": "@static-ui/cli",
-  "version": "0.1.0-beta.1",
+  "version": "0.1.0",
   "description": "The command-line interface for Static UI - initialize projects, add components, apply themes, and manage your design system across multiple frameworks.",
   "type": "module",
   "main": "./dist/index.js",

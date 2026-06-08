@@ -1,6 +1,6 @@
 {
   "name": "@static-ui/core",
-  "version": "0.1.0-beta.1",
+  "version": "0.1.0",
   "private": false,
   "type": "module",
   "description": "Static UI core - component schemas and multi-framework code generators. Source of truth for component definitions.",

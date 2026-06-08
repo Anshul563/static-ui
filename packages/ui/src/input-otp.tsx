@@ -1,68 +1,86 @@
 "use client"
 
 import * as React from "react"
+import { OTPInput, OTPInputContext } from "input-otp"
+import { MinusIcon } from "lucide-react"
+
 import { cn } from "@/lib/utils"
 
-interface InputOTPProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  maxLength: number
-  onCodeComplete?: (code: string) => void
+function InputOTP({
+  className,
+  containerClassName,
+  ...props
+}: React.ComponentProps<typeof OTPInput> & {
+  containerClassName?: string
+}) {
+  return (
+    <OTPInput
+      data-slot="input-otp"
+      containerClassName={cn(
+        "cn-input-otp flex items-center has-disabled:opacity-50",
+        containerClassName
+      )}
+      spellCheck={false}
+      className={cn("disabled:cursor-not-allowed", className)}
+      {...props}
+    />
+  )
 }
 
-const InputOTP = React.forwardRef<HTMLInputElement, InputOTPProps>(
-  ({ className, maxLength = 6, onCodeComplete, value, onChange, ...props }, ref) => {
-    const [code, setCode] = React.useState<string[]>((value as string || "").split("").slice(0, maxLength))
-    const inputRefs = React.useRef<HTMLInputElement[]>([])
+function InputOTPGroup({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="input-otp-group"
+      className={cn(
+        "flex items-center rounded-lg has-aria-invalid:border-destructive has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 dark:has-aria-invalid:ring-destructive/40",
+        className
+      )}
+      {...props}
+    />
+  )
+}
 
-    React.useEffect(() => {
-      if (value !== undefined) {
-        setCode((value as string).split("").slice(0, maxLength))
-      }
-    }, [value, maxLength])
+function InputOTPSlot({
+  index,
+  className,
+  ...props
+}: React.ComponentProps<"div"> & {
+  index: number
+}) {
+  const inputOTPContext = React.useContext(OTPInputContext)
+  const { char, hasFakeCaret, isActive } = inputOTPContext?.slots[index] ?? {}
 
-    const handleTextChange = (text: string, index: number) => {
-      const cleanDigit = text.replace(/[^0-9]/g, "").slice(-1)
-      const newCode = [...code]
-      newCode[index] = cleanDigit
-      
-      setCode(newCode)
-      if (onChange) {
-        const joined = newCode.join("")
-        onChange({ target: { value: joined } } as React.ChangeEvent<HTMLInputElement>)
-        if (joined.length === maxLength && onCodeComplete) onCodeComplete(joined)
-      }
+  return (
+    <div
+      data-slot="input-otp-slot"
+      data-active={isActive}
+      className={cn(
+        "relative flex size-8 items-center justify-center border-y border-r border-input text-sm transition-all outline-none first:rounded-l-lg first:border-l last:rounded-r-lg aria-invalid:border-destructive data-[active=true]:z-10 data-[active=true]:border-ring data-[active=true]:ring-3 data-[active=true]:ring-ring/50 data-[active=true]:aria-invalid:border-destructive data-[active=true]:aria-invalid:ring-destructive/20 dark:bg-input/30 dark:data-[active=true]:aria-invalid:ring-destructive/40",
+        className
+      )}
+      {...props}
+    >
+      {char}
+      {hasFakeCaret && (
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <div className="h-4 w-px animate-caret-blink bg-foreground duration-1000" />
+        </div>
+      )}
+    </div>
+  )
+}
 
-      if (cleanDigit && index < maxLength - 1) {
-        inputRefs.current[index + 1]?.focus()
-      }
-    }
+function InputOTPSeparator({ ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="input-otp-separator"
+      className="flex items-center [&_svg:not([class*='size-'])]:size-4"
+      role="separator"
+      {...props}
+    >
+      <MinusIcon />
+    </div>
+  )
+}
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
-      if (e.key === "Backspace" && !code[index] && index > 0) {
-        inputRefs.current[index - 1]?.focus()
-      }
-    }
-
-    return (
-      <div className={cn("flex items-center gap-2", className)}>
-        {Array.from({ length: maxLength }).map((_, index) => (
-          <input
-            key={index}
-            ref={(el) => { if (el) inputRefs.current[index] = el }}
-            type="text"
-            inputMode="numeric"
-            pattern="[0-9]*"
-            maxLength={1}
-            value={code[index] || ""}
-            onChange={(e) => handleTextChange(e.target.value, index)}
-            onKeyDown={(e) => handleKeyDown(e, index)}
-            className="w-10 h-12 text-center text-lg font-semibold border border-border bg-background rounded-md shadow-2xs focus:outline-hidden focus:border-ring focus:ring-1 focus:ring-ring transition-all"
-            {...props}
-          />
-        ))}
-      </div>
-    )
-  }
-)
-InputOTP.displayName = "InputOTP"
-
-export { InputOTP }
+export { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator }

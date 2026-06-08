@@ -1,6 +1,6 @@
 {
   "name": "@static-ui/themes",
-  "version": "0.1.0-beta.1",
+  "version": "0.1.0",
   "private": false,
   "type": "module",
   "description": "Theme definitions for Static UI - CSS variable presets for every color scheme. Includes green, blue, zinc, slate, gaming, cyberpunk, and modern themes.",

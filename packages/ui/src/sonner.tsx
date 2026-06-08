@@ -1,61 +1,45 @@
 "use client"
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import {
+  CircleCheckIcon,
+  InfoIcon,
+  Loader2Icon,
+  OctagonXIcon,
+  TriangleAlertIcon,
+} from "lucide-react"
+import { useTheme } from "next-themes"
+import { Toaster as Sonner, type ToasterProps } from "sonner"
 
-interface SonnerMessage {
-  id: string
-  message: string
-  description?: string
-}
-
-const SonnerContext = React.createContext<{
-  toast: (message: string, description?: string) => void
-} | null>(null)
-
-export function useSonner() {
-  const context = React.useContext(SonnerContext)
-  if (!context) throw new Error("useSonner must be used within a SonnerProvider")
-  return context
-}
-
-export const SonnerProvider = ({ children }: { children: React.ReactNode }) => {
-  const [items, setItems] = React.useState<SonnerMessage[]>([])
-
-  const toast = React.useCallback((message: string, description?: string) => {
-    const id = Math.random().toString(36).substring(2, 9)
-    setItems((prev) => [...prev, { id, message, description }].slice(-3)) // Keeps a max stack of 3 on screen
-
-    setTimeout(() => {
-      setItems((prev) => prev.filter((item) => item.id !== id))
-    }, 4000)
-  }, [])
+const Toaster = ({ ...props }: ToasterProps) => {
+  const { theme = "system" } = useTheme()
 
   return (
-    <SonnerContext.Provider value={{ toast }}>
-      {children}
-      <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none w-full max-w-sm">
-        {items.map((item, index) => {
-          const isBottom = items.length - 1 - index
-          return (
-            <div
-              key={item.id}
-              style={{
-                transform: `scale(${1 - isBottom * 0.05}) translateY(${isBottom * 10}px)`,
-                zIndex: items.length - isBottom,
-                opacity: 1 - isBottom * 0.3,
-              }}
-              className={cn(
-                "pointer-events-auto w-full rounded-xl border border-border bg-background p-4 text-foreground shadow-md transition-all duration-300 flex flex-col gap-1 origin-bottom",
-                isBottom > 0 ? "absolute bottom-0" : "relative"
-              )}
-            >
-              <div className="text-sm font-semibold tracking-tight">{item.message}</div>
-              {item.description && <div className="text-xs text-muted-foreground">{item.description}</div>}
-            </div>
-          )
-        })}
-      </div>
-    </SonnerContext.Provider>
+    <Sonner
+      theme={theme as ToasterProps["theme"]}
+      className="toaster group"
+      icons={{
+        success: <CircleCheckIcon className="size-4" />,
+        info: <InfoIcon className="size-4" />,
+        warning: <TriangleAlertIcon className="size-4" />,
+        error: <OctagonXIcon className="size-4" />,
+        loading: <Loader2Icon className="size-4 animate-spin" />,
+      }}
+      style={
+        {
+          "--normal-bg": "var(--popover)",
+          "--normal-text": "var(--popover-foreground)",
+          "--normal-border": "var(--border)",
+          "--border-radius": "var(--radius)",
+        } as React.CSSProperties
+      }
+      toastOptions={{
+        classNames: {
+          toast: "cn-toast",
+        },
+      }}
+      {...props}
+    />
   )
 }
+
+export { Toaster }

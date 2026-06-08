@@ -166,6 +166,16 @@
       "categories": ["overlay"]
     },
     {
+      "name": "chart",
+      "type": "components:ui",
+      "description": "A chart component for data visualization using Recharts",
+      "frameworks": ["react", "nextjs"],
+      "dependencies": ["recharts"],
+      "registryDependencies": [],
+      "files": ["chart.tsx"],
+      "categories": ["data-display"]
+    },
+    {
       "name": "drawer",
       "type": "components:ui",
       "description": "A slide-out panel for navigation or content",
@@ -310,6 +320,16 @@
       "categories": ["layout"]
     },
     {
+      "name": "sheet",
+      "type": "components:ui",
+      "description": "A slide-out dialog panel from the edge of the screen",
+      "frameworks": ["react", "nextjs", "remix"],
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": ["sheet.tsx"],
+      "categories": ["overlay"]
+    },
+    {
       "name": "sidebar",
       "type": "components:ui",
       "description": "A collapsible sidebar navigation panel",
@@ -434,6 +454,16 @@
       "registryDependencies": [],
       "files": ["typography.tsx"],
       "categories": ["typography"]
+    },
+    {
+      "name": "use-mobile",
+      "type": "components:hook",
+      "description": "A hook that detects mobile viewport for responsive layouts",
+      "frameworks": ["react", "nextjs", "vue", "nuxt", "solid", "svelte", "astro", "remix"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": ["hooks/use-mobile.ts"],
+      "categories": ["hooks"]
     },
     {
       "name": "ai-chat",

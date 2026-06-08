@@ -52,6 +52,9 @@ const COMPONENT_DEPENDENCY_OVERRIDES: Record<string, string[]> = {
   collapsible: ["@base-ui/react"],
   slider: ["@base-ui/react"],
   switch: ["@base-ui/react"],
+  chart: ["recharts", "lucide-react"],
+  sheet: ["@base-ui/react"],
+  "use-mobile": [],
 };
 
 interface RegistryMetadata {
@@ -120,6 +123,29 @@ async function buildRegistry() {
         registryDependencies: metaEntry?.registryDependencies ?? [],
         files: [{ name: file, content }],
       });
+    }
+
+    // --- Hooks ---
+    const HOOKS_DIR = path.join(UI_DIR, "hooks");
+    if (await fs.pathExists(HOOKS_DIR)) {
+      const hookFiles = await fs.readdir(HOOKS_DIR);
+      for (const file of hookFiles) {
+        if (!file.endsWith(".ts")) continue;
+
+        const rawName = path.basename(file, ".ts");
+        const filePath = path.join(HOOKS_DIR, file);
+        const content = await fs.readFile(filePath, "utf8");
+        const metaEntry = meta.components.find((c) => c.name === rawName);
+
+        buildItems.push({
+          name: rawName,
+          type: "components:hook",
+          frameworks: metaEntry?.frameworks ?? DEFAULT_FRAMEWORKS,
+          dependencies: metaEntry?.dependencies ?? [],
+          registryDependencies: metaEntry?.registryDependencies ?? [],
+          files: [{ name: `hooks/${file}`, content }],
+        });
+      }
     }
 
     // --- Blocks ---

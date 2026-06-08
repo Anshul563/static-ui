@@ -11,6 +11,7 @@ import {
   selectTheme,
 } from "../prompts/index.js";
 import { detectFramework, getAdapterById } from "../adapters/index.js";
+import { fetchRegistry, filterRegistryByFramework } from "../registry/index.js";
 
 interface ThemeManifestEntry {
   label: string;
@@ -406,6 +407,22 @@ ${darkVars}
   body {
     @apply bg-background text-foreground;
   }
+
+  :root {
+    --chart-1: oklch(0.646 0.222 41.116);
+    --chart-2: oklch(0.6 0.118 184.704);
+    --chart-3: oklch(0.398 0.07 227.392);
+    --chart-4: oklch(0.828 0.189 84.429);
+    --chart-5: oklch(0.769 0.188 70.08);
+  }
+
+  .dark {
+    --chart-1: oklch(0.488 0.243 264.376);
+    --chart-2: oklch(0.696 0.17 162.48);
+    --chart-3: oklch(0.769 0.188 70.08);
+    --chart-4: oklch(0.627 0.265 303.9);
+    --chart-5: oklch(0.645 0.246 16.439);
+  }
 }`;
 }
 
@@ -572,13 +589,88 @@ export function cn(...inputs: ClassValue[]) {
   await fs.outputFile(cssPath, cssContent, "utf8");
   spin.stop(`Updated ${path.relative(projectRoot, cssPath)}`);
 
+  // Fetch registry and install all components
+  spin.start("Fetching component registry...");
+  let registry;
+  try {
+    registry = await fetchRegistry();
+  } catch (err) {
+    spin.stop("Failed to fetch registry.");
+    p.cancel(`Registry error: ${(err as Error).message}`);
+    process.exit(1);
+  }
+  spin.stop("Registry loaded!");
+
+  const targetFolder = resolveAlias(projectRoot, config.aliases.ui);
+  await fs.ensureDir(targetFolder);
+  const frameworkComponents = filterRegistryByFramework(registry, config.framework);
+
+  spin.start("Copying components...");
+  const userUtilsAlias = config.aliases.utils;
+  const allDeps = new Set<string>();
+  for (const component of frameworkComponents) {
+    // Skip hooks — they are created separately in the project hooks directory
+    if (component.type === "components:hook") {
+      if (component.dependencies) {
+        for (const dep of component.dependencies) {
+          allDeps.add(dep);
+        }
+      }
+      continue;
+    }
+
+    for (const file of component.files) {
+      let updatedContent = file.content
+        .replace(/from\s+"@\/lib\/utils"/g, `from "${userUtilsAlias}"`)
+
+      const dest = path.join(targetFolder, file.name);
+      await fs.outputFile(dest, updatedContent, "utf8");
+    }
+
+    if (component.dependencies) {
+      for (const dep of component.dependencies) {
+        allDeps.add(dep);
+      }
+    }
+  }
+  spin.stop(`Components copied to ${path.relative(projectRoot, targetFolder)}`);
+
+  // Create hooks/use-mobile.ts
+  spin.start("Creating hooks...");
+  const hooksDir = resolveAlias(projectRoot, "@/hooks");
+  await fs.ensureDir(hooksDir);
+  const hookExt = language === "typescript" ? "ts" : "js";
+  const useMobileContent = `import * as React from "react"
+
+const MOBILE_BREAKPOINT = 768
+
+export function useIsMobile() {
+  const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
+
+  React.useEffect(() => {
+    const mql = window.matchMedia(\`(max-width: \${MOBILE_BREAKPOINT - 1}px)\`)
+    const onChange = () => {
+      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    }
+    mql.addEventListener("change", onChange)
+    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    return () => mql.removeEventListener("change", onChange)
+  }, [])
+
+  return !!isMobile
+}
+`;
+  await fs.outputFile(path.join(hooksDir, `use-mobile.${hookExt}`), useMobileContent, "utf8");
+  spin.stop(`Created ${path.relative(projectRoot, path.join(hooksDir, `use-mobile.${hookExt}`))}`);
+
   const installDeps = await p.confirm({
-    message: "Install dependencies (clsx, tailwind-merge)?",
+    message: "Install dependencies?",
   });
 
   if (installDeps && !p.isCancel(installDeps)) {
+    const deps = ["clsx", "tailwind-merge", ...allDeps];
     spin.start("Installing dependencies...");
-    installDependencies(projectRoot, ["clsx", "tailwind-merge"]);
+    installDependencies(projectRoot, [...new Set(deps)]);
     spin.stop("Dependencies installed!");
   }
 
