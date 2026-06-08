@@ -14,7 +14,8 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "dist/**", "storybook-static/**", "!.next/cache/**"]
+      "outputs": [".next/**", "dist/**", "storybook-static/**", "!.next/cache/**"],
+      "inputs": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.json", "tsconfig.json", "package.json"]
     },
     "dev": {
       "cache": false,
@@ -26,7 +27,59 @@
     },
     "lint": {
       "dependsOn": ["^build"],
+      "outputs": [],
+      "inputs": ["src/**/*.ts", "src/**/*.tsx", "eslint.config.mjs"]
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"],
+      "inputs": ["src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts", "vitest.config.ts"]
+    },
+    "test:coverage": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"],
+      "inputs": ["src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts", "vitest.config.ts"]
+    },
+    "e2e": {
+      "dependsOn": ["build"],
+      "outputs": ["playwright-report/**"],
+      "inputs": ["e2e/**/*.spec.ts", "playwright.config.ts"]
+    },
+    "registry": {
+      "dependsOn": [],
+      "outputs": ["dist/index.json"],
+      "inputs": [
+        "scripts/build-registry.ts",
+        "registry.json",
+        "../ui/src/**/*.tsx",
+        "../ui/src/**/*.ts"
+      ]
+    },
+    "validate:registry": {
+      "dependsOn": ["registry"],
       "outputs": []
+    },
+    "knip": {
+      "dependsOn": [],
+      "outputs": []
+    },
+    "syncpack": {
+      "dependsOn": [],
+      "outputs": []
+    },
+    "size": {
+      "dependsOn": [],
+      "outputs": []
+    },
+    "format": {
+      "dependsOn": [],
+      "outputs": [],
+      "cache": false
+    },
+    "format:check": {
+      "dependsOn": [],
+      "outputs": [],
+      "cache": false
     },
     "storybook:build": {
       "dependsOn": ["^build"],

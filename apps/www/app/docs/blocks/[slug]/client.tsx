@@ -1,21 +1,81 @@
 "use client"
 
 import React, { useState } from "react"
-import { Card } from "@/components/ui/card"
+import { Check, ChevronRight, Copy, Terminal } from "lucide-react"
 import { notFound, useParams } from "next/navigation"
-import { ChevronRight, Terminal, Check, Copy } from "lucide-react"
+import { Card } from "@/components/ui/card"
 
 const BLOCKS_META = [
-  { name: "Dashboard 01", slug: "dashboard-01", description: "Full dashboard layout with sidebar, header, and stats", deps: ["@base-ui/react", "lucide-react"], registryDeps: ["sidebar", "card", "button", "avatar"] },
-  { name: "Dashboard 02", slug: "dashboard-02", description: "Analytics dashboard variant with charts", deps: ["@base-ui/react", "lucide-react"], registryDeps: ["sidebar", "card", "tabs", "select", "button"] },
-  { name: "Login 01", slug: "login-01", description: "Clean login form with email and password", deps: ["@base-ui/react", "lucide-react"], registryDeps: ["button", "input", "label", "card"] },
-  { name: "Login 02", slug: "login-02", description: "Login form with social auth providers", deps: ["@base-ui/react", "lucide-react"], registryDeps: ["button", "input", "label", "card", "separator"] },
-  { name: "Pricing 01", slug: "pricing-01", description: "Three-tier pricing card layout", deps: ["@base-ui/react", "lucide-react"], registryDeps: ["card", "button", "badge"] },
-  { name: "Pricing 02", slug: "pricing-02", description: "Pricing table with feature comparison", deps: ["@base-ui/react", "lucide-react"], registryDeps: ["card", "button", "badge", "table"] },
-  { name: "Hero 01", slug: "hero-01", description: "Centered hero section with CTA buttons", deps: ["@base-ui/react", "lucide-react"], registryDeps: ["button", "badge"] },
-  { name: "Hero 02", slug: "hero-02", description: "Split hero section with image and text", deps: ["@base-ui/react", "lucide-react"], registryDeps: ["button", "badge"] },
-  { name: "Feature 01", slug: "feature-01", description: "Three-column feature grid", deps: ["@base-ui/react", "lucide-react"], registryDeps: ["card"] },
-  { name: "Feature 02", slug: "feature-02", description: "Alternating feature section with icons", deps: ["@base-ui/react", "lucide-react"], registryDeps: ["card"] },
+  {
+    name: "Dashboard 01",
+    slug: "dashboard-01",
+    description: "Full dashboard layout with sidebar, header, and stats",
+    deps: ["@base-ui/react", "lucide-react"],
+    registryDeps: ["sidebar", "card", "button", "avatar"],
+  },
+  {
+    name: "Dashboard 02",
+    slug: "dashboard-02",
+    description: "Analytics dashboard variant with charts",
+    deps: ["@base-ui/react", "lucide-react"],
+    registryDeps: ["sidebar", "card", "tabs", "select", "button"],
+  },
+  {
+    name: "Login 01",
+    slug: "login-01",
+    description: "Clean login form with email and password",
+    deps: ["@base-ui/react", "lucide-react"],
+    registryDeps: ["button", "input", "label", "card"],
+  },
+  {
+    name: "Login 02",
+    slug: "login-02",
+    description: "Login form with social auth providers",
+    deps: ["@base-ui/react", "lucide-react"],
+    registryDeps: ["button", "input", "label", "card", "separator"],
+  },
+  {
+    name: "Pricing 01",
+    slug: "pricing-01",
+    description: "Three-tier pricing card layout",
+    deps: ["@base-ui/react", "lucide-react"],
+    registryDeps: ["card", "button", "badge"],
+  },
+  {
+    name: "Pricing 02",
+    slug: "pricing-02",
+    description: "Pricing table with feature comparison",
+    deps: ["@base-ui/react", "lucide-react"],
+    registryDeps: ["card", "button", "badge", "table"],
+  },
+  {
+    name: "Hero 01",
+    slug: "hero-01",
+    description: "Centered hero section with CTA buttons",
+    deps: ["@base-ui/react", "lucide-react"],
+    registryDeps: ["button", "badge"],
+  },
+  {
+    name: "Hero 02",
+    slug: "hero-02",
+    description: "Split hero section with image and text",
+    deps: ["@base-ui/react", "lucide-react"],
+    registryDeps: ["button", "badge"],
+  },
+  {
+    name: "Feature 01",
+    slug: "feature-01",
+    description: "Three-column feature grid",
+    deps: ["@base-ui/react", "lucide-react"],
+    registryDeps: ["card"],
+  },
+  {
+    name: "Feature 02",
+    slug: "feature-02",
+    description: "Alternating feature section with icons",
+    deps: ["@base-ui/react", "lucide-react"],
+    registryDeps: ["card"],
+  },
 ]
 
 const BLOCKS_CODE: Record<string, string> = {
@@ -267,7 +327,7 @@ export function Hero02() {
             <button className="inline-flex h-10 items-center justify-center rounded-md border border-border bg-background px-6 py-2 text-sm font-medium text-foreground hover:bg-muted transition-colors">View on GitHub</button>
           </div>
         </div>
-        <Card className="p-8 aspect-[4/3] flex-row items-center justify-center">
+        <Card className="p-8 aspect-4/3 flex-row items-center justify-center">
               <p className="text-muted-foreground">Preview</p>
             </Card>
       </div>
@@ -338,11 +398,12 @@ export default function BlockDetailPage() {
   const slug = params?.slug as string
 
   const meta = BLOCKS_META.find((b) => b.slug === slug)
-  if (!meta) return notFound()
 
   const [activeTab, setActiveTab] = useState<"preview" | "code">("preview")
   const [copiedCode, setCopiedCode] = useState(false)
   const [copiedInstall, setCopiedInstall] = useState(false)
+
+  if (!meta) return notFound()
 
   const code = BLOCKS_CODE[slug] || ""
 
@@ -359,8 +420,30 @@ export default function BlockDetailPage() {
   }
 
   const blockName = meta.name
-  const gradientFrom = ["#22c55e", "#3b82f6", "#a1a1aa", "#94a3b8", "#ec4899", "#eab308", "#14b8a6", "#8b5cf6", "#f97316", "#06b6d4"][BLOCKS_META.indexOf(meta) % 10]
-  const gradientTo = ["#166534", "#1e40af", "#52525b", "#475569", "#9d174d", "#a16207", "#0f766e", "#5b21b6", "#c2410c", "#0891b2"][BLOCKS_META.indexOf(meta) % 10]
+  const gradientFrom = [
+    "#22c55e",
+    "#3b82f6",
+    "#a1a1aa",
+    "#94a3b8",
+    "#ec4899",
+    "#eab308",
+    "#14b8a6",
+    "#8b5cf6",
+    "#f97316",
+    "#06b6d4",
+  ][BLOCKS_META.indexOf(meta) % 10]
+  const gradientTo = [
+    "#166534",
+    "#1e40af",
+    "#52525b",
+    "#475569",
+    "#9d174d",
+    "#a16207",
+    "#0f766e",
+    "#5b21b6",
+    "#c2410c",
+    "#0891b2",
+  ][BLOCKS_META.indexOf(meta) % 10]
 
   return (
     <div className="flex flex-col gap-8 py-6">
@@ -370,7 +453,9 @@ export default function BlockDetailPage() {
           <span className="text-muted-foreground">{blockName}</span>
         </div>
         <h1 className="text-4xl font-bold tracking-tight text-foreground">{blockName}</h1>
-        <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">{meta.description}</p>
+        <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">
+          {meta.description}
+        </p>
       </div>
 
       <hr className="border-border" />
@@ -396,31 +481,44 @@ export default function BlockDetailPage() {
               onClick={handleCopyCode}
               className="flex items-center gap-1.5 rounded-md border border-border bg-card px-2 py-1 text-[11px] font-medium text-foreground hover:bg-accent hover:text-foreground transition-all cursor-pointer"
             >
-              {copiedCode ? <Check className="h-3 w-3 text-primary" /> : <Copy className="h-3 w-3" />}
+              {copiedCode ? (
+                <Check className="h-3 w-3 text-primary" />
+              ) : (
+                <Copy className="h-3 w-3" />
+              )}
               {copiedCode ? "Copied" : "Copy Code"}
             </button>
           )}
         </div>
 
-        <Card className="bg-background min-h-[300px] flex-row items-center justify-center p-6 relative bg-[radial-gradient(#161616_1px,transparent_1px)] bg-[size:16px_16px]">
+        <Card className="bg-background min-h-75 flex-row items-center justify-center p-6 relative bg-[radial-gradient(#161616_1px,transparent_1px)] bg-size-[16px_16px]">
           {activeTab === "preview" ? (
             <div
               className="w-full h-64 rounded-lg flex items-center justify-center"
-              style={{ background: `linear-gradient(135deg, ${gradientFrom}33, ${gradientTo}22)` }}
+              style={{
+                background: `linear-gradient(135deg, ${gradientFrom}33, ${gradientTo}22)`,
+              }}
             >
               <div className="text-center">
                 <div
                   className="w-16 h-16 rounded-xl mx-auto mb-3 flex items-center justify-center text-2xl font-bold"
-                  style={{ background: `linear-gradient(135deg, ${gradientFrom}, ${gradientTo})` }}
+                  style={{
+                    background: `linear-gradient(135deg, ${gradientFrom}, ${gradientTo})`,
+                  }}
                 >
                   {blockName.charAt(0)}
                 </div>
                 <p className="text-sm font-medium text-muted-foreground">{blockName}</p>
-                <p className="text-xs text-muted-foreground mt-1">Block preview — add to your project to see it live</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Block preview — add to your project to see it live
+                </p>
               </div>
             </div>
           ) : (
-            <Card size="sm" className="w-full font-mono text-[11px] overflow-x-auto whitespace-pre p-4 bg-card text-left leading-relaxed max-h-[400px] overflow-y-auto">
+            <Card
+              size="sm"
+              className="w-full font-mono text-[11px] overflow-x-auto whitespace-pre p-4 bg-card text-left leading-relaxed max-h-100 overflow-y-auto"
+            >
               <code>{code}</code>
             </Card>
           )}
@@ -429,7 +527,9 @@ export default function BlockDetailPage() {
 
       <div className="space-y-4 pt-4">
         <h3 className="text-lg font-semibold text-foreground tracking-tight">Installation</h3>
-        <p className="text-xs text-muted-foreground">Run the following command to add this block to your project:</p>
+        <p className="text-xs text-muted-foreground">
+          Run the following command to add this block to your project:
+        </p>
         <Card className="bg-card/80 p-3 pl-4 max-w-xl shadow-md flex-row items-center justify-between">
           <div className="flex items-center gap-3 font-mono text-xs text-foreground">
             <Terminal className="h-3.5 w-3.5 text-primary" />
@@ -439,7 +539,11 @@ export default function BlockDetailPage() {
             onClick={handleCopyInstall}
             className="flex items-center gap-1.5 rounded-md border border-border bg-card px-2 py-1 text-[11px] font-medium text-foreground hover:bg-accent hover:text-foreground transition-all cursor-pointer ml-3"
           >
-            {copiedInstall ? <Check className="h-3 w-3 text-primary" /> : <Copy className="h-3 w-3" />}
+            {copiedInstall ? (
+              <Check className="h-3 w-3 text-primary" />
+            ) : (
+              <Copy className="h-3 w-3" />
+            )}
             {copiedInstall ? "Copied" : "Copy"}
           </button>
         </Card>
@@ -451,7 +555,12 @@ export default function BlockDetailPage() {
           <p className="text-xs text-muted-foreground">Package dependencies:</p>
           <div className="flex flex-wrap gap-2">
             {meta.deps.map((dep) => (
-              <span key={dep} className="inline-flex items-center rounded-md border border-border bg-card px-2.5 py-1 text-[11px] font-mono text-foreground">{dep}</span>
+              <span
+                key={dep}
+                className="inline-flex items-center rounded-md border border-border bg-card px-2.5 py-1 text-[11px] font-mono text-foreground"
+              >
+                {dep}
+              </span>
             ))}
           </div>
         </div>
@@ -459,7 +568,12 @@ export default function BlockDetailPage() {
           <p className="text-xs text-muted-foreground">Required components (also installed):</p>
           <div className="flex flex-wrap gap-2">
             {meta.registryDeps.map((dep) => (
-              <span key={dep} className="inline-flex items-center rounded-md border border-border bg-card px-2.5 py-1 text-[11px] font-mono text-foreground">{dep}</span>
+              <span
+                key={dep}
+                className="inline-flex items-center rounded-md border border-border bg-card px-2.5 py-1 text-[11px] font-mono text-foreground"
+              >
+                {dep}
+              </span>
             ))}
           </div>
         </div>

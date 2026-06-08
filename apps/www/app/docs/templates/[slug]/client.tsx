@@ -1,14 +1,32 @@
 "use client"
 
 import React, { useState } from "react"
-import { Card } from "@/components/ui/card"
+import { Check, ChevronRight, Copy, Terminal } from "lucide-react"
 import { notFound, useParams } from "next/navigation"
-import { ChevronRight, Terminal, Check, Copy } from "lucide-react"
+import { Card } from "@/components/ui/card"
 
 const TEMPLATES_META = [
-  { name: "Marketing", slug: "marketing", description: "Full marketing landing page with hero, features, and pricing sections", deps: ["@base-ui/react", "lucide-react", "next"], registryDeps: ["hero-01", "feature-01", "pricing-01", "button"] },
-  { name: "Dashboard", slug: "dashboard", description: "Full dashboard template with sidebar navigation and analytics", deps: ["@base-ui/react", "lucide-react", "next"], registryDeps: ["dashboard-01", "sidebar", "button", "card"] },
-  { name: "Auth", slug: "auth", description: "Authentication pages template with login and register modes", deps: ["@base-ui/react", "lucide-react", "next"], registryDeps: ["login-01", "login-02"] },
+  {
+    name: "Marketing",
+    slug: "marketing",
+    description: "Full marketing landing page with hero, features, and pricing sections",
+    deps: ["@base-ui/react", "lucide-react", "next"],
+    registryDeps: ["hero-01", "feature-01", "pricing-01", "button"],
+  },
+  {
+    name: "Dashboard",
+    slug: "dashboard",
+    description: "Full dashboard template with sidebar navigation and analytics",
+    deps: ["@base-ui/react", "lucide-react", "next"],
+    registryDeps: ["dashboard-01", "sidebar", "button", "card"],
+  },
+  {
+    name: "Auth",
+    slug: "auth",
+    description: "Authentication pages template with login and register modes",
+    deps: ["@base-ui/react", "lucide-react", "next"],
+    registryDeps: ["login-01", "login-02"],
+  },
 ]
 
 const TEMPLATES_CODE: Record<string, string> = {
@@ -182,11 +200,12 @@ export default function TemplateDetailPage() {
   const slug = params?.slug as string
 
   const meta = TEMPLATES_META.find((t) => t.slug === slug)
-  if (!meta) return notFound()
 
   const [activeTab, setActiveTab] = useState<"preview" | "code">("preview")
   const [copiedCode, setCopiedCode] = useState(false)
   const [copiedInstall, setCopiedInstall] = useState(false)
+
+  if (!meta) return notFound()
 
   const code = TEMPLATES_CODE[slug] || ""
 
@@ -202,8 +221,10 @@ export default function TemplateDetailPage() {
     setTimeout(() => setCopiedInstall(false), 2000)
   }
 
-  const gradientFrom = { marketing: "#22c55e", dashboard: "#3b82f6", auth: "#a855f7" }[slug] || "#22c55e"
-  const gradientTo = { marketing: "#166534", dashboard: "#1e40af", auth: "#7c3aed" }[slug] || "#166534"
+  const gradientFrom =
+    { marketing: "#22c55e", dashboard: "#3b82f6", auth: "#a855f7" }[slug] || "#22c55e"
+  const gradientTo =
+    { marketing: "#166534", dashboard: "#1e40af", auth: "#7c3aed" }[slug] || "#166534"
 
   return (
     <div className="flex flex-col gap-8 py-6">
@@ -213,7 +234,9 @@ export default function TemplateDetailPage() {
           <span className="text-muted-foreground">{meta.name}</span>
         </div>
         <h1 className="text-4xl font-bold tracking-tight text-foreground">{meta.name}</h1>
-        <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">{meta.description}</p>
+        <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">
+          {meta.description}
+        </p>
       </div>
 
       <hr className="border-border" />
@@ -239,31 +262,44 @@ export default function TemplateDetailPage() {
               onClick={handleCopyCode}
               className="flex items-center gap-1.5 rounded-md border border-border bg-card px-2 py-1 text-[11px] font-medium text-foreground hover:bg-accent hover:text-foreground transition-all cursor-pointer"
             >
-              {copiedCode ? <Check className="h-3 w-3 text-primary" /> : <Copy className="h-3 w-3" />}
+              {copiedCode ? (
+                <Check className="h-3 w-3 text-primary" />
+              ) : (
+                <Copy className="h-3 w-3" />
+              )}
               {copiedCode ? "Copied" : "Copy Code"}
             </button>
           )}
         </div>
 
-        <Card className="bg-background min-h-[300px] flex-row items-center justify-center p-6 relative bg-[radial-gradient(#161616_1px,transparent_1px)] bg-[size:16px_16px]">
+        <Card className="bg-background min-h-75 flex-row items-center justify-center p-6 relative bg-[radial-gradient(#161616_1px,transparent_1px)] bg-size-[16px_16px]">
           {activeTab === "preview" ? (
             <div
               className="w-full h-64 rounded-lg flex items-center justify-center"
-              style={{ background: `linear-gradient(135deg, ${gradientFrom}33, ${gradientTo}22)` }}
+              style={{
+                background: `linear-gradient(135deg, ${gradientFrom}33, ${gradientTo}22)`,
+              }}
             >
               <div className="text-center">
                 <div
                   className="w-16 h-16 rounded-xl mx-auto mb-3 flex items-center justify-center text-2xl font-bold"
-                  style={{ background: `linear-gradient(135deg, ${gradientFrom}, ${gradientTo})` }}
+                  style={{
+                    background: `linear-gradient(135deg, ${gradientFrom}, ${gradientTo})`,
+                  }}
                 >
                   {meta.name.charAt(0)}
                 </div>
                 <p className="text-sm font-medium text-muted-foreground">{meta.name} Template</p>
-                <p className="text-xs text-muted-foreground mt-1">Template preview — add to your project to see it live</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Template preview — add to your project to see it live
+                </p>
               </div>
             </div>
           ) : (
-            <Card size="sm" className="w-full font-mono text-[11px] overflow-x-auto whitespace-pre p-4 bg-card text-left leading-relaxed max-h-[400px] overflow-y-auto">
+            <Card
+              size="sm"
+              className="w-full font-mono text-[11px] overflow-x-auto whitespace-pre p-4 bg-card text-left leading-relaxed max-h-100 overflow-y-auto"
+            >
               <code>{code}</code>
             </Card>
           )}
@@ -272,7 +308,9 @@ export default function TemplateDetailPage() {
 
       <div className="space-y-4 pt-4">
         <h3 className="text-lg font-semibold text-foreground tracking-tight">Installation</h3>
-        <p className="text-xs text-muted-foreground">Run the following command to add this template to your project:</p>
+        <p className="text-xs text-muted-foreground">
+          Run the following command to add this template to your project:
+        </p>
         <Card className="bg-card/80 p-3 pl-4 max-w-xl shadow-md flex-row items-center justify-between">
           <div className="flex items-center gap-3 font-mono text-xs text-foreground">
             <Terminal className="h-3.5 w-3.5 text-primary" />
@@ -282,7 +320,11 @@ export default function TemplateDetailPage() {
             onClick={handleCopyInstall}
             className="flex items-center gap-1.5 rounded-md border border-border bg-card px-2 py-1 text-[11px] font-medium text-foreground hover:bg-accent hover:text-foreground transition-all cursor-pointer ml-3"
           >
-            {copiedInstall ? <Check className="h-3 w-3 text-primary" /> : <Copy className="h-3 w-3" />}
+            {copiedInstall ? (
+              <Check className="h-3 w-3 text-primary" />
+            ) : (
+              <Copy className="h-3 w-3" />
+            )}
             {copiedInstall ? "Copied" : "Copy"}
           </button>
         </Card>
@@ -294,15 +336,27 @@ export default function TemplateDetailPage() {
           <p className="text-xs text-muted-foreground">Package dependencies:</p>
           <div className="flex flex-wrap gap-2">
             {meta.deps.map((dep) => (
-              <span key={dep} className="inline-flex items-center rounded-md border border-border bg-card px-2.5 py-1 text-[11px] font-mono text-foreground">{dep}</span>
+              <span
+                key={dep}
+                className="inline-flex items-center rounded-md border border-border bg-card px-2.5 py-1 text-[11px] font-mono text-foreground"
+              >
+                {dep}
+              </span>
             ))}
           </div>
         </div>
         <div className="space-y-2">
-          <p className="text-xs text-muted-foreground">Required blocks and components (also installed):</p>
+          <p className="text-xs text-muted-foreground">
+            Required blocks and components (also installed):
+          </p>
           <div className="flex flex-wrap gap-2">
             {meta.registryDeps.map((dep) => (
-              <span key={dep} className="inline-flex items-center rounded-md border border-border bg-card px-2.5 py-1 text-[11px] font-mono text-foreground">{dep}</span>
+              <span
+                key={dep}
+                className="inline-flex items-center rounded-md border border-border bg-card px-2.5 py-1 text-[11px] font-mono text-foreground"
+              >
+                {dep}
+              </span>
             ))}
           </div>
         </div>

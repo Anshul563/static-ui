@@ -1,14 +1,14 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React, { useEffect, useState } from "react"
+import { ExternalLink, Menu, X } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
-import { Menu, X, ExternalLink } from "lucide-react"
 import { SearchModal } from "@/components/SearchModal"
 import { ThemeSwitcher } from "@/components/ThemeSwitcher"
 import { ThemeToggleButton } from "@/components/ThemeToggleButton"
 import { Badge } from "@/components/ui/badge"
+import { cn } from "@/lib/utils"
 
 const sidebarNavigation = [
   {
@@ -110,8 +110,21 @@ const sidebarNavigation = [
   },
   {
     title: "Showcase",
+    items: [{ name: "Showcase", href: "/docs/showcase" }],
+  },
+  {
+    title: "Developers",
     items: [
-      { name: "Showcase", href: "/docs/showcase" },
+      { name: "Architecture", href: "/docs/developers/architecture" },
+      { name: "Monorepo Structure", href: "/docs/developers/monorepo" },
+      { name: "Development Workflow", href: "/docs/developers/workflow" },
+      { name: "Contributing", href: "/docs/developers/contributing" },
+      { name: "Testing", href: "/docs/developers/testing" },
+      { name: "Release Process", href: "/docs/developers/release" },
+      { name: "Commit Conventions", href: "/docs/developers/commits" },
+      { name: "Versioning", href: "/docs/developers/versioning" },
+      { name: "CI/CD", href: "/docs/developers/cicd" },
+      { name: "Project Health", href: "/docs/developers/project-health" },
     ],
   },
 ]
@@ -180,29 +193,50 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
               className="md:hidden flex h-8 w-8 items-center justify-center rounded-md border border-border bg-card text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
               aria-label="Toggle sidebar"
             >
-              {mobileSidebarOpen ? (
-                <X className="h-4 w-4" />
-              ) : (
-                <Menu className="h-4 w-4" />
-              )}
+              {mobileSidebarOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
             <Link href="/" className="flex items-center gap-1 font-semibold text-foreground">
               <img src="/logo.svg" alt="Static UI" className="h-5 w-auto" />
-              Static UI <Badge variant="outline" className="">Docs</Badge>
+              Static UI{" "}
+              <Badge variant="outline" className="">
+                Docs
+              </Badge>
             </Link>
           </div>
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-muted-foreground">
-            <Link href="/" className="transition-colors hover:text-foreground">Home</Link>
-            <Link href="/docs/components" className="transition-colors hover:text-foreground">Components</Link>
-            <Link href="/docs/blocks" className="transition-colors hover:text-foreground">Blocks</Link>
-            <Link href="/docs/templates" className="transition-colors hover:text-foreground">Templates</Link>
-            <Link href="/docs/themes" className="transition-colors hover:text-foreground">Themes</Link>
-            <Link href="/docs/showcase" className="transition-colors hover:text-foreground">Showcase</Link>
-            <a href={process.env.NEXT_PUBLIC_STORYBOOK_URL || "https://registry-staticui.vercel.app"} target="_blank" rel="noreferrer" className="transition-colors hover:text-foreground flex items-center gap-1">
+            <Link href="/" className="transition-colors hover:text-foreground">
+              Home
+            </Link>
+            <Link href="/docs/components" className="transition-colors hover:text-foreground">
+              Components
+            </Link>
+            <Link href="/docs/blocks" className="transition-colors hover:text-foreground">
+              Blocks
+            </Link>
+            <Link href="/docs/templates" className="transition-colors hover:text-foreground">
+              Templates
+            </Link>
+            <Link href="/docs/themes" className="transition-colors hover:text-foreground">
+              Themes
+            </Link>
+            <Link href="/docs/showcase" className="transition-colors hover:text-foreground">
+              Showcase
+            </Link>
+            <a
+              href={process.env.NEXT_PUBLIC_STORYBOOK_URL || "https://registry-staticui.vercel.app"}
+              target="_blank"
+              rel="noreferrer"
+              className="transition-colors hover:text-foreground flex items-center gap-1"
+            >
               <ExternalLink className="h-3.5 w-3.5" />
               Storybook
             </a>
-            <a href={process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/Anshul563/static-ui"} target="_blank" rel="noreferrer" className="transition-colors hover:text-foreground flex items-center gap-1">
+            <a
+              href={process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/Anshul563/static-ui"}
+              target="_blank"
+              rel="noreferrer"
+              className="transition-colors hover:text-foreground flex items-center gap-1"
+            >
               <ExternalLink className="h-3.5 w-3.5" />
               GitHub
             </a>
@@ -241,9 +275,7 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
         </aside>
 
         {/* Dynamic Reading Content Canvas */}
-        <main className="max-w-3xl pb-16 min-w-0 w-full">
-          {children}
-        </main>
+        <main className="max-w-3xl pb-16 min-w-0 w-full">{children}</main>
       </div>
 
       {/* Footer */}
@@ -252,9 +284,29 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p>© 2026 Static UI. Built open-source for modern developers.</p>
             <div className="flex gap-4">
-              <Link href="/docs" className="hover:text-foreground transition-colors">Docs</Link>
-              <a href={process.env.NEXT_PUBLIC_STORYBOOK_URL || "https://registry-staticui.vercel.app"} target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">Storybook</a>
-              <a href={process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/Anshul563/static-ui"} target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">GitHub</a>
+              <Link href="/docs" className="hover:text-foreground transition-colors">
+                Docs
+              </Link>
+              <a
+                href={
+                  process.env.NEXT_PUBLIC_STORYBOOK_URL || "https://registry-staticui.vercel.app"
+                }
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-foreground transition-colors"
+              >
+                Storybook
+              </a>
+              <a
+                href={
+                  process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/Anshul563/static-ui"
+                }
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-foreground transition-colors"
+              >
+                GitHub
+              </a>
             </div>
           </div>
         </div>
@@ -262,4 +314,3 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
     </div>
   )
 }
-

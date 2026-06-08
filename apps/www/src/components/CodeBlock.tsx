@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Check, Copy } from "lucide-react"
 import { renderCodeBlock, type CodeBlockOptions } from "@/lib/code-highlighter"
 
@@ -35,11 +35,9 @@ export function CodeBlock({
 
   useEffect(() => {
     let cancelled = false
-    renderCodeBlock({ code, language, highlightLines, showLineNumbers }).then(
-      (result) => {
-        if (!cancelled) setHtml(result)
-      },
-    )
+    renderCodeBlock({ code, language, highlightLines, showLineNumbers }).then((result) => {
+      if (!cancelled) setHtml(result)
+    })
     return () => {
       cancelled = true
     }
@@ -52,18 +50,19 @@ export function CodeBlock({
   }
 
   return (
-    <div className="group relative overflow-hidden rounded-xl ring-1 ring-foreground/10" style={{ backgroundColor: "var(--shiki-background, #0d1117)" }}>
+    <div
+      className="group relative overflow-hidden rounded-xl ring-1 ring-foreground/10"
+      style={{ backgroundColor: "var(--shiki-background, #0d1117)" }}
+    >
       {(filename || copyable) && (
         <div className="flex items-center justify-between border-b border-foreground/10 px-4 py-2.5">
           {filename ? (
-            <span className="truncate text-xs text-muted-foreground font-mono">
-              {filename}
-            </span>
+            <span className="truncate text-xs text-muted-foreground font-mono">{filename}</span>
           ) : (
             <span />
           )}
           <div className="flex items-center gap-2">
-            <span className="hidden sm:inline-flex items-center rounded-md border border-foreground/10 bg-foreground/[0.04] px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+            <span className="hidden sm:inline-flex items-center rounded-md border border-foreground/10 bg-foreground/4 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
               {languageLabels[language] || language}
             </span>
             {copyable && (
@@ -89,17 +88,16 @@ export function CodeBlock({
         </div>
       )}
       <div
-        className="overflow-x-auto [scrollbar-width:thin]"
+        className="overflow-x-auto scrollbar-thin"
         role="region"
         aria-label={`${languageLabels[language] || language} code block`}
       >
         {html ? (
-          <div
-            className="shiki-code-wrapper"
-            dangerouslySetInnerHTML={{ __html: html }}
-          />
+          <div className="shiki-code-wrapper" dangerouslySetInnerHTML={{ __html: html }} />
         ) : (
-          <pre className="shiki !bg-transparent p-4 font-mono text-sm leading-relaxed text-foreground whitespace-pre overflow-x-auto">{code}</pre>
+          <pre className="shiki bg-transparent! p-4 font-mono text-sm leading-relaxed text-foreground whitespace-pre overflow-x-auto">
+            {code}
+          </pre>
         )}
       </div>
     </div>

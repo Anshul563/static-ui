@@ -1,0 +1,19 @@
+{
+  "semi": false,
+  "singleQuote": false,
+  "trailingComma": "es5",
+  "printWidth": 100,
+  "tabWidth": 2,
+  "plugins": ["prettier-plugin-tailwindcss", "@ianvs/prettier-plugin-sort-imports"],
+  "importOrder": [
+    "^(react|react-dom)$",
+    "<THIRD_PARTY_MODULES>",
+    "^@static-ui/(.*)$",
+    "^@/(.*)$",
+    "^[./]"
+  ],
+  "importOrderParserPlugins": ["typescript", "jsx"],
+  "importOrderTypeScriptVersion": "5.0.0",
+  "tailwindConfig": "./apps/www/tailwind.config.ts",
+  "tailwindFunctions": ["cn", "cva", "clsx"]
+}

@@ -1,0 +1,30 @@
+echo "Running pre-push verification..."
+
+pnpm typecheck
+status=$?
+if [ $status -ne 0 ]; then
+  echo ""
+  echo "❌ TypeScript Error"
+  echo "Run pnpm typecheck locally and fix the errors before pushing."
+  exit $status
+fi
+
+pnpm build
+status=$?
+if [ $status -ne 0 ]; then
+  echo ""
+  echo "❌ Build Failed"
+  echo "Run pnpm build locally and fix the failing package before pushing."
+  exit $status
+fi
+
+pnpm test
+status=$?
+if [ $status -ne 0 ]; then
+  echo ""
+  echo "❌ Tests Failed"
+  echo "Run pnpm test locally and fix the failing tests before pushing."
+  exit $status
+fi
+
+echo "✅ Pre-push verification passed"

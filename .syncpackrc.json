@@ -1,0 +1,18 @@
+{
+  "versionGroups": [
+    {
+      "label": "React and TypeScript should use compatible versions",
+      "packages": ["**"],
+      "dependencies": ["react", "react-dom"],
+      "preferVersion": "highest"
+    }
+  ],
+  "semverGroups": [
+    {
+      "label": "All dependencies should use caret ranges",
+      "range": "^"
+    }
+  ],
+  "sortAz": ["dependencies", "devDependencies", "peerDependencies"],
+  "sortFirst": ["name", "version", "private", "description", "scripts"]
+}

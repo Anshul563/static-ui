@@ -1,0 +1,68 @@
+name: Validate Registry
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "packages/registry/**"
+      - "packages/ui/src/**"
+  pull_request:
+    paths:
+      - "packages/registry/**"
+      - "packages/ui/src/**"
+  workflow_dispatch:
+
+env:
+  PNPM_VERSION: "11.5.2"
+  NODE_VERSION: "20"
+
+jobs:
+  validate:
+    name: Validate Registry
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @static-ui/registry build
+      - run: pnpm validate:registry
+      - run: pnpm --filter @static-ui/registry test
+
+      - name: Check for duplicate entries
+        run: |
+          node -e "
+            const reg = require('./packages/registry/dist/index.json');
+            const names = reg.map(i => i.name);
+            const dups = names.filter((n, i) => names.indexOf(n) !== i);
+            if (dups.length > 0) {
+              console.error('Duplicate entries:', [...new Set(dups)]);
+              process.exit(1);
+            }
+            console.log('✓ No duplicate entries');
+          "
+
+      - name: Verify all files exist
+        run: |
+          node -e "
+            const fs = require('fs');
+            const path = require('path');
+            const reg = require('./packages/registry/dist/index.json');
+            let errors = 0;
+            for (const item of reg) {
+              for (const file of item.files) {
+                const resolved = path.resolve('packages/ui/src', file.name);
+                if (!fs.existsSync(resolved)) {
+                  console.error('Missing file:', resolved);
+                  errors++;
+                }
+              }
+            }
+            if (errors > 0) process.exit(1);
+            console.log('✓ All ' + reg.length + ' entries verified');
+          "

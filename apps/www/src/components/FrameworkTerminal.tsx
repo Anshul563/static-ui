@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useCallback, useRef } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { Terminal as TerminalIcon } from "lucide-react"
 import { Card } from "@/components/ui/card"
 
@@ -19,8 +19,6 @@ const lines: Line[] = [
   { text: "✓ Static UI configured", type: "success", delay: 3000 },
   { text: "Ready to build.", type: "output", delay: 3600 },
 ]
-
-const totalDuration = 4200
 
 export function FrameworkTerminal() {
   const [visibleLines, setVisibleLines] = useState<number[]>([])
@@ -97,7 +95,7 @@ export function FrameworkTerminal() {
         <span className="ml-2 text-[11px] text-muted-foreground font-mono">terminal</span>
       </div>
 
-      <div className="p-4 font-mono text-xs leading-relaxed min-h-[200px] bg-card/30">
+      <div className="p-4 font-mono text-xs leading-relaxed min-h-50 bg-card/30">
         <div className="flex items-center gap-2 text-muted-foreground mb-3">
           <TerminalIcon className="h-3.5 w-3.5" />
           <span>Framework Auto Detection</span>

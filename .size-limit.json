@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Button",
+    "path": "packages/ui/src/button.tsx",
+    "import": "{ Button }",
+    "limit": "5 KB"
+  },
+  {
+    "name": "Dialog",
+    "path": "packages/ui/src/dialog.tsx",
+    "import": "{ Dialog }",
+    "limit": "5 KB"
+  },
+  {
+    "name": "Select",
+    "path": "packages/ui/src/select.tsx",
+    "import": "{ Select }",
+    "limit": "5 KB"
+  },
+  {
+    "name": "Card",
+    "path": "packages/ui/src/card.tsx",
+    "import": "{ Card }",
+    "limit": "3 KB"
+  },
+  {
+    "name": "AI Components",
+    "path": "packages/ui/src/ai-chat.tsx",
+    "import": "{ AiChat }",
+    "limit": "8 KB"
+  }
+]
