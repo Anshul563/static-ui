@@ -1,11 +1,8 @@
 "use client"
 
 import { ChevronRight } from "lucide-react"
-import { CodeBlock } from "@/components/CodeBlock"
-import { DynamicCommand } from "@/components/docs/CommandBlock"
+import { CommandBlock, DynamicCommand } from "@/components/docs/CommandBlock"
 import { Card } from "@/components/ui/card"
-import { getCommand } from "@/lib/package-manager"
-import { usePackageManager } from "@/lib/package-manager-context"
 
 interface CommandDef {
   name: string
@@ -119,9 +116,6 @@ const commands: CommandDef[] = [
 ]
 
 function CommandCard({ cmd }: { cmd: CommandDef }) {
-  const { packageManager } = usePackageManager()
-  const usageCode = getCommand(cmd.type, packageManager) + (cmd.usageArgs || "")
-
   return (
     <Card className="p-5 space-y-4">
       <div className="flex items-start justify-between gap-4">
@@ -137,7 +131,7 @@ function CommandCard({ cmd }: { cmd: CommandDef }) {
 
       <p className="text-sm text-muted-foreground leading-relaxed">{cmd.description}</p>
 
-      <CodeBlock code={usageCode} language="bash" />
+      <CommandBlock type={cmd.type} usageArgs={cmd.usageArgs} />
 
       {cmd.flags && cmd.flags.length > 0 && (
         <div className="space-y-1.5">

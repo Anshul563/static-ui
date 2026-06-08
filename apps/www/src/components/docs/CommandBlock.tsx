@@ -24,13 +24,14 @@ function setStoredPM(pm: PackageManager) {
 interface CommandBlockProps {
   type: CommandType
   slug?: string
+  usageArgs?: string
 }
 
-export function CommandBlock({ type, slug }: CommandBlockProps) {
+export function CommandBlock({ type, slug, usageArgs }: CommandBlockProps) {
   const [pm, setPm] = useState<PackageManager>(getStoredPM)
   const [copied, setCopied] = useState(false)
 
-  const command = getCommand(type, pm, slug)
+  const command = getCommand(type, pm, slug) + (usageArgs || "")
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(command)
