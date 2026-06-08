@@ -4,7 +4,7 @@ import * as React from "react"
 import { Select as SelectPrimitive } from "@base-ui/react/select"
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react"
 
-import { cn } from "@/lib/utils"
+import { cn } from "./lib/utils"
 
 const Select = SelectPrimitive.Root
 
@@ -54,6 +54,10 @@ function SelectTrigger({
       />
     </SelectPrimitive.Trigger>
   )
+}
+
+function SelectPortal({ ...props }: SelectPrimitive.Portal.Props) {
+  return <SelectPrimitive.Portal data-slot="select-portal" {...props} />
 }
 
 function SelectContent({
@@ -185,6 +189,7 @@ export {
   SelectGroup,
   SelectItem,
   SelectLabel,
+  SelectPortal,
   SelectScrollDownButton,
   SelectScrollUpButton,
   SelectSeparator,

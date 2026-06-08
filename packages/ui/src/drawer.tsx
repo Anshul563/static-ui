@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Drawer as DrawerPrimitive } from "vaul"
 
-import { cn } from "@/lib/utils"
+import { cn } from "./lib/utils"
 
 function Drawer({
   ...props
@@ -44,6 +44,8 @@ function DrawerOverlay({
     />
   )
 }
+
+const DrawerBackdrop = DrawerOverlay
 
 function DrawerContent({
   className,
@@ -122,13 +124,14 @@ function DrawerDescription({
 
 export {
   Drawer,
-  DrawerPortal,
-  DrawerOverlay,
-  DrawerTrigger,
+  DrawerBackdrop,
   DrawerClose,
   DrawerContent,
-  DrawerHeader,
-  DrawerFooter,
-  DrawerTitle,
   DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerPortal,
+  DrawerTitle,
+  DrawerTrigger,
 }

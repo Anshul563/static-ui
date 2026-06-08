@@ -2,7 +2,7 @@
 
 import { PreviewCard as PreviewCardPrimitive } from "@base-ui/react/preview-card"
 
-import { cn } from "@/lib/utils"
+import { cn } from "./lib/utils"
 
 function HoverCard({ ...props }: PreviewCardPrimitive.Root.Props) {
   return <PreviewCardPrimitive.Root data-slot="hover-card" {...props} />
@@ -11,6 +11,12 @@ function HoverCard({ ...props }: PreviewCardPrimitive.Root.Props) {
 function HoverCardTrigger({ ...props }: PreviewCardPrimitive.Trigger.Props) {
   return (
     <PreviewCardPrimitive.Trigger data-slot="hover-card-trigger" {...props} />
+  )
+}
+
+function HoverCardPortal({ ...props }: PreviewCardPrimitive.Portal.Props) {
+  return (
+    <PreviewCardPrimitive.Portal data-slot="hover-card-portal" {...props} />
   )
 }
 
@@ -48,4 +54,4 @@ function HoverCardContent({
   )
 }
 
-export { HoverCard, HoverCardTrigger, HoverCardContent }
+export { HoverCard, HoverCardTrigger, HoverCardPortal, HoverCardContent }

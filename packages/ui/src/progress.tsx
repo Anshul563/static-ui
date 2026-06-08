@@ -1,90 +1,113 @@
 "use client"
 
-import * as React from "react"
-import { Popover as PopoverPrimitive } from "@base-ui/react/popover"
+import { Progress as ProgressPrimitive } from "@base-ui/react/progress"
 
-import { cn } from "@/lib/utils"
+import { cn } from "./lib/utils"
 
-function Popover({ ...props }: PopoverPrimitive.Root.Props) {
-  return <PopoverPrimitive.Root data-slot="popover" {...props} />
-}
-
-function PopoverTrigger({ ...props }: PopoverPrimitive.Trigger.Props) {
-  return <PopoverPrimitive.Trigger data-slot="popover-trigger" {...props} />
-}
-
-function PopoverContent({
+function Progress({
   className,
-  align = "center",
-  alignOffset = 0,
-  side = "bottom",
-  sideOffset = 4,
+  value,
+  max = 100,
   ...props
-}: PopoverPrimitive.Popup.Props &
-  Pick<
-    PopoverPrimitive.Positioner.Props,
-    "align" | "alignOffset" | "side" | "sideOffset"
-  >) {
+}: ProgressPrimitive.Root.Props) {
+  const percentage =
+    typeof value === "number" && max > 0
+      ? Math.min(100, Math.max(0, (value / max) * 100))
+      : null
+
   return (
-    <PopoverPrimitive.Portal>
-      <PopoverPrimitive.Positioner
-        align={align}
-        alignOffset={alignOffset}
-        side={side}
-        sideOffset={sideOffset}
-        className="isolate z-50"
+    <ProgressPrimitive.Root
+      data-slot="progress"
+      className={cn("relative w-full", className)}
+      value={value}
+      max={max}
+      {...props}
+    >
+      <ProgressPrimitive.Track
+        data-slot="progress-track"
+        className="relative h-2 w-full overflow-hidden rounded-full bg-muted"
       >
-        <PopoverPrimitive.Popup
-          data-slot="popover-content"
+        <ProgressPrimitive.Indicator
+          data-slot="progress-indicator"
           className={cn(
-            "z-50 flex w-72 origin-(--transform-origin) flex-col gap-2.5 rounded-lg bg-popover p-2.5 text-sm text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
-            className
+            "h-full rounded-full bg-primary transition-[transform,width] duration-300 ease-out",
+            percentage === null && "w-1/3 animate-pulse"
           )}
-          {...props}
+          style={
+            percentage === null
+              ? undefined
+              : {
+                  width: `${percentage}%`,
+                }
+          }
         />
-      </PopoverPrimitive.Positioner>
-    </PopoverPrimitive.Portal>
+      </ProgressPrimitive.Track>
+    </ProgressPrimitive.Root>
   )
 }
 
-function PopoverHeader({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="popover-header"
-      className={cn("flex flex-col gap-0.5 text-sm", className)}
-      {...props}
-    />
-  )
-}
-
-function PopoverTitle({ className, ...props }: PopoverPrimitive.Title.Props) {
-  return (
-    <PopoverPrimitive.Title
-      data-slot="popover-title"
-      className={cn("font-medium", className)}
-      {...props}
-    />
-  )
-}
-
-function PopoverDescription({
+function ProgressTrack({
   className,
   ...props
-}: PopoverPrimitive.Description.Props) {
+}: ProgressPrimitive.Track.Props) {
   return (
-    <PopoverPrimitive.Description
-      data-slot="popover-description"
-      className={cn("text-muted-foreground", className)}
+    <ProgressPrimitive.Track
+      data-slot="progress-track"
+      className={cn(
+        "relative h-2 w-full overflow-hidden rounded-full bg-muted",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+function ProgressIndicator({
+  className,
+  ...props
+}: ProgressPrimitive.Indicator.Props) {
+  return (
+    <ProgressPrimitive.Indicator
+      data-slot="progress-indicator"
+      className={cn(
+        "h-full rounded-full bg-primary transition-[transform,width] duration-300 ease-out",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+function ProgressLabel({
+  className,
+  ...props
+}: ProgressPrimitive.Label.Props) {
+  return (
+    <ProgressPrimitive.Label
+      data-slot="progress-label"
+      className={cn("text-sm font-medium", className)}
+      {...props}
+    />
+  )
+}
+
+function ProgressValue({
+  className,
+  ...props
+}: ProgressPrimitive.Value.Props) {
+  return (
+    <ProgressPrimitive.Value
+      data-slot="progress-value"
+      className={cn("text-sm text-muted-foreground tabular-nums", className)}
       {...props}
     />
   )
 }
 
 export {
-  Popover,
-  PopoverContent,
-  PopoverDescription,
-  PopoverHeader,
-  PopoverTitle,
-  PopoverTrigger,
+  Progress,
+  ProgressIndicator,
+  ProgressLabel,
+  ProgressTrack,
+  ProgressValue,
 }

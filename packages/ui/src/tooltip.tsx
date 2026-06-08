@@ -2,7 +2,7 @@
 
 import { Tooltip as TooltipPrimitive } from "@base-ui/react/tooltip"
 
-import { cn } from "@/lib/utils"
+import { cn } from "./lib/utils"
 
 function TooltipProvider({
   delay = 0,
@@ -23,6 +23,10 @@ function Tooltip({ ...props }: TooltipPrimitive.Root.Props) {
 
 function TooltipTrigger({ ...props }: TooltipPrimitive.Trigger.Props) {
   return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />
+}
+
+function TooltipPortal({ ...props }: TooltipPrimitive.Portal.Props) {
+  return <TooltipPrimitive.Portal data-slot="tooltip-portal" {...props} />
 }
 
 function TooltipContent({
@@ -63,4 +67,4 @@ function TooltipContent({
   )
 }
 
-export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }
+export { Tooltip, TooltipTrigger, TooltipPortal, TooltipContent, TooltipProvider }

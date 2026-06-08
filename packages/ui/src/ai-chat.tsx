@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { cn } from "@/lib/utils"
+import { cn } from "./lib/utils"
 import { AiMessage } from "./ai-message"
 import { AiPrompt } from "./ai-prompt"
 
