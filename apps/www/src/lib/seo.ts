@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://get-staticui.vercel.app"
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://staticui.online"
 
 export const siteConfig = {
   name: "Static UI",
@@ -30,9 +30,7 @@ export function createMetadata(overrides?: {
   ogImage?: string
   noIndex?: boolean
 }): Metadata {
-  const title = overrides?.title
-    ? `${overrides.title} - ${siteConfig.name}`
-    : siteConfig.name
+  const title = overrides?.title ? `${overrides.title} - ${siteConfig.name}` : siteConfig.name
   const description = overrides?.description || siteConfig.description
   const url = overrides?.path ? `${siteConfig.url}${overrides.path}` : siteConfig.url
   const ogImage = overrides?.ogImage || siteConfig.ogImage

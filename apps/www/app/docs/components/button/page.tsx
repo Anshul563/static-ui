@@ -1,23 +1,22 @@
-"use client";
+"use client"
 
-import React, { useState } from "react";
-import { Terminal } from "lucide-react";
-import { Card } from "@/components/ui/card";
+import React, { useState } from "react"
+// 1. Importing your TRUE production component from your local code workspace folder
+import { Button } from "@static-ui/ui"
+import { CodeBlock } from "@/components/CodeBlock"
+import { CommandBlock } from "@/components/CommandBlock"
 import {
   Breadcrumb,
-  BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,
+  BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { CodeBlock } from "@/components/CodeBlock";
-
-// 1. Importing your TRUE production component from your local code workspace folder
-import { Button } from "@static-ui/ui";
+} from "@/components/ui/breadcrumb"
+import { Card } from "@/components/ui/card"
 
 export default function ButtonDocsPage() {
-  const [activeTab, setActiveTab] = useState<"preview" | "code">("preview");
+  const [activeTab, setActiveTab] = useState<"preview" | "code">("preview")
 
   const buttonCodeString = `import { Button } from "@/components/static-ui/button"
 
@@ -28,7 +27,7 @@ export default function Demo() {
       <Button variant="outline">Outline Border</Button>
     </div>
   )
-}`;
+}`
 
   return (
     <div className="flex flex-col gap-8 py-6">
@@ -51,8 +50,8 @@ export default function Demo() {
         </Breadcrumb>
         <h1 className="text-4xl font-bold tracking-tight text-foreground">Button</h1>
         <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">
-          An interactive anchor element used to trigger actions, handle form
-          submission states, or fire navigation links.
+          An interactive anchor element used to trigger actions, handle form submission states, or
+          fire navigation links.
         </p>
       </div>
 
@@ -73,7 +72,6 @@ export default function Demo() {
               Code
             </button>
           </div>
-
         </div>
 
         {/* View Canvas Box */}
@@ -93,16 +91,13 @@ export default function Demo() {
 
       {/* Terminal Command Utility Box */}
       <div className="space-y-4 pt-4">
-        <h3 className="text-lg font-semibold text-foreground tracking-tight">
-          Installation
-        </h3>
+        <h3 className="text-lg font-semibold text-foreground tracking-tight">Installation</h3>
         <p className="text-xs text-muted-foreground">
-          Inject this raw primitive directly into your code layers via the CLI
-          bundle:
+          Inject this raw primitive directly into your code layers via the CLI bundle:
         </p>
 
-        <CodeBlock code="npx @static-ui/cli add button" language="bash" />
+        <CommandBlock type="add" slug="button" />
       </div>
     </div>
-  );
+  )
 }

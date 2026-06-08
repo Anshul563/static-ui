@@ -13,6 +13,7 @@ import {
 import dynamic from "next/dynamic"
 import { notFound } from "next/navigation"
 import { CodeBlock } from "@/components/CodeBlock"
+import { CommandBlock } from "@/components/CommandBlock"
 import { Badge } from "@/components/ui/badge"
 import {
   Breadcrumb,
@@ -970,7 +971,7 @@ export default function ComponentDetailClient({ slug: propSlug }: { slug: string
         <p className="text-xs text-muted-foreground">
           Run the following command to add this component to your project:
         </p>
-        <CodeBlock code={`npx @static-ui/cli add ${slug}`} language="bash" />
+        <CommandBlock type="add" slug={slug} />
       </div>
 
       {/* Import Path */}

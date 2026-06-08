@@ -24,11 +24,16 @@ import {
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { AnimatedCounter } from "@/components/AnimatedCounter"
+import { CommandBlock } from "@/components/CommandBlock"
+import { DynamicCommand } from "@/components/DynamicCommand"
 import { FrameworkSection } from "@/components/FrameworkSection"
 import Navbar from "@/components/Navbar"
+import { PackageManagerSwitcher } from "@/components/PackageManagerSwitcher"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { getCommand } from "@/lib/package-manager"
+import { usePackageManager } from "@/lib/package-manager-context"
 
 function GitHubIcon({ className }: { className?: string }) {
   return (
@@ -87,42 +92,42 @@ const aiComponents = [
     description: "Streaming chat interface with markdown and code rendering.",
     icon: MessageSquare,
     gradient: "from-emerald-500/20 to-teal-500/5",
-    install: "npx @static-ui/cli add ai-chat",
+    slug: "ai-chat",
   },
   {
     title: "AI Sidebar",
     description: "Context-aware sidebar for AI-assisted workflows.",
     icon: Layout,
     gradient: "from-blue-500/20 to-indigo-500/5",
-    install: "npx @static-ui/cli add ai-sidebar",
+    slug: "ai-sidebar",
   },
   {
     title: "AI Prompt",
     description: "Prompt input with history, suggestions, and shortcuts.",
     icon: Terminal,
     gradient: "from-purple-500/20 to-pink-500/5",
-    install: "npx @static-ui/cli add ai-prompt",
+    slug: "ai-prompt",
   },
   {
     title: "AI Message",
     description: "Structured message components with role-based styling.",
     icon: Bot,
     gradient: "from-amber-500/20 to-orange-500/5",
-    install: "npx @static-ui/cli add ai-message",
+    slug: "ai-message",
   },
   {
     title: "AI File Upload",
     description: "Drag-and-drop file upload with progress and preview.",
     icon: FileUp,
     gradient: "from-rose-500/20 to-red-500/5",
-    install: "npx @static-ui/cli add ai-file-upload",
+    slug: "ai-file-upload",
   },
   {
     title: "AI Code Block",
     description: "Syntax-highlighted code blocks with copy and expand.",
     icon: Code2,
     gradient: "from-cyan-500/20 to-teal-500/5",
-    install: "npx @static-ui/cli add ai-code-block",
+    slug: "ai-code-block",
   },
 ]
 
@@ -174,6 +179,7 @@ const themes = [
 export default function LandingPage() {
   const [activeTheme, setActiveTheme] = useState("green")
   const [copiedCommands, setCopiedCommands] = useState<Record<string, boolean>>({})
+  const { packageManager } = usePackageManager()
   const router = useRouter()
 
   const handleCopy = async (text: string, key: string) => {
@@ -211,24 +217,12 @@ export default function LandingPage() {
             for modern developers.
           </p>
 
-          <div className="mx-auto mt-8 max-w-sm">
-            <Card className="flex-row items-center justify-between p-2.5 pl-4 bg-card/80 backdrop-blur-md transition-colors group border border-border/50">
-              <div className="flex items-center gap-3 font-mono text-xs sm:text-sm text-foreground">
-                <Terminal className="h-4 w-4 text-primary shrink-0" />
-                <span className="select-all">npx @static-ui/cli init</span>
-              </div>
-              <button
-                onClick={() => handleCopy("npx @static-ui/cli init", "hero")}
-                className="flex items-center justify-center h-8 w-8 rounded-lg bg-muted border border-border hover:bg-accent text-foreground cursor-pointer transition-all active:scale-95"
-                aria-label="Copy initialization command"
-              >
-                {copiedCommands["hero"] ? (
-                  <Check className="h-3.5 w-3.5 text-primary" />
-                ) : (
-                  <Copy className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground transition-colors" />
-                )}
-              </button>
-            </Card>
+          <div className="flex justify-center mt-6">
+            <PackageManagerSwitcher />
+          </div>
+
+          <div className="mx-auto mt-4 max-w-sm">
+            <CommandBlock type="init" />
           </div>
 
           <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -453,7 +447,6 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {aiComponents.map((ai) => {
               const Icon = ai.icon
-              const copyKey = `ai-${ai.title}`
               return (
                 <Card key={ai.title} className="bento-card group bg-card/50 backdrop-blur-sm">
                   <CardContent className="p-5 space-y-4">
@@ -475,12 +468,16 @@ export default function LandingPage() {
                     </div>
                     <div className="flex items-center gap-2 rounded-lg bg-muted/50 border border-border/50 px-3 py-2 font-mono text-[11px] text-muted-foreground group-hover:border-primary/20 transition-colors">
                       <span className="text-primary shrink-0">$</span>
-                      <span className="truncate flex-1">{ai.install}</span>
+                      <span className="truncate flex-1">
+                        <DynamicCommand type="add" slug={ai.slug} />
+                      </span>
                       <button
-                        onClick={() => handleCopy(ai.install, copyKey)}
+                        onClick={() =>
+                          handleCopy(getCommand("add", packageManager, ai.slug), `ai-${ai.title}`)
+                        }
                         className="shrink-0 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
                       >
-                        {copiedCommands[copyKey] ? (
+                        {copiedCommands[`ai-${ai.title}`] ? (
                           <Check className="h-3 w-3 text-primary" />
                         ) : (
                           <Copy className="h-3 w-3" />
@@ -607,7 +604,10 @@ export default function LandingPage() {
                           size="sm"
                           className="text-xs h-8"
                           onClick={() =>
-                            handleCopy(`npx @static-ui/cli add ${tmpl.slug}`, `tmpl-${tmpl.slug}`)
+                            handleCopy(
+                              getCommand("add", packageManager, tmpl.slug),
+                              `tmpl-${tmpl.slug}`
+                            )
                           }
                         >
                           {copiedCommands[`tmpl-${tmpl.slug}`] ? "Copied!" : "Install"}
@@ -686,7 +686,7 @@ export default function LandingPage() {
                   {activeTheme} Theme
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  npx @static-ui/cli init --theme {activeTheme}
+                  <DynamicCommand type="init" /> --theme {activeTheme}
                 </p>
               </div>
               <Button
@@ -847,23 +847,7 @@ export default function LandingPage() {
           </p>
 
           <div className="mx-auto mt-8 max-w-sm">
-            <Card className="flex-row items-center justify-between p-2.5 pl-4 bg-muted/80 backdrop-blur-md border border-border/50 group">
-              <div className="flex items-center gap-3 font-mono text-xs sm:text-sm text-foreground">
-                <Terminal className="h-4 w-4 text-primary shrink-0" />
-                <span className="select-all">npx @static-ui/cli init</span>
-              </div>
-              <button
-                onClick={() => handleCopy("npx @static-ui/cli init", "cta")}
-                className="flex items-center justify-center h-8 w-8 rounded-lg bg-muted border border-border hover:bg-accent text-foreground cursor-pointer transition-all active:scale-95"
-                aria-label="Copy initialization command"
-              >
-                {copiedCommands["cta"] ? (
-                  <Check className="h-3.5 w-3.5 text-primary" />
-                ) : (
-                  <Copy className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground transition-colors" />
-                )}
-              </button>
-            </Card>
+            <CommandBlock type="init" />
           </div>
 
           <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -932,8 +916,7 @@ export default function LandingPage() {
                 <li>
                   <a
                     href={
-                      process.env.NEXT_PUBLIC_STORYBOOK_URL ||
-                      "https://registry-staticui.vercel.app"
+                      process.env.NEXT_PUBLIC_STORYBOOK_URL || "https://registry.staticui.online"
                     }
                     target="_blank"
                     rel="noreferrer"

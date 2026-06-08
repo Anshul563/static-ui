@@ -40,7 +40,7 @@
     "url": "git+https://github.com/Anshul563/static-ui.git",
     "directory": "packages/core"
   },
-  "homepage": "https://get-staticui.vercel.app",
+  "homepage": "https://staticui.online",
   "bugs": {
     "url": "https://github.com/Anshul563/static-ui/issues"
   },

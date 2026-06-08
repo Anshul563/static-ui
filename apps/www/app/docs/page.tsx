@@ -1,16 +1,11 @@
-import React from "react"
-import { Terminal, ArrowRight } from "lucide-react"
-import Link from "next/link"
-import { createMetadata } from "@/lib/seo"
-import {
-  Card,
-} from "@/components/ui/card"
+"use client"
 
-export const metadata = createMetadata({
-  title: "Introduction",
-  description: "Beautifully designed component primitives that you can copy, paste, and completely control inside your applications.",
-  path: "/docs",
-})
+import React from "react"
+import { ArrowRight, Terminal } from "lucide-react"
+import Link from "next/link"
+import { CommandBlock } from "@/components/CommandBlock"
+import { DynamicCommand } from "@/components/DynamicCommand"
+import { Card } from "@/components/ui/card"
 
 export default function DocsIntroductionPage() {
   return (
@@ -19,7 +14,8 @@ export default function DocsIntroductionPage() {
         <p className="text-xs font-medium text-muted-foreground">Getting Started</p>
         <h1 className="text-4xl font-bold tracking-tight text-foreground">Introduction</h1>
         <p className="text-lg text-muted-foreground leading-relaxed">
-          Beautifully designed component primitives that you can copy, paste, and completely control inside your applications.
+          Beautifully designed component primitives that you can copy, paste, and completely control
+          inside your applications.
         </p>
       </div>
 
@@ -27,14 +23,17 @@ export default function DocsIntroductionPage() {
 
       <div className="space-y-4 text-sm leading-relaxed text-muted-foreground">
         <p>
-          Static UI is a modern, unstyled component library built on top of <strong className="text-foreground">Base UI</strong> and styled with <strong className="text-foreground">Tailwind CSS v4</strong>.
-          Every component is designed to be copied, pasted, and fully customized — giving you complete control over your codebase.
+          Static UI is a modern, unstyled component library built on top of{" "}
+          <strong className="text-foreground">Base UI</strong> and styled with{" "}
+          <strong className="text-foreground">Tailwind CSS v4</strong>. Every component is designed
+          to be copied, pasted, and fully customized — giving you complete control over your
+          codebase.
         </p>
 
         <p>
-          Unlike traditional component libraries that ship as npm dependencies with locked-in styles,
-          Static UI gives you the source code directly. You own every line, can modify every style,
-          and never worry about breaking changes from upstream updates.
+          Unlike traditional component libraries that ship as npm dependencies with locked-in
+          styles, Static UI gives you the source code directly. You own every line, can modify every
+          style, and never worry about breaking changes from upstream updates.
         </p>
 
         <Card className="bg-card/40 p-6 backdrop-blur-md mt-6">
@@ -45,11 +44,12 @@ export default function DocsIntroductionPage() {
               <p className="text-xs text-muted-foreground">
                 Initialize Static UI in your project with a single command:
               </p>
-              <Card size="sm" className="flex-row items-center gap-2 bg-background px-4 py-2.5 font-mono text-sm text-foreground">
-                npx @static-ui/cli init
-              </Card>
+              <CommandBlock type="init" />
               <p className="text-xs text-muted-foreground">
-                Then add any component: <code className="text-primary">npx @static-ui/cli add button</code>
+                Then add any component:{" "}
+                <code className="text-primary">
+                  <DynamicCommand type="add" slug="button" />
+                </code>
               </p>
             </div>
           </div>

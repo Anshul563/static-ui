@@ -1,11 +1,12 @@
 "use client"
 
+import { ArrowRight, Blocks, Cpu, Share2 } from "lucide-react"
 import Link from "next/link"
-import { ArrowRight, Cpu, Blocks, Share2 } from "lucide-react"
 import { Card } from "@/components/ui/card"
+import { CommandBlock } from "./CommandBlock"
 import { FrameworkGrid } from "./FrameworkGrid"
-import { FrameworkTerminal } from "./FrameworkTerminal"
 import { FrameworkRoadmap } from "./FrameworkRoadmap"
+import { FrameworkTerminal } from "./FrameworkTerminal"
 
 const features = [
   {
@@ -35,7 +36,7 @@ export function FrameworkSection() {
 
       <div className="mx-auto max-w-6xl relative z-10">
         <div className="text-center max-w-2xl mx-auto mb-16">
-            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/40 px-3 py-1 text-xs font-medium text-chart-1 backdrop-blur-xs mb-6">
+          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/40 px-3 py-1 text-xs font-medium text-chart-1 backdrop-blur-xs mb-6">
             <span className="h-1.5 w-1.5 rounded-full bg-chart-1 animate-pulse" />
             Multi-Framework Architecture
           </div>
@@ -52,8 +53,8 @@ export function FrameworkSection() {
           </p>
 
           <p className="mt-3 text-sm text-muted-foreground max-w-lg mx-auto leading-relaxed">
-            Static UI automatically detects your framework and installs the correct
-            components, themes, and templates with a single command.
+            Static UI automatically detects your framework and installs the correct components,
+            themes, and templates with a single command.
           </p>
         </div>
 
@@ -73,7 +74,10 @@ export function FrameworkSection() {
                   className="group bg-card/40 p-5 backdrop-blur-sm transition-all duration-300"
                 >
                   <div className="flex items-start gap-3">
-                    <Card size="sm" className="flex h-9 w-9 shrink-0 flex-row items-center justify-center bg-muted/60 group-hover:border-primary/30 transition-colors p-0 [--card-spacing:0]">
+                    <Card
+                      size="sm"
+                      className="flex h-9 w-9 shrink-0 flex-row items-center justify-center bg-muted/60 group-hover:border-primary/30 transition-colors p-0 [--card-spacing:0]"
+                    >
                       <Icon className="h-4 w-4 text-chart-2" />
                     </Card>
                     <div>
@@ -102,10 +106,7 @@ export function FrameworkSection() {
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Card className="inline-flex flex-row items-center gap-2 bg-card/80 px-4 py-2.5 font-mono text-sm text-foreground backdrop-blur-sm">
-              <span className="text-primary">$</span>
-              <span>npx @static-ui/cli init</span>
-            </Card>
+            <CommandBlock type="init" />
 
             <div className="flex gap-3">
               <Link

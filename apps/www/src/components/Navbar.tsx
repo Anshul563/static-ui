@@ -1,12 +1,12 @@
-import { Menu, X } from "lucide-react";
-import Link from "next/link";
-import React, { useState } from "react";
-import { ThemeToggleButton } from "./ThemeToggleButton";
-import { SearchModal } from "./SearchModal";
-import { Badge } from "./ui/badge";
+import React, { useState } from "react"
+import { Menu, X } from "lucide-react"
+import Link from "next/link"
+import { SearchModal } from "./SearchModal"
+import { ThemeToggleButton } from "./ThemeToggleButton"
+import { Badge } from "./ui/badge"
 
 export default function Navbar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
     <div>
@@ -26,34 +26,19 @@ export default function Navbar() {
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-2 text-sm font-medium text-muted-foreground">
             <div className="flex gap-5">
-              <Link
-                href="/docs"
-                className="transition-colors hover:text-foreground"
-              >
+              <Link href="/docs" className="transition-colors hover:text-foreground">
                 Docs
               </Link>
-              <Link
-                href="/docs/components"
-                className="transition-colors hover:text-foreground"
-              >
+              <Link href="/docs/components" className="transition-colors hover:text-foreground">
                 Components
               </Link>
-              <Link
-                href="/docs/blocks"
-                className="transition-colors hover:text-foreground"
-              >
+              <Link href="/docs/blocks" className="transition-colors hover:text-foreground">
                 Blocks
               </Link>
-              <Link
-                href="/docs/templates"
-                className="transition-colors hover:text-foreground"
-              >
+              <Link href="/docs/templates" className="transition-colors hover:text-foreground">
                 Templates
               </Link>
-              <Link
-                href="/docs/themes"
-                className="transition-colors hover:text-foreground"
-              >
+              <Link href="/docs/themes" className="transition-colors hover:text-foreground">
                 Themes
               </Link>
             </div>
@@ -64,35 +49,23 @@ export default function Navbar() {
             <div className="h-4 w-px rounded-2xl bg-gray-300" />
             <div className="flex gap-2">
               <a
-                href={
-                  process.env.NEXT_PUBLIC_STORYBOOK_URL ||
-                  "https://registry-staticui.vercel.app"
-                }
+                href={process.env.NEXT_PUBLIC_STORYBOOK_URL || "https://registry.staticui.online"}
                 target="_blank"
                 rel="noreferrer"
                 className="transition-colors hover:text-foreground"
               >
-                <img
-                  src="/icons/storybook.svg"
-                  alt="Static UI"
-                  className="h-5 w-auto"
-                />
+                <img src="/icons/storybook.svg" alt="Static UI" className="h-5 w-auto" />
               </a>
               <div className="h-4 w-px rounded-2xl bg-gray-300" />
               <a
                 href={
-                  process.env.NEXT_PUBLIC_GITHUB_URL ||
-                  "https://github.com/Anshul563/static-ui"
+                  process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/Anshul563/static-ui"
                 }
                 target="_blank"
                 rel="noreferrer"
                 className="transition-colors hover:text-foreground"
               >
-                <img
-                  src="/icons/github.svg"
-                  alt="Static UI"
-                  className="h-5 w-auto"
-                />
+                <img src="/icons/github.svg" alt="Static UI" className="h-5 w-auto" />
               </a>
             </div>
           </nav>
@@ -102,11 +75,7 @@ export default function Navbar() {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden text-muted-foreground hover:text-foreground focus:outline-none"
           >
-            {mobileMenuOpen ? (
-              <X className="h-5 w-5" />
-            ) : (
-              <Menu className="h-5 w-5" />
-            )}
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
 
@@ -149,10 +118,7 @@ export default function Navbar() {
               Themes
             </Link>
             <a
-              href={
-                process.env.NEXT_PUBLIC_STORYBOOK_URL ||
-                "https://registry-staticui.vercel.app"
-              }
+              href={process.env.NEXT_PUBLIC_STORYBOOK_URL || "https://registry.staticui.online"}
               target="_blank"
               rel="noreferrer"
               className="text-muted-foreground hover:text-foreground py-1"
@@ -160,10 +126,7 @@ export default function Navbar() {
               Storybook
             </a>
             <a
-              href={
-                process.env.NEXT_PUBLIC_GITHUB_URL ||
-                "https://github.com/Anshul563/static-ui"
-              }
+              href={process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/Anshul563/static-ui"}
               target="_blank"
               rel="noreferrer"
               className="text-muted-foreground hover:text-foreground py-1"
@@ -174,5 +137,5 @@ export default function Navbar() {
         )}
       </header>
     </div>
-  );
+  )
 }

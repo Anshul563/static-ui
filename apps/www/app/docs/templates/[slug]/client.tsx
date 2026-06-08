@@ -1,8 +1,9 @@
 "use client"
 
 import React, { useState } from "react"
-import { Check, ChevronRight, Copy, Terminal } from "lucide-react"
+import { Check, ChevronRight, Copy } from "lucide-react"
 import { notFound, useParams } from "next/navigation"
+import { CommandBlock } from "@/components/CommandBlock"
 import { Card } from "@/components/ui/card"
 
 const TEMPLATES_META = [
@@ -203,7 +204,6 @@ export default function TemplateDetailPage() {
 
   const [activeTab, setActiveTab] = useState<"preview" | "code">("preview")
   const [copiedCode, setCopiedCode] = useState(false)
-  const [copiedInstall, setCopiedInstall] = useState(false)
 
   if (!meta) return notFound()
 
@@ -213,12 +213,6 @@ export default function TemplateDetailPage() {
     await navigator.clipboard.writeText(code)
     setCopiedCode(true)
     setTimeout(() => setCopiedCode(false), 2000)
-  }
-
-  const handleCopyInstall = async () => {
-    await navigator.clipboard.writeText(`npx @static-ui/cli add ${slug}`)
-    setCopiedInstall(true)
-    setTimeout(() => setCopiedInstall(false), 2000)
   }
 
   const gradientFrom =
@@ -311,23 +305,9 @@ export default function TemplateDetailPage() {
         <p className="text-xs text-muted-foreground">
           Run the following command to add this template to your project:
         </p>
-        <Card className="bg-card/80 p-3 pl-4 max-w-xl shadow-md flex-row items-center justify-between">
-          <div className="flex items-center gap-3 font-mono text-xs text-foreground">
-            <Terminal className="h-3.5 w-3.5 text-primary" />
-            <span>npx @static-ui/cli add {slug}</span>
-          </div>
-          <button
-            onClick={handleCopyInstall}
-            className="flex items-center gap-1.5 rounded-md border border-border bg-card px-2 py-1 text-[11px] font-medium text-foreground hover:bg-accent hover:text-foreground transition-all cursor-pointer ml-3"
-          >
-            {copiedInstall ? (
-              <Check className="h-3 w-3 text-primary" />
-            ) : (
-              <Copy className="h-3 w-3" />
-            )}
-            {copiedInstall ? "Copied" : "Copy"}
-          </button>
-        </Card>
+        <div className="max-w-xl">
+          <CommandBlock type="add" slug={slug} />
+        </div>
       </div>
 
       <div className="space-y-4">

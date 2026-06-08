@@ -3,7 +3,7 @@
 import React, { useState } from "react"
 import { ChevronRight } from "lucide-react"
 import { notFound, useParams } from "next/navigation"
-import { CodeBlock } from "@/components/CodeBlock"
+import { CommandBlock } from "@/components/CommandBlock"
 import { Card } from "@/components/ui/card"
 
 const THEMES_META = [
@@ -510,7 +510,7 @@ export default function ThemeDetailPage() {
         <p className="text-xs text-muted-foreground">
           Apply this theme to your project using the CLI:
         </p>
-        <CodeBlock code={`npx @static-ui/cli theme ${slug}`} language="bash" />
+        <CommandBlock type="theme" slug={slug} />
       </div>
 
       <div className="space-y-4">

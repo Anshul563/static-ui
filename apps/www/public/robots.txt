@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://get-staticui.vercel.app/sitemap.xml
+Sitemap: https://staticui.online/sitemap.xml

@@ -16,7 +16,9 @@
     "./modern.json": "./modern.json"
   },
   "sideEffects": false,
-  "files": ["*.json"],
+  "files": [
+    "*.json"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -32,7 +34,7 @@
     "url": "git+https://github.com/Anshul563/static-ui.git",
     "directory": "packages/themes"
   },
-  "homepage": "https://get-staticui.vercel.app",
+  "homepage": "https://staticui.online",
   "bugs": {
     "url": "https://github.com/Anshul563/static-ui/issues"
   },
