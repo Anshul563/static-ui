@@ -1,5 +1,5 @@
 import { Loader2 } from "lucide-react"
-import { Card } from "@/components/ui/card"
+import { Card } from "@/../static-ui/ui/card"
 
 export default function ComponentDetailLoading() {
   return (

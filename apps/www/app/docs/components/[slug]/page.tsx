@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation"
 import { registryBySlug } from "@/lib/registry"
 import { createMetadata } from "@/lib/seo"
+import { loadExampleSource } from "@/lib/source-loader"
 import ComponentDetailClient from "./client"
 
 export function generateStaticParams() {
@@ -30,5 +31,6 @@ export default async function ComponentDetailPage({
   const { slug } = await params
   const meta = registryBySlug[slug]
   if (!meta) notFound()
-  return <ComponentDetailClient slug={slug} />
+  const source = loadExampleSource(slug)
+  return <ComponentDetailClient slug={slug} source={source} />
 }

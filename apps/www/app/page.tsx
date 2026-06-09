@@ -27,11 +27,12 @@ import { AnimatedCounter } from "@/components/AnimatedCounter"
 import { CommandBlock, DynamicCommand } from "@/components/docs/CommandBlock"
 import { FrameworkSection } from "@/components/FrameworkSection"
 import Navbar from "@/components/Navbar"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/../static-ui/ui/badge"
+import { Button } from "@/../static-ui/ui/button"
+import { Card, CardContent } from "@/../static-ui/ui/card"
 import { getCommand } from "@/lib/package-manager"
 import { usePackageManager } from "@/lib/package-manager-context"
+import { AuroraText } from "@/components/ui/aurora-text"
 
 function GitHubIcon({ className }: { className?: string }) {
   return (
@@ -191,63 +192,81 @@ export default function LandingPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative pt-16 pb-12 lg:pt-20 lg:pb-20 overflow-hidden">
-        <div className="hero-grid absolute inset-0" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_0%,color-mix(in_oklch,var(--primary)_8%,transparent),transparent)] pointer-events-none" />
+      <section className="relative pt-20 pb-16 lg:pt-28 lg:pb-24 overflow-hidden">
+      {/* Background Gradients & Grids */}
+      <div className="hero-grid absolute inset-0 opacity-70" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,color-mix(in_oklch,var(--primary)_10%,transparent),transparent)] pointer-events-none" />
 
-        <div className="relative mx-auto max-w-5xl px-6 text-center">
-          <Badge variant="outline" className="mb-6 px-3 py-1 text-xs font-medium">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse mr-2 inline-block" />
-            Open-Source Component Library
-          </Badge>
+      <div className="relative mx-auto max-w-5xl px-6 text-center">
+        {/* Announcement Badge */}
+        <Badge variant="outline" className="mb-6 px-3 py-1.5 text-xs font-medium bg-background/50 backdrop-blur-xs border-primary/20">
+          <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse mr-2 inline-block" />
+          Open-Source Component Library
+        </Badge>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-foreground leading-[0.7]">
-            Build <span className="text-primary italic">modern</span> applications <br />{" "}
-            <span className="text-3xl mb-2">with</span> <br />
-            <span className="bg-linear-to-r from-primary via-emerald-400 to-teal-500 bg-clip-text text-transparent font-semibold mt-2">
-              complete code ownership
-            </span>
-            <span className="text-foreground">.</span>
-          </h1>
+        {/* Fixed Heading: Natural line heights, balanced sizes */}
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground leading-[1.15] sm:leading-[1.1]">
+          Build <span className="text-primary font-normal italic">modern</span> applications{" "}
+          <span className="block text-2xl sm:text-3xl font-normal text-muted-foreground my-2 sm:my-3">with</span>
+          <AuroraText>complete code ownership</AuroraText>
+          .
+        </h1>
 
-          <p className="mx-auto mt-5 max-w-2xl text-base sm:text-lg text-muted-foreground leading-relaxed">
-            Open-source components, AI-ready blocks, themes, templates, and multi-framework support
-            for modern developers.
-          </p>
+        {/* Subtitle description */}
+        <p className="mx-auto mt-6 max-w-2xl text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed">
+          Open-source components, AI-ready blocks, themes, templates, and multi-framework support
+          built for modern developers.
+        </p>
 
-          <div className="mx-auto mt-8 max-w-sm">
+        {/* CTA Actions & Command Terminal Container */}
+        <div className="mt-10 flex flex-col items-center justify-center gap-6">
+          <div className="w-full max-w-sm">
             <CommandBlock type="init" />
           </div>
-
-          <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+          
+          <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
             <Button
               onClick={() => router.push("/docs")}
               size="lg"
-              className="group text-base h-11 px-6"
+              className="group text-base h-11 px-6 w-full sm:w-auto shadow-sm shadow-primary/20 cursor-pointer"
             >
               Get Started
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
             </Button>
             <Button
               variant="outline"
               onClick={() => router.push("/docs/components")}
               size="lg"
-              className="text-base h-11 px-6"
+              className="text-base h-11 px-6 w-full sm:w-auto bg-background/50 backdrop-blur-xs cursor-pointer"
             >
               Browse Components
             </Button>
           </div>
+        </div>
 
-          <div className="mt-12 grid grid-cols-3 md:grid-cols-6 gap-6 md:gap-8 max-w-3xl mx-auto">
+        {/* Stats Grid - Enhanced Layout & Border Separation */}
+        <div className="mt-16 sm:mt-20 pt-8 border-t border-border/40 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-y-8 gap-x-4 max-w-4xl mx-auto">
+          <div className="flex flex-col items-center">
             <AnimatedCounter end={50} suffix="+" label="Components" />
+          </div>
+          <div className="flex flex-col items-center">
             <AnimatedCounter end={10} suffix="+" label="Blocks" />
+          </div>
+          <div className="flex flex-col items-center">
             <AnimatedCounter end={7} suffix="" label="Themes" />
+          </div>
+          <div className="flex flex-col items-center">
             <AnimatedCounter end={8} suffix="" label="Frameworks" />
+          </div>
+          <div className="flex flex-col items-center">
             <AnimatedCounter end={1} label="MIT Licensed" />
+          </div>
+          <div className="flex flex-col items-center">
             <AnimatedCounter end={1} label="Open Source" />
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
       {/* Component Showcase */}
       <section className="relative py-20 lg:py-28">

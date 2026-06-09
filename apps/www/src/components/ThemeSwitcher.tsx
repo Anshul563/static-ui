@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react"
 import { Check, ChevronDown } from "lucide-react"
-import { Card } from "@/components/ui/card"
+import { Card } from "@/../static-ui/ui/card"
 
 interface ThemeVars {
   ":root": Record<string, string>

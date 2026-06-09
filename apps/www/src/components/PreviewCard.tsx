@@ -1,9 +1,9 @@
 "use client"
 
 import React, { useState } from "react"
-import { Check, Copy, Terminal } from "lucide-react"
+import { Check, Copy } from "lucide-react"
 import { CommandCopy } from "./CommandCopy"
-import { Card } from "@/components/ui/card"
+import { Card } from "@/../static-ui/ui/card"
 import { CodeBlock } from "@/components/CodeBlock"
 
 interface PreviewCardProps {

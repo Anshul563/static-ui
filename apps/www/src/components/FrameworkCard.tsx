@@ -2,7 +2,7 @@
 
 import { Check } from "lucide-react"
 import Image from "next/image"
-import { Card } from "@/components/ui/card"
+import { Card } from "@/../static-ui/ui/card"
 import type { Framework } from "@/lib/frameworks"
 import { FrameworkBadge } from "./FrameworkBadge"
 

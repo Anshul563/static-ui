@@ -4,7 +4,7 @@ import React from "react"
 import { Globe, Sparkles } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { Card } from "@/components/ui/card"
+import { Card } from "@/../static-ui/ui/card"
 
 export interface ProjectData {
   title: string

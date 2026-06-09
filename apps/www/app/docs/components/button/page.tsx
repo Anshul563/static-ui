@@ -12,13 +12,13 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { Card } from "@/components/ui/card"
+} from "@/../static-ui/ui/breadcrumb"
+import { Card } from "@/../static-ui/ui/card"
 
 export default function ButtonDocsPage() {
   const [activeTab, setActiveTab] = useState<"preview" | "code">("preview")
 
-  const buttonCodeString = `import { Button } from "@/components/static-ui/button"
+  const buttonCodeString = `import { Button } from "@/../static-ui/ui/button"
 
 export default function Demo() {
   return (

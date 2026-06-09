@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import { Terminal, Check, Copy } from "lucide-react"
-import { Card } from "@/components/ui/card"
+import { Card } from "@/../static-ui/ui/card"
 
 interface CommandCopyProps {
   command: string

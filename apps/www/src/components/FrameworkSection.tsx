@@ -3,7 +3,7 @@
 import { ArrowRight, Blocks, Cpu, Share2 } from "lucide-react"
 import Link from "next/link"
 import { CommandBlock } from "@/components/docs/CommandBlock"
-import { Card } from "@/components/ui/card"
+import { Card } from "@/../static-ui/ui/card"
 import { FrameworkGrid } from "./FrameworkGrid"
 import { FrameworkRoadmap } from "./FrameworkRoadmap"
 import { FrameworkTerminal } from "./FrameworkTerminal"

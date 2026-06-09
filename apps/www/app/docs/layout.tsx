@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation"
 import { SearchModal } from "@/components/SearchModal"
 import { ThemeSwitcher } from "@/components/ThemeSwitcher"
 import { ThemeToggleButton } from "@/components/ThemeToggleButton"
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/../static-ui/ui/badge"
 import { cn } from "@/lib/utils"
 
 const sidebarNavigation = [

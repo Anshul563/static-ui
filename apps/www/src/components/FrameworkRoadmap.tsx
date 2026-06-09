@@ -1,7 +1,7 @@
 "use client"
 
 import { frameworkCategories, statusConfig } from "@/lib/frameworks"
-import { Card } from "@/components/ui/card"
+import { Card } from "@/../static-ui/ui/card"
 
 export function FrameworkRoadmap() {
   const totalPhases = frameworkCategories.length

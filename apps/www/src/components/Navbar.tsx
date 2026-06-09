@@ -4,7 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { SearchModal } from "./SearchModal"
 import { ThemeToggleButton } from "./ThemeToggleButton"
-import { Badge } from "./ui/badge"
+import { Badge } from "@/../static-ui/ui/badge"
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)

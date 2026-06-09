@@ -4,7 +4,7 @@ import React from "react"
 import { ArrowRight, Terminal } from "lucide-react"
 import Link from "next/link"
 import { CommandBlock, DynamicCommand } from "@/components/docs/CommandBlock"
-import { Card } from "@/components/ui/card"
+import { Card } from "@/../static-ui/ui/card"
 
 export default function DocsIntroductionPage() {
   return (

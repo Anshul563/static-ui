@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { Search, Command, FileText, Palette, Layout, FileCode, ArrowRight } from "lucide-react"
 import fuzzysort from "fuzzysort"
 import { trackSearch } from "@/lib/analytics"
-import { Card } from "@/components/ui/card"
+import { Card } from "@/../static-ui/ui/card"
 
 interface SearchItem {
   title: string
