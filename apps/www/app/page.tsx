@@ -33,6 +33,8 @@ import { Card, CardContent } from "@/../static-ui/ui/card"
 import { getCommand } from "@/lib/package-manager"
 import { usePackageManager } from "@/lib/package-manager-context"
 import { AuroraText } from "@/components/ui/aurora-text"
+import { LineShadowText } from "@/components/ui/line-shadow-text"
+import { useTheme } from "next-themes"
 
 function GitHubIcon({ className }: { className?: string }) {
   return (
@@ -176,10 +178,12 @@ const themes = [
 ]
 
 export default function LandingPage() {
-  const [activeTheme, setActiveTheme] = useState("green")
+  const [activeTheme, setActiveTheme] = useState("zinc")
   const [copiedCommands, setCopiedCommands] = useState<Record<string, boolean>>({})
   const { packageManager } = usePackageManager()
   const router = useRouter()
+   const theme = useTheme()
+  const shadowColor = theme.resolvedTheme === "dark" ? "white" : "black"
 
   const handleCopy = async (text: string, key: string) => {
     await navigator.clipboard.writeText(text)
@@ -206,7 +210,9 @@ export default function LandingPage() {
 
         {/* Fixed Heading: Natural line heights, balanced sizes */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground leading-[1.15] sm:leading-[1.1]">
-          Build <span className="text-primary font-normal italic">modern</span> applications{" "}
+          Build  <LineShadowText className="italic" shadowColor={shadowColor}>
+        modern
+      </LineShadowText> applications{" "}
           <span className="block text-2xl sm:text-3xl font-normal text-muted-foreground my-2 sm:my-3">with</span>
           <AuroraText>complete code ownership</AuroraText>
           .

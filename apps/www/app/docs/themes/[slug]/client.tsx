@@ -4,7 +4,7 @@ import React, { useState } from "react"
 import { ChevronRight } from "lucide-react"
 import { notFound, useParams } from "next/navigation"
 import { CommandBlock } from "@/components/docs/CommandBlock"
-import { Card } from "@/components/ui/card"
+import { Card } from "@/../static-ui/ui/card"
 
 const THEMES_META = [
   {

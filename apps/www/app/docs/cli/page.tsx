@@ -3,7 +3,7 @@
 import { ChevronRight } from "lucide-react"
 import Image from "next/image"
 import { CommandBlock, DynamicCommand } from "@/components/docs/CommandBlock"
-import { Card } from "@/components/ui/card"
+import { Card } from "@/../static-ui/ui/card"
 
 interface CommandDef {
   name: string

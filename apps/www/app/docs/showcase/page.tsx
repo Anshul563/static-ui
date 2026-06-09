@@ -2,7 +2,7 @@ import React from "react"
 import { ArrowUpRight } from "lucide-react"
 import Link from "next/link"
 import { createMetadata } from "@/lib/seo"
-import { Card } from "@/components/ui/card"
+import { Card } from "@/../static-ui/ui/card"
 
 export const metadata = createMetadata({
   title: "Showcase",

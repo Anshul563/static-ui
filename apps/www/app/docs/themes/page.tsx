@@ -2,7 +2,7 @@ import React from "react"
 import { Check, Terminal } from "lucide-react"
 import Link from "next/link"
 import { DynamicCommand } from "@/components/docs/CommandBlock"
-import { Card } from "@/components/ui/card"
+import { Card } from "@/../static-ui/ui/card"
 import { createMetadata } from "@/lib/seo"
 
 export const metadata = createMetadata({

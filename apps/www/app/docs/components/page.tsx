@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { Check, Copy, Terminal } from "lucide-react"
+import { Check, Copy } from "lucide-react"
 import Link from "next/link"
 import {
   Breadcrumb,
@@ -10,7 +10,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
+} from "@/../static-ui/ui/breadcrumb"
 import { getCommand } from "@/lib/package-manager"
 import { usePackageManager } from "@/lib/package-manager-context"
 import { categoryLabels, components } from "@/lib/registry"
