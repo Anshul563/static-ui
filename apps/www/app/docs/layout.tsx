@@ -128,7 +128,7 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
         <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] lg:grid-cols-[280px_1fr_260px] gap-8 pt-8">
           {/* Left Sidebar (Desktop) */}
           <aside
-            className="sticky top-20 hidden md:block self-start custom-sidebar"
+            className="sticky top-20 hidden md:block self-start scrollbar-minimal"
             style={{ maxHeight: "calc(100vh - 5rem)", overflowY: "auto" }}
           >
             <DocsSidebar />

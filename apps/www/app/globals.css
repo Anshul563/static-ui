@@ -398,11 +398,57 @@
   mask-composite: exclude;
 }
 
-.custom-sidebar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+.scrollbar-minimal {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--border)) transparent;
 }
 
-.custom-sidebar::-webkit-scrollbar {
+@media (hover: hover) {
+  .scrollbar-minimal {
+    scrollbar-color: transparent transparent;
+    transition: scrollbar-color 0.2s ease;
+  }
+
+  .scrollbar-minimal:hover {
+    scrollbar-color: hsl(var(--border)) transparent;
+  }
+}
+
+.scrollbar-minimal::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-minimal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-minimal::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 9999px;
+  min-height: 40px;
+  transition: background-color 0.2s ease, opacity 0.2s ease, width 0.2s ease;
+}
+
+@media (hover: hover) {
+  .scrollbar-minimal:hover::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+  }
+
+  .scrollbar-minimal::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.35);
+  }
+
+  .scrollbar-minimal::-webkit-scrollbar-thumb:active {
+    background: hsl(var(--primary) / 0.5);
+  }
+}
+
+.scrollbar-minimal::-webkit-scrollbar-thumb:active {
+  background: hsl(var(--primary) / 0.5);
+}
+
+.scrollbar-minimal::-webkit-scrollbar-button {
   display: none;
 }
+

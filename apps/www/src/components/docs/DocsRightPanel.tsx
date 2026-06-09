@@ -211,7 +211,7 @@ export function DocsRightPanel() {
 
   return (
     <aside className="hidden lg:block w-65 shrink-0">
-      <div className="sticky top-20 flex flex-col gap-6 py-8 custom-sidebar" style={{ maxHeight: "calc(100vh - 5rem)", overflowY: "auto" }}>
+      <div className="sticky top-20 flex flex-col gap-6 py-8 scrollbar-minimal" style={{ maxHeight: "calc(100vh - 5rem)", overflowY: "auto" }}>
         {headings.length > 0 && (
           <div>
             <h4 className="mb-2 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">

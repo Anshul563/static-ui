@@ -113,7 +113,7 @@ export function DocsSidebar() {
         <h4 className="mb-1 px-3 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
           Components
         </h4>
-        <div className="max-h-[280px] overflow-y-auto custom-sidebar space-y-px">
+        <div className="max-h-[280px] overflow-y-auto scrollbar-minimal space-y-px">
           {componentNavItems.map((item) => {
             const isActive = pathname === item.href
             return (
