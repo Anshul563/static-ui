@@ -4,7 +4,7 @@ import { Button } from "@static-ui/ui"
 export default function PopoverDemo() {
   return (
     <Popover>
-      <PopoverTrigger asChild>
+      <PopoverTrigger>
         <Button variant="outline">Open Popover</Button>
       </PopoverTrigger>
       <PopoverContent className="w-64">

@@ -1,10 +1,10 @@
 "use client"
 
-import { useState, Component, type ReactNode } from "react"
+import { Component, useState, type ReactNode } from "react"
 import { Loader2 } from "lucide-react"
 import dynamic from "next/dynamic"
-import { CodeBlock } from "@/components/CodeBlock"
 import { Card } from "@/../static-ui/ui/card"
+import { CodeBlock } from "@/components/CodeBlock"
 import { examples } from "@/lib/examples"
 
 class ErrorBoundary extends Component<
@@ -33,9 +33,11 @@ export function ComponentPreview({ slug, source }: ComponentPreviewProps) {
 
   const LivePreview = dynamic(
     () =>
-      examples[slug as keyof typeof examples]?.()?.then((mod) => ({
-        default: mod.default,
-      })) ??
+      (examples[slug as keyof typeof examples]?.() as Promise<Record<string, unknown>>)?.then(
+        (mod) => ({
+          default: (mod.default ?? Object.values(mod)[0]) as React.ComponentType,
+        })
+      ) ??
       Promise.resolve({
         default: () => (
           <div className="flex flex-col items-center gap-2 text-muted-foreground py-8">
@@ -73,13 +75,15 @@ export function ComponentPreview({ slug, source }: ComponentPreviewProps) {
         </div>
       </div>
 
-      <Card className="bg-background min-h-75 flex-row items-center justify-center p-6 relative bg-[radial-gradient(#161616_1px,transparent_1px)] bg-size-[16px_16px]">
+      <Card className="bg-card min-h-75 flex-row items-center justify-center p-6 relative ">
         {activeTab === "preview" ? (
           <ErrorBoundary
             fallback={
               <div className="flex flex-col items-center gap-2 text-muted-foreground py-8">
                 <p className="text-xs font-medium text-muted-foreground">Failed to load preview</p>
-                <p className="text-[10px] text-muted-foreground">The component may have unresolved dependencies</p>
+                <p className="text-[10px] text-muted-foreground">
+                  The component may have unresolved dependencies
+                </p>
               </div>
             }
           >
@@ -87,14 +91,12 @@ export function ComponentPreview({ slug, source }: ComponentPreviewProps) {
               <LivePreview />
             </div>
           </ErrorBoundary>
+        ) : source ? (
+          <CodeBlock code={source} language="tsx" showLineNumbers />
         ) : (
-          source ? (
-            <CodeBlock code={source} language="tsx" showLineNumbers />
-          ) : (
-            <div className="flex flex-col items-center gap-2 text-muted-foreground py-8">
-              <p className="text-xs font-medium text-muted-foreground">Source code not available</p>
-            </div>
-          )
+          <div className="flex flex-col items-center gap-2 text-muted-foreground py-8">
+            <p className="text-xs font-medium text-muted-foreground">Source code not available</p>
+          </div>
         )}
       </Card>
     </div>

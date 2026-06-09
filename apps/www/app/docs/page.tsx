@@ -1,10 +1,12 @@
 "use client"
 
 import React from "react"
-import { ArrowRight, Terminal } from "lucide-react"
+import { ArrowRight, ExternalLink, Terminal } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
-import { CommandBlock, DynamicCommand } from "@/components/docs/CommandBlock"
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@static-ui/ui"
 import { Card } from "@/../static-ui/ui/card"
+import { CommandBlock, DynamicCommand } from "@/components/docs/CommandBlock"
 
 export default function DocsIntroductionPage() {
   return (
@@ -23,10 +25,62 @@ export default function DocsIntroductionPage() {
       <div className="space-y-4 text-sm leading-relaxed text-muted-foreground">
         <p>
           Static UI is a modern, unstyled component library built on top of{" "}
-          <strong className="text-foreground">Base UI</strong> and styled with{" "}
-          <strong className="text-foreground">Tailwind CSS v4</strong>. Every component is designed
-          to be copied, pasted, and fully customized — giving you complete control over your
-          codebase.
+          <HoverCard>
+            <HoverCardTrigger className="inline-flex items-center justify-center text-sm font-medium text-foreground cursor-pointer hover:bg-accent transition-colors">
+              Base UI
+            </HoverCardTrigger>
+            <HoverCardContent>
+              <div className="text-sm font-medium text-foreground">Build with Base UI</div>
+              <div className="text-xs text-muted-foreground mt-1">
+                Base UI is a collection of accessible and customizable React components.
+              </div>
+              <div className="flex items-center justify-between gap-2 mt-4">
+                <Image
+                  src="/icons/base-ui.svg"
+                  alt="Base UI Components"
+                  width={20}
+                  height={20}
+                  className=""
+                />
+                <Link
+                  href="https://baseui.com/"
+                  target="_blank"
+                  className="text-primary hover:underline inline-flex items-center gap-1"
+                >
+                  Learn More <ExternalLink className="h-3 w-3" />
+                </Link>
+              </div>
+            </HoverCardContent>
+          </HoverCard>{" "}
+          and styled with  <HoverCard>
+            <HoverCardTrigger className="inline-flex items-center justify-center text-sm font-medium text-foreground cursor-pointer hover:bg-accent transition-colors">
+              Tailwind CSS v4
+            </HoverCardTrigger>
+            <HoverCardContent>
+              <div className="text-sm font-medium text-foreground"> Styled with Tailwind CSS</div>
+              <div className="text-xs text-muted-foreground mt-1">
+                Tailwind CSS is a utility-first CSS framework for rapidly building custom designs.
+              </div>
+              <div className="flex items-center justify-between gap-2 mt-4">
+                <Image
+                  src="/icons/tailwind-css.svg"
+                  alt="Tailwind CSS"
+                  width={20}
+                  height={20}
+                  className=""
+                />
+                <Link
+                  href="https://tailwindcss.com/"
+                  target="_blank"
+                  className="text-primary hover:underline inline-flex items-center gap-1"
+                >
+                  Learn More <ExternalLink className="h-3 w-3" />
+                </Link>
+              </div>
+            </HoverCardContent>
+          </HoverCard>. Every
+          component is designed to be copied, pasted, and fully customized — giving you complete
+          control over your codebase.
         </p>
 
         <p>

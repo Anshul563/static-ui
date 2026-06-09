@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { Check, Copy } from "lucide-react"
+import { Check, Copy, Terminal } from "lucide-react"
 import Link from "next/link"
 import {
   Breadcrumb,

@@ -161,7 +161,7 @@ export default function ComponentDetailClient({
         <p className="text-xs text-muted-foreground">
           Import the component directly from the package:
         </p>
-        <Card className="bg-card/80 p-3 pl-4 max-w-xl shadow-md flex-row items-center justify-between">
+        <Card className="bg-card/80 p-3 pl-4 max-w-xl flex-row items-center justify-between">
           <code className="font-mono text-xs text-foreground">
             {`import { ${meta.name.replace(/\s+/g, "")} } from "@static-ui/ui"`}
           </code>
@@ -187,7 +187,7 @@ export default function ComponentDetailClient({
               {props.map((prop) => (
                 <tr key={prop.name} className="border-b border-border last:border-0">
                   <td className="px-4 py-2.5 font-mono text-[11px] text-primary">{prop.name}</td>
-                  <td className="px-4 py-2.5 font-mono text-[11px] text-amber-300">{prop.type}</td>
+                  <td className="px-4 py-2.5 font-mono text-[11px] text-chart-2">{prop.type}</td>
                   <td className="px-4 py-2.5 text-muted-foreground">{prop.description}</td>
                 </tr>
               ))}

@@ -196,10 +196,10 @@ export default function LandingPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative pt-20 pb-16 lg:pt-28 lg:pb-24 overflow-hidden">
+      <section className="relative pt-10 pb-16 lg:pt-12 lg:pb-24 overflow-hidden">
       {/* Background Gradients & Grids */}
       <div className="hero-grid absolute inset-0 opacity-70" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,color-mix(in_oklch,var(--primary)_10%,transparent),transparent)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,color-mix(in_oklch,var(--chart-2)_10%,transparent),transparent)] pointer-events-none" />
 
       <div className="relative mx-auto max-w-5xl px-6 text-center">
         {/* Announcement Badge */}

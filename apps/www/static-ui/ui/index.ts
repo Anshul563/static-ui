@@ -1,4 +1,3 @@
-export { cn } from "./lib/utils"
 
 export { AiChat } from "./ai-chat"
 export { AiMessage } from "./ai-message"
