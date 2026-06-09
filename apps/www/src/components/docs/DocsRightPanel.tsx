@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react"
 import { ChevronLeft, ChevronRight, ExternalLink, GitPullRequest, Shield } from "lucide-react"
+import { GithubIcon } from "@/components/GithubIcon"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { categoryLabels, registryBySlug } from "@/lib/registry"
-import Image from "next/image"
 
 const pageOrder = [
   "/docs",
@@ -345,13 +345,7 @@ export function DocsRightPanel() {
                 rel="noreferrer"
                 className="flex items-center gap-1.5 rounded-md px-2 py-1.5 text-[12px] text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors"
               >
-                <Image
-                  src="/icons/github.svg"
-                  alt="GitHub"
-                  width={12}
-                  height={12}
-                  className="shrink-0"
-                />
+                <GithubIcon size={12} className="shrink-0" />
                 Request a feature
               </a>
             </li>

@@ -1,7 +1,10 @@
+"use client"
+
 import React, { useState } from "react"
 import { Menu, X } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { GithubIcon } from "./GithubIcon"
 import { SearchModal } from "./SearchModal"
 import { ThemeToggleButton } from "./ThemeToggleButton"
 import { Badge } from "@/../static-ui/ui/badge"
@@ -72,13 +75,7 @@ export default function Navbar() {
                 rel="noreferrer"
                 className="transition-colors hover:text-foreground"
               >
-                <Image
-                  src="/icons/github.svg"
-                  alt="Static UI"
-                  width={20}
-                  height={20}
-                  className="h-5 w-auto"
-                />
+                <GithubIcon size={20} className="h-5 w-auto" />
               </a>
             </div>
           </nav>
